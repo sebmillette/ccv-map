@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "webpack-dev-server --config webpack.dev.config.js",
-    "build": "rm -rf dist && npm run webpack --mode production --config webpack.build.config.js",
+    "build": "rm -rf dist && webpack --mode production --config webpack.build.config.js",
     "build-dev": "rm -rf dist && npm run npm run build && npm run push-dev",
     "push-dev": ""
   },
@@ -15,6 +15,7 @@
   "dependencies": {
     "@formatjs/intl-numberformat": "^7.2.3",
     "d3": "^7.3.0",
+    "dotenv": "^16.0.0",
     "lodash": "^4.17.21",
     "mapbox-gl": "^2.7.0"
   },

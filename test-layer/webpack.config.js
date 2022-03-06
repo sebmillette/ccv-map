@@ -5,7 +5,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const config = {
     name: 'MapBox map for CCV',
     entry: {
-        bullet: '../src/map.js',
+        mapCCV: './src/index.js',
     },
     output: {
         path: path.join(__dirname, 'dist'),

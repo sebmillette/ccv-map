@@ -1,5 +1,6 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
+const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -36,6 +37,9 @@ const config = {
             patterns: [
                 { from: './data', to: 'data' },
             ],
+        }),
+        new webpack.DefinePlugin({
+            'process.env.MAPBOX_API': JSON.stringify('MAPBOX_API'),
         }),
     ],
 };
