@@ -1,2 +1,2 @@
 # CCV-map
-Mapbox web for CCV project
+MapBox map for CCV project
