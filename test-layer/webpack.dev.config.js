@@ -1,8 +1,7 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
 const webpack = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const CopyPlugin = require('copy-webpack-plugin');
 const commonConfig = require('./webpack.config');
 
@@ -22,17 +21,7 @@ const config = {
         hot: true,
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            template: 'views/index.ejs',
-            filename: 'index.html',
-            inject: true,
-            title: commonConfig.name,
-            templateParameters: {
-                js: `${entryKey}.js`,
-                css: `${entryKey}.css`,
-            },
-        }),
-        new CleanWebpackPlugin(),
+
         new CopyPlugin({
             patterns: [
                 { from: './data', to: 'data' },

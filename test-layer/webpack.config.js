@@ -1,5 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 const config = {
@@ -73,6 +75,13 @@ const config = {
         new MiniCssExtractPlugin({
             filename: '[name].css',
         }),
+        new HtmlWebpackPlugin({
+            template: 'views/index.ejs',
+            filename: 'index.html',
+            inject: true,
+            title: this.name,
+        }),
+        new CleanWebpackPlugin(),
     ],
 };
 
