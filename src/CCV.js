@@ -14,16 +14,24 @@ export class MapCCV {
 
     create() {
         console.log(this);
-        Map.draw({
+        this.mapObject = Map.draw({
             geoCenter: this.geoCenter,
             MAPBOX_API: this.payload.MAPBOX_API,
             id: this.payload.id,
         });
-    }
 
-    update() {
+    }
+    
+    update({property, value}) {
         this.init();
-        // Update should not create a new map!!
-        // this.create();
+        switch (property) {
+            case 'style':
+                console.log('update style')
+                this.mapObject.setStyle('mapbox://styles/mapbox/' + value);                
+                break;
+        
+            default:
+                break;
+        }
     }
 }

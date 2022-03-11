@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "CCV",
             "url": "http://localhost:8080/index.html",
-            "webRoot": "${workspaceFolder}"
+            "webRoot": "${workspaceFolder}/test-layer"
         }
     ]
 }

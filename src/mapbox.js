@@ -12,5 +12,7 @@ export const Map = {
             bearing: -17.6,
             antialias: true,
         });
+
+        return map;
     },
 };

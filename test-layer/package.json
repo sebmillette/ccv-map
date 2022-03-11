@@ -15,7 +15,6 @@
   "dependencies": {
     "@formatjs/intl-numberformat": "^7.2.3",
     "d3": "^7.3.0",
-    "dotenv": "^16.0.0",
     "lodash": "^4.17.21",
     "mapbox-gl": "^2.7.0"
   },
@@ -29,6 +28,7 @@
     "copy-webpack-plugin": "^9.0.1",
     "core-js": "^3.17.3",
     "css-loader": "^6.2.0",
+    "dat.gui": "^0.7.9",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",

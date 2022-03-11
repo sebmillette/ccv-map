@@ -79,7 +79,7 @@ const config = {
             template: 'views/index.ejs',
             filename: 'index.html',
             inject: true,
-            title: this.name,
+            title: 'MapBox map for CCV',
         }),
         new CleanWebpackPlugin(),
     ],
