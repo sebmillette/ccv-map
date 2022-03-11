@@ -16,8 +16,8 @@ const config = {
     },
     target: 'web',
     performance: {
-        maxEntrypointSize: 1024000,
-        maxAssetSize: 1024000,
+        maxEntrypointSize: 2024000,
+        maxAssetSize: 2024000,
     },
     module: {
         rules: [

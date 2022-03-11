@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --config webpack.dev.config.js",
     "build": "rm -rf dist && webpack --mode production --config webpack.build.config.js",
-    "build-dev": "rm -rf dist && npm run npm run build && npm run push-dev",
-    "push-dev": ""
+    "deploy": "npm run build && firebase deploy --only hosting"
   },
   "repository": "https://github.com/spandl/CCV-map",
   "author": "Ralph Spandl – ralph.spandl@r42.ca",

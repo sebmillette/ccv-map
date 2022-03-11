@@ -8,12 +8,11 @@ export class MapCCV {
     }
 
     init() {
-        console.log(this);
         this.geoCenter = [-73.595717, 45.488102];
+        console.log(this);
     }
 
     create() {
-        console.log(this);
         this.mapObject = Map.draw({
             geoCenter: this.geoCenter,
             MAPBOX_API: this.payload.MAPBOX_API,
