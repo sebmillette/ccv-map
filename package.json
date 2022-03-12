@@ -1,5 +1,39 @@
 {
+  "name": "map_box_ccv",
+  "version": "0.1.0",
+  "description": "MapBox for CCV",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --config webpack.dev.config.js",
+    "build": "rm -rf dist && webpack --mode production --config webpack.build.config.js",
+    "deploy": "npm run build && firebase deploy --only hosting"
+  },
+  "repository": "https://github.com/spandl/CCV-map",
+  "author": "Ralph Spandl – ralph.spandl@r42.ca",
+  "license": "MIT",
   "dependencies": {
+    "@formatjs/intl-numberformat": "^7.2.3",
+    "d3": "^7.3.0",
+    "lodash": "^4.17.21",
     "mapbox-gl": "^2.7.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "@babel/eslint-parser": "^7.15.4",
+    "@babel/preset-env": "^7.15.4",
+    "babel-loader": "^8.2.2",
+    "core-js": "^3.17.3",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-unused-imports": "^1.1.4",
+    "eslint-webpack-plugin": "^3.0.1",
+    "prettier": "^2.4.0",
+    "regenerator-runtime": "^0.13.9"
   }
 }

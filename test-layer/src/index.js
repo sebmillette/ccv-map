@@ -1,3 +1,6 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
 import * as _ from 'lodash';
 import config from '../config.json';
 import { MapCCV } from '../../src/CCV';
@@ -14,6 +17,9 @@ const loadMap = () => {
         id: containerId,
         map: {
             style: 'dark-v10',
+        },
+        data: {
+            path: 'data/locations.json',
         },
     };
     const map = new MapCCV(payload);

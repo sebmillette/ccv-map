@@ -7,14 +7,13 @@ const config = {
     optimization: {
         minimize: true,
     },
-    // plugins: [
-    //     new CopyPlugin({
-    //         patterns: [
-    //             { from: 'src/settings', to: '' },
-    //             { from: 'src/assets/icons', to: 'icons' },
-    //         ],
-    //     }),
-    // ],
+    plugins: [
+        new CopyPlugin({
+            patterns: [
+                { from: './src/data', to: 'data' },
+            ],
+        }),
+    ],
 };
 
 module.exports = merge(commonConfig, {

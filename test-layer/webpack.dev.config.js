@@ -24,7 +24,7 @@ const config = {
 
         new CopyPlugin({
             patterns: [
-                { from: './data', to: 'data' },
+                { from: './src/data', to: 'data' },
             ],
         }),
         new webpack.DefinePlugin({
