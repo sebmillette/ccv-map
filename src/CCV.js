@@ -1,6 +1,8 @@
+import 'mapbox-gl/dist/mapbox-gl.css';
 import { Map } from './mapbox';
 import { Data } from './data';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import { Scales } from './scales';
+
 import { arrayToFeature } from './arrayToFeature';
 
 export class MapCCV {
@@ -16,7 +18,7 @@ export class MapCCV {
         payload.data = data;
 
         // geo center
-        payload.geoCenter = Data.calculateGeoCenter({ payload });
+        payload.map.geoCenter = Data.calculateGeoCenter({ payload });
 
         // data properties
         payload.metricExtent = Data.calculateMetricExtent({ payload });
@@ -29,6 +31,23 @@ export class MapCCV {
         case 'style':
             console.log('update style');
             this.mapObject.setStyle(`mapbox://styles/mapbox/${value}`);
+            break;
+        case 'location':
+            console.log('fly to...');
+            // merge new location settings with payload
+            this.payload.map.geoCenter = Data.calculateGeoCenter({ payload: this.payload });
+            console.log(this.payload.map.geoCenter);
+            this.mapObject.flyTo({
+                center: this.payload.map.geoCenter,
+                zoom: this.payload.map.zoom,
+                speed: 0.8,
+                pitch: Scales.pitchScale(this.payload.map.zoom),
+                easing(t) {
+                    return t;
+                },
+                essential: true,
+            });
+            this.mapObject.flying = true;
             break;
 
         default:

@@ -15,7 +15,6 @@ export const arrayToFeature = {
             obj.geometry = geometry;
             return obj;
         });
-        console.log(featureJSON);
         return featureJSON;
     },
 

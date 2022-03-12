@@ -17,8 +17,8 @@ const loadMap = () => {
         map: {
             style: 'dark-v10',
             zoom: 13,
-            geoCenterType: 'data', // [manual, postalCode]
-            geoCenterValue: '[-73.595717, 45.488102]',
+            geoCenterType: 'manual', // [manual, postalCode]
+            geoCenterValue: '-73.595, 45.488',
         },
         data: {
             path: 'data/locations.json',

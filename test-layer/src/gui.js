@@ -3,7 +3,7 @@ import * as dat from 'dat.gui';
 export const GUI = {
     create({ payload, map }) {
         const gui = new dat.GUI();
-        gui.width = 300;
+        gui.width = 250;
 
         const mapSection = gui.addFolder('Map');
         mapSection.open();
@@ -13,16 +13,26 @@ export const GUI = {
             .onChange((value) => {
                 map.update({ property: 'style', value });
             });
-
         mapSection
-            .add(payload.map, 'geoCenterType', { Data: 'data', Manual: 'manual', 'Postal Code': 'postalCode' });
+            .add(payload.map, 'geoCenterType', {
+                'Data Center': 'data', Manual: 'manual', 'Postal Code': 'postalCode',
+            });
         mapSection
             .add(payload.map, 'geoCenterValue');
         mapSection
             .add(payload.map, 'zoom');
 
         // Fly-to button
-        const obj = { 'fly to destination': () => { console.log('fly to destination'); } };
-        mapSection.add(obj, 'fly to destination');
+        const flyBtn = { 'fly to destination': () => {
+            map.update({ property: 'location', value: payload.map });
+        } };
+        mapSection.add(flyBtn, 'fly to destination');
+
+        const dataSection = gui.addFolder('Data');
+        dataSection
+            .add(payload.data, 'path');
+
+        const dataBtn = { 'replace data': () => { console.log('replace data'); } };
+        dataSection.add(dataBtn, 'replace data');
     },
 };

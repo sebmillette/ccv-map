@@ -28,7 +28,7 @@ export const Data = {
             return dataGeoCenter();
 
         case 'manual':
-            return payload.map.geoCenterValue;
+            return payload.map.geoCenterValue.split(',').map((d) => Number(d));
 
         case 'postalCode':
             /*
