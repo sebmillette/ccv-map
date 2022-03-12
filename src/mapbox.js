@@ -7,7 +7,7 @@ export const Map = {
             container: payload.id,
             style: `mapbox://styles/mapbox/${payload.map.style}`,
             center: payload.geoCenter,
-            zoom: 14,
+            zoom: payload.map.zoom,
             pitch: 45,
             bearing: -17.6,
             antialias: true,

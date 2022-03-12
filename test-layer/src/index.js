@@ -10,13 +10,15 @@ import './css/base.scss';
 
 const loadMap = () => {
     const containerId = 'dev-map';
-    const container = document.getElementById(containerId);
 
     const payload = {
         MAPBOX_API: config.MAPBOX_API,
         id: containerId,
         map: {
             style: 'dark-v10',
+            zoom: 13,
+            geoCenterType: 'data', // [manual, postalCode]
+            geoCenterValue: '[-73.595717, 45.488102]',
         },
         data: {
             path: 'data/locations.json',
@@ -31,23 +33,3 @@ const loadMap = () => {
 document.addEventListener('DOMContentLoaded', () => {
     loadMap();
 });
-
-/**
- * Resize Map when container resizes
- */
-// const debounce = _.debounce(() => {
-//     map.payload.width = container.offsetWidth;
-//     map.payload.height = container.offsetHeight;
-//     map.update();
-// }, 100);
-
-// const resizeObserver = new ResizeObserver((entries) => {
-//     // eslint-disable-next-line no-restricted-syntax
-//     for (const entry of entries) {
-//         if (entry.target.id === containerId) {
-//             debounce();
-//         }
-//     }
-// });
-
-// resizeObserver.observe(container);

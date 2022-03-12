@@ -6,25 +6,25 @@ import { arrayToFeature } from './arrayToFeature';
 export class MapCCV {
     constructor(payload) {
         this.payload = payload;
-        this.init();
-    }
-
-    init() {
-        this.payload.geoCenter = [-73.595717, 45.488102];
-        console.log(this);
     }
 
     async create() {
-        const rawData = await Data.load({ path: this.payload.data.path });
-        this.payload.metricExtent = [100, 10000000];
-
+        const payload = this.payload;
+        // Data
+        const rawData = await Data.load({ path: payload.data.path });
         const data = arrayToFeature.process({ data: rawData.locations });
-        this.payload.data = data;
-        this.mapObject = Map.draw({ payload: this.payload });
+        payload.data = data;
+
+        // geo center
+        payload.geoCenter = Data.calculateGeoCenter({ payload });
+
+        // data properties
+        payload.metricExtent = Data.calculateMetricExtent({ payload });
+
+        this.mapObject = Map.draw({ payload });
     }
 
     update({ property, value }) {
-        this.init();
         switch (property) {
         case 'style':
             console.log('update style');
