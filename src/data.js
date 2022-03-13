@@ -12,6 +12,19 @@ export const Data = {
         });
     },
 
+    loadGeo() {
+        const geo = {};
+        const loadData = async () => {
+            const response = await d3.json('./layer-data/3Digit_MTL.geojson');
+            geo.threeDigits = response;
+            return geo;
+        };
+
+        return new Promise((resolve) => {
+            resolve(loadData());
+        });
+    },
+
     calculateGeoCenter({ payload }) {
         const geoType = payload.map.geoCenterType;
 

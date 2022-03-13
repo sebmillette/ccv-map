@@ -10,7 +10,7 @@ const config = {
     plugins: [
         new CopyPlugin({
             patterns: [
-                { from: './src/data', to: 'data' },
+                { from: './src/layer-data', to: 'layer-data' },
             ],
         }),
     ],

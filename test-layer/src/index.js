@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import config from '../config.json';
 import { MapCCV } from '../../src/CCV';
 import { GUI } from './gui';
+import { Buttons } from './btn-scripts';
 
 import './css/base.scss';
 
@@ -28,6 +29,8 @@ const loadMap = () => {
     map.create();
 
     GUI.create({ payload, map });
+
+    Buttons.addListeners(map);
 };
 
 document.addEventListener('DOMContentLoaded', () => {

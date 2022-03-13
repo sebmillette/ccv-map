@@ -1,3 +1,7 @@
+# heavy files
+test-layer/assets
+
+# VS stuff
 dist
 .npmrc
 .DS_Store

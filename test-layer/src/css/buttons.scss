@@ -1,0 +1,18 @@
+#buttons {
+  position: absolute;
+  z-index: 100;
+  bottom: 5px;
+  left: 5px;
+  background-color: white;
+  color: slategray;
+
+  ul {
+    margin: 0;
+    padding: 10px 5px;
+    cursor: pointer;
+    li {
+      list-style-type: none;
+      padding: 0 5px;
+    }
+  }
+}

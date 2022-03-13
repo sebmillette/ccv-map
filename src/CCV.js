@@ -23,6 +23,9 @@ export class MapCCV {
         // data properties
         payload.metricExtent = Data.calculateMetricExtent({ payload });
 
+        // geo layers
+        payload.geo = await Data.loadGeo();
+
         this.mapObject = Map.draw({ payload });
     }
 
@@ -40,7 +43,7 @@ export class MapCCV {
             this.mapObject.flyTo({
                 center: this.payload.map.geoCenter,
                 zoom: this.payload.map.zoom,
-                speed: 0.8,
+                speed: 1.2,
                 pitch: Scales.pitchScale(this.payload.map.zoom),
                 easing(t) {
                     return t;
