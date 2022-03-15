@@ -14,7 +14,7 @@ export class MapCCV {
         const payload = this.payload;
         // Data
         const rawData = await Data.load({ path: payload.data.path });
-        const data = arrayToFeature.process({ data: rawData.locations });
+        const data = arrayToFeature.process({ data: rawData.locations, properties: ['metric', 'id'] });
         payload.data = data;
 
         // geo center

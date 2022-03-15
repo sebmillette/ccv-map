@@ -1,20 +1,25 @@
 export const arrayToFeature = {
-    process: ({ data }) => {
+    process: ({ data, properties }) => {
         const featureJSON = arrayToFeature.obj;
         featureJSON.features = data.map((d) => {
             if (typeof d.Lat === 'string') return arrayToFeature.empty;
             const obj = {};
             obj.type = 'Feature';
-            const metric = d.metric;
-            obj.properties = { metric };
-            obj.properties.id = d['Numero Centris'];
 
+            // collect properties
+            obj.properties = {};
+            properties.forEach((p) => {
+                obj.properties[p] = d[p];
+            });
+
+            // set geometry
             const geometry = {};
             geometry.type = 'Point';
-            geometry.coordinates = [d.Lat, d.Long];
+            geometry.coordinates = [d.Latitude, d.Longitude];
             obj.geometry = geometry;
             return obj;
         });
+
         return featureJSON;
     },
 

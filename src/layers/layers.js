@@ -84,6 +84,11 @@ export const Layers = {
         );
     },
     threeDigits: ({ map, payload }) => {
+        /*
+        ! TO DO : render colors of layers according to location data
+        ! restrict layers to certain zoom
+        ! repeat with other levels (city / municipality)
+        */
         map.addLayer({
             id: 'threeDigits',
             type: 'line',
@@ -106,7 +111,5 @@ export const Layers = {
                 'fill-opacity': 0.1,
             },
         });
-
-        // attach data
     },
 };

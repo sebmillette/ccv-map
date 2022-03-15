@@ -1,4 +1,8 @@
 import * as d3 from 'd3';
+import * as _ from 'lodash';
+
+import { arrayToFeature } from '../../src/arrayToFeature';
+import { Tools } from './Tools';
 
 export const Buttons = {
     addListeners(map) {
@@ -13,13 +17,22 @@ export const Buttons = {
 
 const ButtonClick = {
     trigger: async (map, action) => {
+        const dataGeoJSON = async () => {
+            const featureJSON = await ButtonClick.CSVToGeoJSON();
+            Tools.saveAsJSON({ json: featureJSON, fileName: 'geoJSON.geojson' });
+        };
+        const choroplethGeoJSON = async () => {
+            const featureJSON = await ButtonClick.mergeGeoJSON();
+            const choroplethJSON = {};
+            // Tools.saveAsJSON({ json: featureJSON, fileName: 'choroplethJSON.geojson' });
+        };
         switch (action) {
-        case 'export-qc':
-            ButtonClick.exportGeoJSON('PRNAME', 'Quebec');
+        case 'data-geojson':
+            dataGeoJSON();
             break;
 
-        case 'export-mtl':
-            ButtonClick.exportGeoJSON('CFSAUID', 'H');
+        case 'data-choropleth':
+            choroplethGeoJSON();
             break;
 
         default:
@@ -27,13 +40,32 @@ const ButtonClick = {
         }
     },
 
-    exportGeoJSON: async (property, searchTerm) => {
-        // load full file
-        const response = await d3.json('./assets/3Digit.geojson');
-        console.log(response.type);
+    CSVToGeoJSON: async () => {
+        const createData = async () => {
+            const response = await d3.csv('./data/raw-data.csv');
+            const properties = ['Latitude', 'Longitude',
+                'Prix Ajusté', 'Superficie', 'Prix Vendu', 'id', 'Zip', 'City'];
+            const data = response.map((d) => _.pick(d, ...properties));
 
-        // filter
+            return arrayToFeature.process({ data, properties });
+        };
 
-        // save
+        return new Promise((resolve) => {
+            resolve(createData());
+        });
+    },
+
+    mergeGeoJSON: async () => {
+        const featureJSON = await ButtonClick.CSVToGeoJSON();
+
+        // group data by postal code
+
+        // sum or count or average the metric
+
+        // merge with featureJSON
+
+        // save or use on the fly
+
+        console.log(featureJSON);
     },
 };
