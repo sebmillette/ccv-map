@@ -13,9 +13,9 @@ export class MapCCV {
     async create() {
         const payload = this.payload;
         // Data
-        const rawData = await Data.load({ path: payload.data.path });
-        const data = arrayToFeature.process({ data: rawData.locations, properties: ['metric', 'id'] });
-        payload.data = data;
+        const data = await Data.load({ path: payload.data.locationPath });
+        // const data = arrayToFeature.process({ data: rawData.locations, properties: ['metric', 'id'] });
+        payload.locationData = data;
 
         // geo center
         payload.map.geoCenter = Data.calculateGeoCenter({ payload });
@@ -23,8 +23,8 @@ export class MapCCV {
         // data properties
         payload.metricExtent = Data.calculateMetricExtent({ payload });
 
-        // geo layers
-        payload.geo = await Data.loadGeo();
+        // Zip layer
+        payload.geo = await Data.loadGeo({ payload });
 
         this.mapObject = Map.draw({ payload });
     }

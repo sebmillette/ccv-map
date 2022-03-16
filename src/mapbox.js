@@ -23,17 +23,17 @@ export const Map = {
         map.on('load', () => {
             map.addSource('locations', {
                 type: 'geojson',
-                data: payload.data,
+                data: payload.locationData,
             });
 
-            map.addSource('threeDigits', {
+            map.addSource('zipData', {
                 type: 'geojson',
-                data: payload.geo.threeDigits,
+                data: payload.geo.zipData,
             });
 
-            Layers.dots({ map, payload });
             Layers.buildings({ map });
-            Layers.threeDigits({ map, payload });
+            Layers.dots({ map, payload });
+            Layers.zipData({ map, payload });
         });
 
         map.on('moveend', (e) => {

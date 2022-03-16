@@ -2,14 +2,15 @@ export const Layers = {
     dots: ({ map, payload }) => {
         map.addLayer(
             {
-                id: 'dots-locations',
+                id: 'locations',
                 type: 'circle',
                 source: 'locations',
                 minzoom: 4,
                 paint: {
-                // increase the radius of the circle as the zoom level and dbh value increases
+                    // 'fill-fill-sort-key': 10,
+                    // increase the radius of the circle as the zoom level and dbh value increases
                     'circle-radius': {
-                        property: 'metric',
+                        property: payload.data.accessors.metric,
                         type: 'exponential',
                         stops: [
                             [{ zoom: 16, value: payload.metricExtent[0] }, 8],
@@ -19,7 +20,7 @@ export const Layers = {
                         ],
                     },
                     'circle-color': {
-                        property: 'metric',
+                        property: payload.data.accessors.metric,
                         type: 'exponential',
                         stops: [
                             [payload.metricExtent[0], 'rgb(255,255,255)'],
@@ -30,13 +31,13 @@ export const Layers = {
                     // 'circle-stroke-width': 1,
                     'circle-opacity': {
                         stops: [
-                            [12, 0],
+                            [10, 0],
                             [15, 1],
                         ],
                     },
                 },
             },
-            'waterway-label',
+            // 'zipData',
         );
     },
 
@@ -83,16 +84,16 @@ export const Layers = {
             labelLayerId,
         );
     },
-    threeDigits: ({ map, payload }) => {
+    zipData: ({ map, payload }) => {
         /*
         ! TO DO : render colors of layers according to location data
         ! restrict layers to certain zoom
         ! repeat with other levels (city / municipality)
         */
         map.addLayer({
-            id: 'threeDigits',
+            id: 'zipData',
             type: 'line',
-            source: 'threeDigits',
+            source: 'zipData',
             layout: {},
             paint: {
                 'line-width': 1,
@@ -102,14 +103,28 @@ export const Layers = {
         });
 
         map.addLayer({
-            id: 'threeDigitsFill',
+            id: 'zipDataFill',
             type: 'fill',
-            source: 'threeDigits',
+            source: 'zipData',
             layout: {},
             paint: {
-                'fill-color': '#FFF',
-                'fill-opacity': 0.1,
+                // 'fill-fill-sort-key': 20,
+                'fill-color': [
+                    'interpolate',
+                    ['linear'],
+                    ['get', payload.data.accessors.metric],
+                    0,
+                    '#FFF',
+                    50,
+                    '#EED322',
+                    100,
+                    '#E6B71E',
+                    200,
+                    '#DA9C20',
+                ],
+                'fill-opacity': 0.5,
             },
-        });
+        },
+        'locations');
     },
 };

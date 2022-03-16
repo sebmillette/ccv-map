@@ -17,12 +17,16 @@ const loadMap = () => {
         id: containerId,
         map: {
             style: 'dark-v10',
-            zoom: 13,
-            geoCenterType: 'manual', // [manual, postalCode]
+            zoom: 12,
+            geoCenterType: 'data', // [manual, postalCode]
             geoCenterValue: '-73.595, 45.488',
         },
         data: {
-            path: 'data/locations.json',
+            locationPath: 'data/locations.geojson', // GeoJSON with properties
+            zipData: 'data/3Digit_MTL.geojson', // GeoJSON without metrics
+            accessors: {
+                metric: 'Superficie',
+            },
         },
     };
     const map = new MapCCV(payload);

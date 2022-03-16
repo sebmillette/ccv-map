@@ -30,7 +30,7 @@ export const GUI = {
 
         const dataSection = gui.addFolder('Data');
         dataSection
-            .add(payload.data, 'path');
+            .add(payload.data, 'locationPath');
 
         const dataBtn = { 'replace data': () => { console.log('replace data'); } };
         dataSection.add(dataBtn, 'replace data');
