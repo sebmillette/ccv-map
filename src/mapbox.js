@@ -1,7 +1,7 @@
 import mapboxgl from 'mapbox-gl';
-// import * as d3 from 'd3';
 
 import { Layers } from './layers/layers';
+import { ZipLayer } from './layers/zipLayer';
 import { Scales } from './scales';
 
 export const Map = {
@@ -33,7 +33,7 @@ export const Map = {
 
             Layers.buildings({ map });
             Layers.dots({ map, payload });
-            Layers.zipData({ map, payload });
+            ZipLayer.add({ map, payload });
         });
 
         map.on('moveend', (e) => {

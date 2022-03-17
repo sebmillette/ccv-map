@@ -84,47 +84,5 @@ export const Layers = {
             labelLayerId,
         );
     },
-    zipData: ({ map, payload }) => {
-        /*
-        ! TO DO : render colors of layers according to location data
-        ! restrict layers to certain zoom
-        ! repeat with other levels (city / municipality)
-        */
-        map.addLayer({
-            id: 'zipData',
-            type: 'line',
-            source: 'zipData',
-            layout: {},
-            paint: {
-                'line-width': 1,
-                'line-color': '#FFF',
-                'line-opacity': 0.6,
-            },
-        });
 
-        map.addLayer({
-            id: 'zipDataFill',
-            type: 'fill',
-            source: 'zipData',
-            layout: {},
-            paint: {
-                // 'fill-fill-sort-key': 20,
-                'fill-color': [
-                    'interpolate',
-                    ['linear'],
-                    ['get', payload.data.accessors.metric],
-                    0,
-                    '#FFF',
-                    50,
-                    '#EED322',
-                    100,
-                    '#E6B71E',
-                    200,
-                    '#DA9C20',
-                ],
-                'fill-opacity': 0.5,
-            },
-        },
-        'locations');
-    },
 };

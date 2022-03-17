@@ -14,8 +14,11 @@
   "dependencies": {
     "@formatjs/intl-numberformat": "^7.2.3",
     "d3": "^7.3.0",
+    "d3-geo": "^3.0.1",
+    "install": "^0.13.0",
     "lodash": "^4.17.21",
-    "mapbox-gl": "^2.7.0"
+    "mapbox-gl": "^2.7.0",
+    "npm": "^8.5.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
