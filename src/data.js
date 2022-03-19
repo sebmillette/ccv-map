@@ -43,8 +43,10 @@ export const Data = {
 
         // Each zip code is expected to get a metric
 
-        geoData.features.forEach((d) => {
+        geoData.features.forEach((d, i) => {
             const zipCode = d.properties.CFSAUID;
+            d.id = i;
+            d.zip = zipCode;
             const zone = group.get(zipCode);
             d.properties[metricAccessor] = zone ? d3.mean(zone, (v) => v[metricAccessor]) : 0;
         });
@@ -79,7 +81,7 @@ export const Data = {
 
         case 'postalCode':
             /*
-            ! calculate extent of postal code shape
+            ! calculate extent of postal code shape >> See bound example on zip layer
              */
             return [-73.595717, 45.488102];
 

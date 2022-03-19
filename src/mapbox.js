@@ -5,8 +5,10 @@ import { ZipLayer } from './layers/zipLayer';
 import { Scales } from './scales';
 
 export const Map = {
-    draw({ payload }) {
+    draw({ payload, MapCCV }) {
         mapboxgl.accessToken = payload.MAPBOX_API;
+        // eslint-disable-next-line no-param-reassign
+        MapCCV.appState = { type: 'status', value: 'success', message: 'MapBox token OK' };
 
         const map = new mapboxgl.Map({
             container: payload.id,
@@ -19,6 +21,7 @@ export const Map = {
             flying: false,
         });
         map.flying = false;
+        map.MapCCV = MapCCV;
 
         map.on('load', () => {
             map.addSource('locations', {
@@ -46,6 +49,8 @@ export const Map = {
             const pitch = Scales.pitchScale(currentZoom);
             map.setPitch(pitch);
         });
+
+        // this.createAppState({ type: 'status', value: 'success', message: 'Layers loaded' });
         return map;
     },
 };

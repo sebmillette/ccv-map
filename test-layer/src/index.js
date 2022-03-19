@@ -28,6 +28,7 @@ const loadMap = () => {
                 metric: 'Superficie',
             },
         },
+        eventCallback: mapEvents,
     };
     const map = new MapCCV(payload);
     map.create();
@@ -40,3 +41,8 @@ const loadMap = () => {
 document.addEventListener('DOMContentLoaded', () => {
     loadMap();
 });
+
+const mapEvents = (obj) => {
+    const log = document.getElementById('log');
+    log.innerHTML = `<span>${obj.message} (${obj.type} | ${obj.value})</span>${log.innerHTML}`;
+};

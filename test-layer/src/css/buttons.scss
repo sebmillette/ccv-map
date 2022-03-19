@@ -20,3 +20,24 @@
     }
   }
 }
+
+#log {
+  padding: 5px;
+  background-color: rgb(232, 235, 238);
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 300px;
+  height: 150px;
+  z-index: 90;
+  border: 1px dashed slategray;
+
+  font-size: 14px;
+  line-height: 18px;
+
+  overflow: scroll;
+
+  span {
+    display: block;
+  }
+}

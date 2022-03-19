@@ -5,6 +5,8 @@ import * as d3 from 'd3';
 import { geoEqualEarth, geoPath } from 'd3-geo';
 
 export const ZipLayer = {
+
+    fillOpacity: 0.5,
     add: ({ map, payload }) => {
         /*
         ! TO DO : color scheme
@@ -44,7 +46,14 @@ export const ZipLayer = {
                     200,
                     '#DA9C20',
                 ],
-                'fill-opacity': 0.5,
+                // See: https://docs.mapbox.com/mapbox-gl-js/example/hover-styles/
+                'fill-opacity': [
+                    'case',
+                    ['boolean', ['feature-state', 'click'], false], ZipLayer.fillOpacity + 0.4,
+                    ['boolean', ['feature-state', 'hover'], false], ZipLayer.fillOpacity + 0.2,
+                    ZipLayer.fillOpacity,
+                ],
+
             },
         },
         'locations'); // place choropleth UNDERNEATH locations
@@ -53,6 +62,9 @@ export const ZipLayer = {
         ToolTip.add({ map, interactionId, payload });
     },
 };
+
+let hoveredStateId = null;
+let clickStateId = null;
 
 const ToolTip = {
     add: ({ map, interactionId, payload }) => {
@@ -86,6 +98,22 @@ const ToolTip = {
 
             // drawBox({ map, bounds });
 
+            // Manage click state
+            if (event.features.length > 0) {
+                if (clickStateId !== null) {
+                    map.setFeatureState(
+                        { source: 'zipData', id: clickStateId },
+                        { click: false },
+                    );
+                }
+                clickStateId = event.features[0].id;
+                map.setFeatureState(
+                    { source: 'zipData', id: clickStateId },
+                    { click: true },
+                );
+            }
+
+            map.MapCCV.appState = { type: 'user', value: 'click', message: `clicked on ${feature.properties.CFSAUID}` };
             /*
             ! To Do - zoom to bound (using external button)
             */
@@ -95,14 +123,34 @@ const ToolTip = {
                 .addTo(map);
         });
 
-        map.on('mouseenter', interactionId, () => {
-            /*
-            ! To Do: highlight color on mouseover (transparency)
-            */
+        map.on('mousemove', interactionId, (event) => {
+            // Manage hover state
+            if (event.features.length > 0) {
+                if (clickStateId === event.features[0].id) return;
+                if (hoveredStateId !== null) {
+                    map.setFeatureState(
+                        { source: 'zipData', id: hoveredStateId },
+                        { hover: false },
+                    );
+                }
+                hoveredStateId = event.features[0].id;
+                map.setFeatureState(
+                    { source: 'zipData', id: hoveredStateId },
+                    { hover: true },
+                );
+            }
             map.getCanvas().style.cursor = 'pointer';
         });
 
         map.on('mouseleave', interactionId, () => {
+            // Manage hover state
+            if (hoveredStateId !== null) {
+                map.setFeatureState(
+                    { source: 'zipData', id: hoveredStateId },
+                    { hover: false },
+                );
+            }
+            hoveredStateId = null;
             map.getCanvas().style.cursor = 'default';
         });
     },

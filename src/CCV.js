@@ -8,14 +8,20 @@ import { arrayToFeature } from './arrayToFeature';
 export class MapCCV {
     constructor(payload) {
         this.payload = payload;
+        this.eventCallback = payload.eventCallback;
+        this.appState = { type: 'status', value: 'success', message: 'Class created' };
+        payload.appState = this.appState;
     }
 
     async create() {
+        this.appState = { type: 'status', value: 'success', message: 'create' };
         const payload = this.payload;
         // Data
         const data = await Data.load({ path: payload.data.locationPath });
         // const data = arrayToFeature.process({ data: rawData.locations, properties: ['metric', 'id'] });
         payload.locationData = data;
+
+        this.appState = { type: 'status', value: 'success', message: 'Location data loaded' };
 
         // geo center
         payload.map.geoCenter = Data.calculateGeoCenter({ payload });
@@ -25,8 +31,9 @@ export class MapCCV {
 
         // Zip layer
         payload.geo = await Data.loadGeo({ payload });
+        this.appState = { type: 'status', value: 'success', message: 'Zip layer loaded' };
 
-        this.mapObject = Map.draw({ payload });
+        this.mapObject = Map.draw({ payload, MapCCV: this });
     }
 
     update({ property, value }) {
@@ -56,5 +63,10 @@ export class MapCCV {
         default:
             break;
         }
+    }
+
+    set appState(obj) {
+        if (!this.eventCallback) return;
+        this.eventCallback(obj);
     }
 }
