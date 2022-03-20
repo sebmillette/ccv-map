@@ -49,7 +49,7 @@ const loadMap = () => {
             },
             // {
             //     name: 'municipalData',
-            //     path: 'data/ZOOM_MedLevel_Municipalty.geojson',
+            //     path: 'data/ZOOM_MedLevel_Municipality.geojson',
             //     geoKey: 'CDUID',
             //     dataKey: 'L02_MUNI',
             //     zoomVisibility: [9, 14],

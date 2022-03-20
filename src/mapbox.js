@@ -24,7 +24,7 @@ export const Map = {
             antialias: true,
             flying: false,
             minZoom: 6,
-            maxZoom: 15,
+            maxZoom: 18,
         });
         map.flying = false;
         map.MapCCV = MapCCV;
