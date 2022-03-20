@@ -17,17 +17,48 @@ const loadMap = () => {
         id: containerId,
         map: {
             style: 'dark-v10',
-            zoom: 12,
-            geoCenterType: 'data', // [manual, postalCode]
+            zoom: 5,
+            geoCenterType: 'dataBound', // [manual, dataBound, dataCenter]
             geoCenterValue: '-73.595, 45.488',
+            showBuildings: true,
         },
         data: {
-            locationPath: 'data/locations.geojson', // GeoJSON with properties
-            zipData: 'data/3Digit_MTL.geojson', // GeoJSON without metrics
-            accessors: {
-                metric: 'Superficie',
+            locationPath: 'data/QC_CONDO_SOLD_METRIC.geojson', // GeoJSON with properties
+            showAsLayer: true,
+            zoomVisibility: [10, 24],
+            accessor: {
+                metric: 'PRICE_BY_SQMETER',
+                type: 'NUMBER', // [NUMBER, CURRENCY]
+                aggregation: 'AVG', // [AVG, SUM, COUNT]
+                unit: '$/m2',
             },
         },
+        layers: [
+            {
+                name: 'zipData',
+                path: 'data/ZOOM_LOWLevel_3Digit.geojson', // path to postal code boundary
+                geoKey: 'CFSAUID', // key used in geoJSON >> null if no data merge required
+                dataKey: 'L03_3DPC', // key used in data file
+                zoomVisibility: [5, 8],
+                accessor: {
+                    metric: 'PRICE_BY_SQMETER',
+                    type: 'NUMBER', // [NUMBER, CURRENCY]
+                    aggregation: 'AVG', // [AVG, SUM, COUNT]
+                    unit: '$/m2',
+                },
+            },
+            // {
+            //     name: 'zipDataTwo',
+            //     path: 'data/ZOOM_LOWLevel_3Digit.geojson', // path to postal code boundary
+            //     geoKey: 'CFSAUID', // key used in geoJSON >> null if no data merge required
+            //     dataKey: 'L03_3DPC', // key used in data file
+            //     accessor: {
+            //         metric: 'PRICE_BY_SQMETER',
+            //         type: 'NUMBER', // [NUMBER, CURRENCY]
+            //         aggregation: 'AVG', // [AVG, SUM, COUNT]
+            //     },
+            // },
+        ],
         eventCallback: mapEvents,
     };
     const map = new MapCCV(payload);

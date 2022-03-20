@@ -2,41 +2,61 @@
 import mapboxgl from 'mapbox-gl';
 import * as _ from 'lodash';
 import * as d3 from 'd3';
-import { geoEqualEarth, geoPath } from 'd3-geo';
+
+import { Data } from '../data';
 
 export const ZipLayer = {
 
     fillOpacity: 0.5,
-    add: ({ map, payload }) => {
+    add: ({ map, payload, layer }) => {
+        const layerName = Object.keys(layer)[0];
+        const layerProps = payload.layers.find((d) => d.name === layerName);
+        const data = layer[layerName];
+        const interactionId = `${layerName}Fill`;
+        const zoomExtent = layerProps.zoomVisibility;
+
+        // data properties
+        const metricExtent = d3.extent(data.features, (d) => Number(d.properties[layerProps.accessor.metric]));
+
+        map.addSource(layerName, {
+            type: 'geojson',
+            data,
+        });
+
         /*
         ! TO DO : color scheme
-        ! restrict layers to certain zoom
         */
-        const interactionId = 'zipDataFill';
 
         map.addLayer({
-            id: 'zipData',
+            id: `${layerName}Line`,
             type: 'line',
-            source: 'zipData',
+            source: layerName,
             layout: {},
             paint: {
-                'line-width': 1,
+                'line-width':
+                [
+                    'case',
+                    ['boolean', ['feature-state', 'click'], false], 6,
+                    ['boolean', ['feature-state', 'hover'], false], 2,
+                    1,
+                ],
                 'line-color': '#FFF',
-                'line-opacity': 0.6,
+                'line-opacity': 1,
             },
         });
 
+        const dotLayer = payload.data.showAsLayer ? 'locations' : '';
         map.addLayer({
             id: interactionId,
             type: 'fill',
-            source: 'zipData',
+            source: layerName,
             layout: {},
             paint: {
                 // 'fill-fill-sort-key': 20,
                 'fill-color': [
                     'interpolate',
                     ['linear'],
-                    ['get', payload.data.accessors.metric],
+                    ['get', layerProps.accessor.metric],
                     0,
                     '#FFF',
                     50,
@@ -47,19 +67,23 @@ export const ZipLayer = {
                     '#DA9C20',
                 ],
                 // See: https://docs.mapbox.com/mapbox-gl-js/example/hover-styles/
-                'fill-opacity': [
-                    'case',
-                    ['boolean', ['feature-state', 'click'], false], ZipLayer.fillOpacity + 0.4,
-                    ['boolean', ['feature-state', 'hover'], false], ZipLayer.fillOpacity + 0.2,
-                    ZipLayer.fillOpacity,
-                ],
+                'fill-opacity':
+                {
+                    stops: [
+                        [zoomExtent[0] - 2, 0],
+                        [zoomExtent[0], ZipLayer.fillOpacity],
+                        [zoomExtent[1], ZipLayer.fillOpacity],
+                        [zoomExtent[1] + 2, 0],
+                    ],
+                },
 
             },
         },
-        'locations'); // place choropleth UNDERNEATH locations
+        dotLayer);
+        // ,'locations'); // place choropleth UNDERNEATH locations
 
         // Add Tooltip
-        ToolTip.add({ map, interactionId, payload });
+        ToolTip.add({ map, interactionId, layerProps });
     },
 };
 
@@ -67,7 +91,7 @@ let hoveredStateId = null;
 let clickStateId = null;
 
 const ToolTip = {
-    add: ({ map, interactionId, payload }) => {
+    add: ({ map, interactionId, layerProps }) => {
         map.on('click', interactionId, (event) => {
             // const num = d3.format('($,.2r')(event.features[0].properties.metric);
             const feature = event.features[0];
@@ -89,11 +113,11 @@ const ToolTip = {
 
             /*
             ! Final formatting
-            ! Add prefix or unit to payload
+            ! Add prefix or unit to layerProps
             */
 
-            const value = feature.properties[payload.data.accessors.metric];
-            const valueFormat = `${d3.format('(,.2r')(value)} m2`;
+            const value = feature.properties[layerProps.accessor.metric];
+            const valueFormat = `${d3.format('(,.2r')(value)}${layerProps.accessor.unit}`;
             const print = value === 0 ? 'no value' : valueFormat;
 
             // drawBox({ map, bounds });
@@ -119,7 +143,7 @@ const ToolTip = {
             */
             new mapboxgl.Popup()
                 .setLngLat(center)
-                .setHTML(`<strong>${payload.data.accessors.metric}:</strong> ${print}`)
+                .setHTML(`<strong>${layerProps.accessor.metric}:</strong> ${print}`)
                 .addTo(map);
         });
 

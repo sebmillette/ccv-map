@@ -1,7 +1,8 @@
 import mapboxgl from 'mapbox-gl';
 
-import { Layers } from './layers/layers';
+import { Buildings } from './layers/buildingLayers';
 import { ZipLayer } from './layers/zipLayer';
+import { DataDots } from './layers/dataLayer';
 import { Scales } from './scales';
 
 export const Map = {
@@ -10,11 +11,14 @@ export const Map = {
         // eslint-disable-next-line no-param-reassign
         MapCCV.appState = { type: 'status', value: 'success', message: 'MapBox token OK' };
 
+        const value = payload.map.geoCenterValue;
+
         const map = new mapboxgl.Map({
             container: payload.id,
             style: `mapbox://styles/mapbox/${payload.map.style}`,
-            center: payload.map.geoCenter,
+            center: payload.map.geoCenterType === 'dataBound' ? [0, 0] : payload.map.geoCenterValue,
             zoom: payload.map.zoom,
+            bounds: payload.map.geoCenterType === 'dataBound' ? value : null,
             pitch: Scales.pitchScale(payload.map.zoom),
             bearing: 0,
             antialias: true,
@@ -29,14 +33,11 @@ export const Map = {
                 data: payload.locationData,
             });
 
-            map.addSource('zipData', {
-                type: 'geojson',
-                data: payload.geo.zipData,
+            if (payload.map.showBuildings) Buildings.add({ map });
+            if (payload.data.showAsLayer) DataDots.add({ map, payload });
+            payload.layerData.forEach((layer, index) => {
+                ZipLayer.add({ map, payload, layer, index });
             });
-
-            Layers.buildings({ map });
-            Layers.dots({ map, payload });
-            ZipLayer.add({ map, payload });
         });
 
         map.on('moveend', (e) => {

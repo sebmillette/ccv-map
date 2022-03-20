@@ -16,22 +16,29 @@ export class MapCCV {
     async create() {
         this.appState = { type: 'status', value: 'success', message: 'create' };
         const payload = this.payload;
+
         // Data
         const data = await Data.load({ path: payload.data.locationPath });
-        // const data = arrayToFeature.process({ data: rawData.locations, properties: ['metric', 'id'] });
         payload.locationData = data;
 
         this.appState = { type: 'status', value: 'success', message: 'Location data loaded' };
 
         // geo center
-        payload.map.geoCenter = Data.calculateGeoCenter({ payload });
+        payload.map.geoCenterValue = Data.calculateGeoCenter({ payload });
 
-        // data properties
-        payload.metricExtent = Data.calculateMetricExtent({ payload });
+        // Process all layers
+        const promises = payload.layers.map(async (layerInfo) => {
+            try {
+                const response = await Data.loadGeo({ layerInfo, locationData: data });
+                return response;
+            } catch (error) {
+                this.appState = { type: 'status', value: 'error', message: error };
+                return '';
+            }
+        });
+        payload.layerData = await Promise.all(promises);
 
-        // Zip layer
-        payload.geo = await Data.loadGeo({ payload });
-        this.appState = { type: 'status', value: 'success', message: 'Zip layer loaded' };
+        this.appState = { type: 'status', value: 'success', message: 'All layer data loaded' };
 
         this.mapObject = Map.draw({ payload, MapCCV: this });
     }

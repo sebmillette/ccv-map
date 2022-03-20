@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import mapboxgl from 'mapbox-gl';
 
 export const Data = {
     load({ path }) {
@@ -12,22 +13,18 @@ export const Data = {
         });
     },
 
-    loadGeo({ payload }) {
+    loadGeo({ layerInfo, locationData }) {
         const geo = {};
-        const groupDimension = 'Zip';
-        const locationData = payload.locationData;
-        const metricAccessor = payload.data.accessors.metric;
 
         const loadData = async () => {
-            const geoData = await d3.json(payload.data.zipData);
+            const geoData = await d3.json(layerInfo.path);
 
             Data.mergeLocationWithGeo({
-                groupDimension,
+                layerInfo,
                 geoData,
                 locationData,
-                metricAccessor,
             });
-            geo.zipData = geoData;
+            geo[layerInfo.name] = geoData;
             return geo;
         };
 
@@ -36,18 +33,25 @@ export const Data = {
         });
     },
 
-    mergeLocationWithGeo: async ({ groupDimension, geoData, locationData, metricAccessor }) => {
+    mergeLocationWithGeo: async ({ layerInfo, geoData, locationData }) => {
+        const dataKey = layerInfo.dataKey;
+        const metricAccessor = layerInfo.accessor.metric;
+        const geoKey = layerInfo.geoKey;
+
         // group data by postal code
-        const groupArray = locationData.features.map((d) => d.properties);
-        const group = d3.group(groupArray, (d) => d[groupDimension]);
+        const dataArray = locationData.features.map((d) => d.properties);
+        const group = d3.group(dataArray, (d) => d[dataKey]);
 
         // Each zip code is expected to get a metric
 
+        /*
+        ! TO DO Integrate 3 aggregations
+        ! Format Number only on the fly
+        */
         geoData.features.forEach((d, i) => {
-            const zipCode = d.properties.CFSAUID;
+            const key = d.properties[geoKey];
             d.id = i;
-            d.zip = zipCode;
-            const zone = group.get(zipCode);
+            const zone = group.get(key);
             d.properties[metricAccessor] = zone ? d3.mean(zone, (v) => v[metricAccessor]) : 0;
         });
 
@@ -62,37 +66,37 @@ export const Data = {
 
     calculateGeoCenter({ payload }) {
         const geoType = payload.map.geoCenterType;
+        const geoArray = payload.locationData.features.map((d) => d.geometry.coordinates);
+        const geoLongExtent = d3.extent(geoArray, (d) => d[1]);
+        const geoLatExtent = d3.extent(geoArray.map((d) => d[0]));
 
         const dataGeoCenter = () => {
-            const geoArray = payload.locationData.features.map((d) => d.geometry.coordinates);
-            const geoLongExtent = d3.extent(geoArray, (d) => d[1]);
-            const geoLatExtent = d3.extent(geoArray.map((d) => d[0]));
             const middle = (extent) => (extent[1] - extent[0]) / 2 + extent[0];
             return [middle(geoLatExtent), middle(geoLongExtent)];
         };
 
-        switch (geoType) {
-        case 'data':
-            return dataGeoCenter();
-            // return [-73.615967, 45.4637115];
+        const dataGeoBounds = () => new mapboxgl.LngLatBounds(
+            new mapboxgl.LngLat(geoLatExtent[0], geoLongExtent[0]),
+            new mapboxgl.LngLat(geoLatExtent[1], geoLongExtent[1]),
+        );
 
+        switch (geoType) {
         case 'manual':
             return payload.map.geoCenterValue.split(',').map((d) => Number(d));
 
-        case 'postalCode':
-            /*
-            ! calculate extent of postal code shape >> See bound example on zip layer
-             */
-            return [-73.595717, 45.488102];
+        case 'dataCenter':
+            return dataGeoCenter();
+
+        case 'dataBound':
+            return dataGeoBounds();
 
         default:
             return [-73.595717, 45.488102];
         }
     },
 
-    calculateMetricExtent({ payload }) {
-        const accessor = payload.data.accessors.metric;
-        return d3.extent(payload.locationData.features, (d) => Number(d.properties[accessor]));
-    },
+    // calculateMetricExtent({ data, accessor }) {
+    //     return d3.extent(data, (d) => Number(d.properties[accessor]));
+    // },
 
 };
