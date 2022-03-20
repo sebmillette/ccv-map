@@ -23,6 +23,8 @@ export const Map = {
             bearing: 0,
             antialias: true,
             flying: false,
+            minZoom: 6,
+            maxZoom: 15,
         });
         map.flying = false;
         map.MapCCV = MapCCV;

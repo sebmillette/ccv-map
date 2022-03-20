@@ -31,26 +31,33 @@ export const ZipLayer = {
             id: `${layerName}Line`,
             type: 'line',
             source: layerName,
+            minzoom: zoomExtent[0],
+            maxzoom: zoomExtent[1],
             layout: {},
             paint: {
                 'line-width':
                 [
                     'case',
-                    ['boolean', ['feature-state', 'click'], false], 6,
+                    ['boolean', ['feature-state', 'click'], false], 3,
                     ['boolean', ['feature-state', 'hover'], false], 2,
                     1,
                 ],
                 'line-color': '#FFF',
-                'line-opacity': 1,
+                'line-opacity': 0.4,
             },
         });
 
         const dotLayer = payload.data.showAsLayer ? 'locations' : '';
+        const zoomOverlay = 0.5;
         map.addLayer({
             id: interactionId,
             type: 'fill',
             source: layerName,
-            layout: {},
+            minzoom: zoomExtent[0],
+            maxzoom: zoomExtent[1],
+            layout: {
+                visibility: 'visible', // for manual enable disable
+            },
             paint: {
                 // 'fill-fill-sort-key': 20,
                 'fill-color': [
@@ -68,19 +75,17 @@ export const ZipLayer = {
                 ],
                 // See: https://docs.mapbox.com/mapbox-gl-js/example/hover-styles/
                 'fill-opacity':
-                {
-                    stops: [
-                        [zoomExtent[0] - 2, 0],
-                        [zoomExtent[0], ZipLayer.fillOpacity],
-                        [zoomExtent[1], ZipLayer.fillOpacity],
-                        [zoomExtent[1] + 2, 0],
-                    ],
-                },
+                // 0.5,
+                [
+                    'case',
+                    ['boolean', ['feature-state', 'click'], false], 0.85,
+                    ['boolean', ['feature-state', 'hover'], false], 0.5,
+                    0.2,
+                ],
 
             },
         },
-        dotLayer);
-        // ,'locations'); // place choropleth UNDERNEATH locations
+        dotLayer); // place choropleth UNDERNEATH dot layer, if available
 
         // Add Tooltip
         ToolTip.add({ map, interactionId, layerProps });
@@ -126,18 +131,18 @@ const ToolTip = {
             if (event.features.length > 0) {
                 if (clickStateId !== null) {
                     map.setFeatureState(
-                        { source: 'zipData', id: clickStateId },
+                        { source: layerProps.name, id: clickStateId },
                         { click: false },
                     );
                 }
                 clickStateId = event.features[0].id;
                 map.setFeatureState(
-                    { source: 'zipData', id: clickStateId },
+                    { source: layerProps.name, id: clickStateId },
                     { click: true },
                 );
             }
 
-            map.MapCCV.appState = { type: 'user', value: 'click', message: `clicked on ${feature.properties.CFSAUID}` };
+            map.MapCCV.appState = { type: 'user', value: 'click', message: `clicked on ${layerProps.geoKey}: ${feature.properties[layerProps.geoKey]}` };
             /*
             ! To Do - zoom to bound (using external button)
             */
@@ -153,13 +158,13 @@ const ToolTip = {
                 if (clickStateId === event.features[0].id) return;
                 if (hoveredStateId !== null) {
                     map.setFeatureState(
-                        { source: 'zipData', id: hoveredStateId },
+                        { source: layerProps.name, id: hoveredStateId },
                         { hover: false },
                     );
                 }
                 hoveredStateId = event.features[0].id;
                 map.setFeatureState(
-                    { source: 'zipData', id: hoveredStateId },
+                    { source: layerProps.name, id: hoveredStateId },
                     { hover: true },
                 );
             }
@@ -170,7 +175,7 @@ const ToolTip = {
             // Manage hover state
             if (hoveredStateId !== null) {
                 map.setFeatureState(
-                    { source: 'zipData', id: hoveredStateId },
+                    { source: layerProps.name, id: hoveredStateId },
                     { hover: false },
                 );
             }

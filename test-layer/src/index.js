@@ -25,7 +25,7 @@ const loadMap = () => {
         data: {
             locationPath: 'data/QC_CONDO_SOLD_METRIC.geojson', // GeoJSON with properties
             showAsLayer: true,
-            zoomVisibility: [10, 24],
+            zoomVisibility: [15, 24],
             accessor: {
                 metric: 'PRICE_BY_SQMETER',
                 type: 'NUMBER', // [NUMBER, CURRENCY]
@@ -39,7 +39,7 @@ const loadMap = () => {
                 path: 'data/ZOOM_LOWLevel_3Digit.geojson', // path to postal code boundary
                 geoKey: 'CFSAUID', // key used in geoJSON >> null if no data merge required
                 dataKey: 'L03_3DPC', // key used in data file
-                zoomVisibility: [5, 8],
+                zoomVisibility: [11, 15],
                 accessor: {
                     metric: 'PRICE_BY_SQMETER',
                     type: 'NUMBER', // [NUMBER, CURRENCY]
@@ -48,16 +48,31 @@ const loadMap = () => {
                 },
             },
             // {
-            //     name: 'zipDataTwo',
-            //     path: 'data/ZOOM_LOWLevel_3Digit.geojson', // path to postal code boundary
-            //     geoKey: 'CFSAUID', // key used in geoJSON >> null if no data merge required
-            //     dataKey: 'L03_3DPC', // key used in data file
+            //     name: 'municipalData',
+            //     path: 'data/ZOOM_MedLevel_Municipalty.geojson',
+            //     geoKey: 'CDUID',
+            //     dataKey: 'L02_MUNI',
+            //     zoomVisibility: [9, 14],
             //     accessor: {
             //         metric: 'PRICE_BY_SQMETER',
-            //         type: 'NUMBER', // [NUMBER, CURRENCY]
-            //         aggregation: 'AVG', // [AVG, SUM, COUNT]
+            //         type: 'NUMBER',
+            //         aggregation: 'AVG',
+            //         unit: '$/m2',
             //     },
             // },
+            {
+                name: 'cityData',
+                path: 'data/ZOOM_HighLevel_CITY.geojson',
+                geoKey: 'CCSUID',
+                dataKey: 'L01_CITY',
+                zoomVisibility: [5, 8],
+                accessor: {
+                    metric: 'PRICE_BY_SQMETER',
+                    type: 'NUMBER',
+                    aggregation: 'AVG',
+                    unit: '$/m2',
+                },
+            },
         ],
         eventCallback: mapEvents,
     };

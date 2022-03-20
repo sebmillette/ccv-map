@@ -15,7 +15,7 @@ export const GUI = {
             });
         mapSection
             .add(payload.map, 'geoCenterType', {
-                'Data Center': 'data', Manual: 'manual', 'Postal Code': 'postalCode',
+                'Data Center': 'dataCenter', Manual: 'manual', 'Data Bound': 'dataBound',
             });
         mapSection
             .add(payload.map, 'geoCenterValue');

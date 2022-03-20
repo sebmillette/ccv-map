@@ -42,16 +42,10 @@ export const Data = {
         const dataArray = locationData.features.map((d) => d.properties);
         const group = d3.group(dataArray, (d) => d[dataKey]);
 
-        // Each zip code is expected to get a metric
-
-        /*
-        ! TO DO Integrate 3 aggregations
-        ! Format Number only on the fly
-        */
         geoData.features.forEach((d, i) => {
             const key = d.properties[geoKey];
             d.id = i;
-            const zone = group.get(key);
+            const zone = Number.isNaN(Number(key)) ? group.get(key) : group.get(Number(key));
             d.properties[metricAccessor] = zone ? d3.mean(zone, (v) => v[metricAccessor]) : 0;
         });
 
