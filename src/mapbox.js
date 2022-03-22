@@ -8,7 +8,6 @@ import { Scales } from './scales';
 export const Map = {
     draw({ payload, MapCCV }) {
         mapboxgl.accessToken = payload.MAPBOX_API;
-        // eslint-disable-next-line no-param-reassign
         MapCCV.appState = { type: 'status', value: 'success', message: 'MapBox token OK' };
 
         const value = payload.map.geoCenterValue;
@@ -42,16 +41,16 @@ export const Map = {
             });
         });
 
-        map.on('moveend', (e) => {
-            if (map.flying) map.flying = false;
-        });
+        // map.on('moveend', (e) => {
+        //     if (map.flying) map.flying = false;
+        // });
 
-        map.on('zoom', () => {
-            if (map.flying) return;
-            const currentZoom = map.getZoom();
-            const pitch = Scales.pitchScale(currentZoom);
-            map.setPitch(pitch);
-        });
+        // map.on('zoom', () => {
+        //     if (map.flying) return;
+        //     const currentZoom = map.getZoom();
+        //     const pitch = Scales.pitchScale(currentZoom);
+        //     map.setPitch(pitch);
+        // });
 
         // this.createAppState({ type: 'status', value: 'success', message: 'Layers loaded' });
         return map;

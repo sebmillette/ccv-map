@@ -25,7 +25,7 @@ const loadMap = () => {
         data: {
             locationPath: 'data/QC_CONDO_SOLD_METRIC.geojson', // GeoJSON with properties
             showAsLayer: true,
-            zoomVisibility: [15, 24],
+            zoomVisibility: [15, 20],
             accessor: {
                 metric: 'PRICE_BY_SQMETER',
                 type: 'NUMBER', // [NUMBER, CURRENCY]
@@ -39,7 +39,7 @@ const loadMap = () => {
                 path: 'data/ZOOM_LOWLevel_3Digit.geojson', // path to postal code boundary
                 geoKey: 'CFSAUID', // key used in geoJSON >> null if no data merge required
                 dataKey: 'L03_3DPC', // key used in data file
-                zoomVisibility: [11, 15],
+                zoomVisibility: [10, 13],
                 accessor: {
                     metric: 'PRICE_BY_SQMETER',
                     type: 'NUMBER', // [NUMBER, CURRENCY]
@@ -47,19 +47,19 @@ const loadMap = () => {
                     unit: '$/m2',
                 },
             },
-            // {
-            //     name: 'municipalData',
-            //     path: 'data/ZOOM_MedLevel_Municipality.geojson',
-            //     geoKey: 'CDUID',
-            //     dataKey: 'L02_MUNI',
-            //     zoomVisibility: [9, 14],
-            //     accessor: {
-            //         metric: 'PRICE_BY_SQMETER',
-            //         type: 'NUMBER',
-            //         aggregation: 'AVG',
-            //         unit: '$/m2',
-            //     },
-            // },
+            {
+                name: 'municipalData',
+                path: 'data/ZOOM_MedLevel_Municipality.geojson',
+                geoKey: 'IDMAP',
+                dataKey: 'L02_MUNI',
+                zoomVisibility: [8, 10],
+                accessor: {
+                    metric: 'PRICE_BY_SQMETER',
+                    type: 'NUMBER',
+                    aggregation: 'AVG',
+                    unit: '$/m2',
+                },
+            },
             {
                 name: 'cityData',
                 path: 'data/ZOOM_HighLevel_CITY.geojson',

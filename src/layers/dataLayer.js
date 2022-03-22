@@ -29,7 +29,7 @@ export const DataDots = {
                         type: 'exponential',
                         stops: [
                             [metricExtent[0], 'rgb(255,255,255)'],
-                            [metricExtent[1], 'rgb(184, 0, 92)'],
+                            [metricExtent[1], 'rgb(120, 50, 22)'],
                         ],
                     },
                     'circle-stroke-color': 'white',
