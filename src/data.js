@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import mapboxgl from 'mapbox-gl';
 
 export const Data = {
-    load({ path }) {
+    load: ({ path }) => {
         const loadData = async () => {
             const response = await d3.json(path);
             return response;
@@ -13,7 +13,9 @@ export const Data = {
         });
     },
 
-    loadGeo({ layerInfo, locationData }) {
+    locationPropertyArray: (locationData) => locationData.features.map((d) => d.properties),
+
+    loadGeo: ({ layerInfo, locationData }) => {
         const geo = {};
 
         const loadData = async () => {
@@ -58,7 +60,7 @@ export const Data = {
         return geoData;
     },
 
-    calculateGeoCenter({ payload }) {
+    calculateGeoCenter: ({ payload }) => {
         const geoType = payload.map.geoCenterType;
         const geoArray = payload.locationData.features.map((d) => d.geometry.coordinates);
         const geoLongExtent = d3.extent(geoArray, (d) => d[1]);

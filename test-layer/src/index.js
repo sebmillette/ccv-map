@@ -16,7 +16,7 @@ const loadMap = () => {
         MAPBOX_API: config.MAPBOX_API,
         id: containerId,
         map: {
-            style: 'dark-v10',
+            style: 'light-v10',
             zoom: 5,
             geoCenterType: 'dataBound', // [manual, dataBound, dataCenter]
             geoCenterValue: '-73.595, 45.488',

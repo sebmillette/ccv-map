@@ -21,6 +21,10 @@ export class MapCCV {
         const data = await Data.load({ path: payload.data.locationPath });
         payload.locationData = data;
 
+        // Quantile Scale (applied to all layers)
+        payload.locationProperties = Data.locationPropertyArray(data);
+        // payload.quantileScale = Scales.quantileScale({ payload, slices: 5 });
+
         this.appState = { type: 'status', value: 'success', message: 'Location data loaded' };
 
         // geo center
@@ -30,6 +34,7 @@ export class MapCCV {
         const promises = payload.layers.map(async (layerInfo) => {
             try {
                 const response = await Data.loadGeo({ layerInfo, locationData: data });
+                this.appState = { type: 'status', value: 'success', message: `Layer ${layerInfo.name} loaded` };
                 return response;
             } catch (error) {
                 this.appState = { type: 'status', value: 'error', message: error };
@@ -37,8 +42,6 @@ export class MapCCV {
             }
         });
         payload.layerData = await Promise.all(promises);
-
-        this.appState = { type: 'status', value: 'success', message: 'All layer data loaded' };
 
         this.mapObject = Map.draw({ payload, MapCCV: this });
     }

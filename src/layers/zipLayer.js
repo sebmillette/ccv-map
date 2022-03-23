@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import * as d3 from 'd3';
 
 import { Data } from '../data';
+import { Scales } from '../scales';
 
 export const ZipLayer = {
 
@@ -22,10 +23,6 @@ export const ZipLayer = {
             type: 'geojson',
             data,
         });
-
-        /*
-        ! TO DO : color scheme
-        */
 
         map.addLayer({
             id: `${layerName}Line`,
@@ -48,7 +45,26 @@ export const ZipLayer = {
         });
 
         const dotLayer = payload.data.showAsLayer ? 'locations' : '';
-        const zoomOverlay = 0.5;
+
+        /* Quantile Color String  */
+        const scaleData = data.features.map((d) => d.properties[layerProps.accessor.metric]).filter((d) => d !== 0);
+        const quantileScale = Scales.quantileScale({ data: scaleData, slices: 5 });
+        const slices = quantileScale.quantiles().map((d) => Math.round(d));
+        slices.unshift(0);
+
+        map.MapCCV.appState = { type: 'info', value: 'quantiles', message: `${layerProps.name}: ${slices}` };
+
+        console.log(quantileScale.quantiles());
+
+        slices.forEach((d, i) => {
+            console.log(`${slices[i]}, ${quantileScale(slices[i])}`);
+        });
+
+        // const colorSettings = slices.reduce(
+        //     (value, d) => `${value} ${d}, ${payload.quantileScale(d)},`,
+        //     '',
+        // );
+
         map.addLayer({
             id: interactionId,
             type: 'fill',
@@ -64,23 +80,26 @@ export const ZipLayer = {
                     'interpolate',
                     ['linear'],
                     ['get', layerProps.accessor.metric],
-                    0,
-                    '#FFF',
-                    50,
-                    '#EED322',
-                    100,
-                    '#E6B71E',
-                    200,
-                    '#DA9C20',
+                    slices[0],
+                    '#c1f7f6', // quantileScale(slices[0]),
+                    slices[1],
+                    '#9ae1b2', // quantileScale(slices[1]),
+                    slices[2],
+                    '#b2bd57', // quantileScale(slices[2]),
+                    slices[3],
+                    '#e0861d', // quantileScale(slices[3]),
+                    slices[4],
+                    '#ff144b', // quantileScale(slices[4]),
                 ],
                 // See: https://docs.mapbox.com/mapbox-gl-js/example/hover-styles/
                 'fill-opacity':
                 // 0.5,
                 [
                     'case',
+                    ['<', ['get', layerProps.accessor.metric], 1], 0,
                     ['boolean', ['feature-state', 'click'], false], 0.85,
-                    ['boolean', ['feature-state', 'hover'], false], 0.5,
-                    0.2,
+                    ['boolean', ['feature-state', 'hover'], false], 0.6,
+                    0.5,
                 ],
 
             },
