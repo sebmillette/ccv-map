@@ -3,7 +3,6 @@ import mapboxgl from 'mapbox-gl';
 import * as _ from 'lodash';
 import * as d3 from 'd3';
 
-import { Data } from '../data';
 import { Scales } from '../scales';
 
 export const ZipLayer = {
@@ -15,9 +14,6 @@ export const ZipLayer = {
         const data = layer[layerName];
         const interactionId = `${layerName}Fill`;
         const zoomExtent = layerProps.zoomVisibility;
-
-        // data properties
-        const metricExtent = d3.extent(data.features, (d) => Number(d.properties[layerProps.accessor.metric]));
 
         map.addSource(layerName, {
             type: 'geojson',
@@ -31,6 +27,7 @@ export const ZipLayer = {
             minzoom: zoomExtent[0],
             maxzoom: zoomExtent[1],
             layout: {},
+            custom: true,
             paint: {
                 'line-width':
                 [
@@ -45,25 +42,8 @@ export const ZipLayer = {
         });
 
         const dotLayer = payload.data.showAsLayer ? 'locations' : '';
-
-        /* Quantile Color String  */
-        const scaleData = data.features.map((d) => d.properties[layerProps.accessor.metric]).filter((d) => d !== 0);
-        const quantileScale = Scales.quantileScale({ data: scaleData, slices: 5 });
-        const slices = quantileScale.quantiles().map((d) => Math.round(d));
-        slices.unshift(0);
-
+        const slices = Scales.quantileSlices({ data: data.features, layerProps });
         map.MapCCV.appState = { type: 'info', value: 'quantiles', message: `${layerProps.name}: ${slices}` };
-
-        console.log(quantileScale.quantiles());
-
-        slices.forEach((d, i) => {
-            console.log(`${slices[i]}, ${quantileScale(slices[i])}`);
-        });
-
-        // const colorSettings = slices.reduce(
-        //     (value, d) => `${value} ${d}, ${payload.quantileScale(d)},`,
-        //     '',
-        // );
 
         map.addLayer({
             id: interactionId,
@@ -76,7 +56,7 @@ export const ZipLayer = {
             },
             paint: {
                 // 'fill-fill-sort-key': 20,
-                'fill-color': [
+                /* 'fill-color': [
                     'interpolate',
                     ['linear'],
                     ['get', layerProps.accessor.metric],
@@ -90,6 +70,19 @@ export const ZipLayer = {
                     '#e0861d', // quantileScale(slices[3]),
                     slices[4],
                     '#ff144b', // quantileScale(slices[4]),
+                ], */
+                'fill-color': [
+                    'step',
+                    ['get', layerProps.accessor.metric],
+                    Scales.manualColors[0],
+                    slices[1],
+                    Scales.manualColors[1],
+                    slices[2],
+                    Scales.manualColors[2],
+                    slices[3],
+                    Scales.manualColors[3],
+                    slices[4],
+                    Scales.manualColors[4],
                 ],
                 // See: https://docs.mapbox.com/mapbox-gl-js/example/hover-styles/
                 'fill-opacity':
@@ -107,12 +100,11 @@ export const ZipLayer = {
         dotLayer); // place choropleth UNDERNEATH dot layer, if available
 
         // Add Tooltip
+        map.hoveredStateId = null;
+        map.clickStateId = null;
         ToolTip.add({ map, interactionId, layerProps });
     },
 };
-
-let hoveredStateId = null;
-let clickStateId = null;
 
 const ToolTip = {
     add: ({ map, interactionId, layerProps }) => {
@@ -148,15 +140,15 @@ const ToolTip = {
 
             // Manage click state
             if (event.features.length > 0) {
-                if (clickStateId !== null) {
+                if (map.clickStateId !== null) {
                     map.setFeatureState(
-                        { source: layerProps.name, id: clickStateId },
+                        { source: layerProps.name, id: map.clickStateId },
                         { click: false },
                     );
                 }
-                clickStateId = event.features[0].id;
+                map.clickStateId = event.features[0].id;
                 map.setFeatureState(
-                    { source: layerProps.name, id: clickStateId },
+                    { source: layerProps.name, id: map.clickStateId },
                     { click: true },
                 );
             }
@@ -165,7 +157,7 @@ const ToolTip = {
             /*
             ! To Do - zoom to bound (using external button)
             */
-            new mapboxgl.Popup()
+            map.tooltip = new mapboxgl.Popup()
                 .setLngLat(center)
                 .setHTML(`<strong>${layerProps.accessor.metric}:</strong> ${print}`)
                 .addTo(map);
@@ -174,16 +166,16 @@ const ToolTip = {
         map.on('mousemove', interactionId, (event) => {
             // Manage hover state
             if (event.features.length > 0) {
-                if (clickStateId === event.features[0].id) return;
-                if (hoveredStateId !== null) {
+                if (map.clickStateId === event.features[0].id) return;
+                if (map.hoveredStateId !== null) {
                     map.setFeatureState(
-                        { source: layerProps.name, id: hoveredStateId },
+                        { source: layerProps.name, id: map.hoveredStateId },
                         { hover: false },
                     );
                 }
-                hoveredStateId = event.features[0].id;
+                map.hoveredStateId = event.features[0].id;
                 map.setFeatureState(
-                    { source: layerProps.name, id: hoveredStateId },
+                    { source: layerProps.name, id: map.hoveredStateId },
                     { hover: true },
                 );
             }
@@ -192,13 +184,13 @@ const ToolTip = {
 
         map.on('mouseleave', interactionId, () => {
             // Manage hover state
-            if (hoveredStateId !== null) {
+            if (map.hoveredStateId !== null) {
                 map.setFeatureState(
-                    { source: layerProps.name, id: hoveredStateId },
+                    { source: layerProps.name, id: map.hoveredStateId },
                     { hover: false },
                 );
             }
-            hoveredStateId = null;
+            map.hoveredStateId = null;
             map.getCanvas().style.cursor = 'default';
         });
     },

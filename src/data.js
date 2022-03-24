@@ -38,6 +38,7 @@ export const Data = {
     mergeLocationWithGeo: async ({ layerInfo, geoData, locationData }) => {
         const dataKey = layerInfo.dataKey;
         const metricAccessor = layerInfo.accessor.metric;
+        const aggregation = layerInfo.accessor.aggregation.toLowerCase();
         const geoKey = layerInfo.geoKey;
 
         // group data by postal code
@@ -48,13 +49,13 @@ export const Data = {
             const key = d.properties[geoKey];
             d.id = i;
             const zone = Number.isNaN(Number(key)) ? group.get(key) : group.get(Number(key));
-            d.properties[metricAccessor] = zone ? d3.mean(zone, (v) => v[metricAccessor]) : 0;
+            d.properties[metricAccessor] = zone ? d3[aggregation](zone, (v) => v[metricAccessor]) : 0;
         });
 
         // add custom properties to geo JSON
         geoData.properties = {
             metric: metricAccessor,
-            aggregation: 'AVG',
+            aggregation,
         };
 
         return geoData;

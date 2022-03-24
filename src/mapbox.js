@@ -26,6 +26,7 @@ export const Map = {
             maxZoom: 18,
         });
         map.flying = false;
+        map.tooltip = null;
         map.MapCCV = MapCCV;
 
         map.on('load', () => {
@@ -38,6 +39,24 @@ export const Map = {
             if (payload.data.showAsLayer) DataDots.add({ map, payload });
             payload.layerData.forEach((layer, index) => {
                 ZipLayer.add({ map, payload, layer, index });
+            });
+        });
+
+        map.on('zoomstart', () => {
+            if (map.tooltip === null) return;
+
+            // remove tooltip
+            map.tooltip.remove();
+            map.tooltip = null;
+
+            // reset layer state
+            map.hoveredStateId = null;
+            map.clickStateId = null;
+
+            payload.layers.forEach((layer) => {
+                map.removeFeatureState({
+                    source: layer.name,
+                });
             });
         });
 

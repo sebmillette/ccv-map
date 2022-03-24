@@ -3,6 +3,7 @@ import * as dat from 'dat.gui';
 export const GUI = {
     create({ payload, map }) {
         const gui = new dat.GUI();
+        gui.close();
         gui.width = 250;
 
         const mapSection = gui.addFolder('Map');

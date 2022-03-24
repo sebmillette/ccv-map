@@ -29,7 +29,7 @@ const loadMap = () => {
             accessor: {
                 metric: 'PRICE_BY_SQMETER',
                 type: 'NUMBER', // [NUMBER, CURRENCY]
-                aggregation: 'AVG', // [AVG, SUM, COUNT]
+                aggregation: 'median', // [mean, median, sum, count]
                 unit: '$/m2',
             },
         },
@@ -43,7 +43,7 @@ const loadMap = () => {
                 accessor: {
                     metric: 'PRICE_BY_SQMETER',
                     type: 'NUMBER', // [NUMBER, CURRENCY]
-                    aggregation: 'AVG', // [AVG, SUM, COUNT]
+                    aggregation: 'median',
                     unit: '$/m2',
                 },
             },
@@ -56,7 +56,7 @@ const loadMap = () => {
                 accessor: {
                     metric: 'PRICE_BY_SQMETER',
                     type: 'NUMBER',
-                    aggregation: 'AVG',
+                    aggregation: 'median',
                     unit: '$/m2',
                 },
             },
@@ -69,7 +69,7 @@ const loadMap = () => {
                 accessor: {
                     metric: 'PRICE_BY_SQMETER',
                     type: 'NUMBER',
-                    aggregation: 'AVG',
+                    aggregation: 'median',
                     unit: '$/m2',
                 },
             },
