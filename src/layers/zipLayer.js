@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import * as d3 from 'd3';
 
 import { Scales } from '../scales';
+import { Tools } from '../tools';
 
 export const ZipLayer = {
 
@@ -21,7 +22,7 @@ export const ZipLayer = {
         });
 
         map.addLayer({
-            id: `${layerName}Line`,
+            id: `${layerName}`,
             type: 'line',
             source: layerName,
             minzoom: zoomExtent[0],
@@ -111,20 +112,11 @@ const ToolTip = {
         map.on('click', interactionId, (event) => {
             // const num = d3.format('($,.2r')(event.features[0].properties.metric);
             const feature = event.features[0];
-            const coordinates = feature.geometry.coordinates;
 
-            const type = feature.geometry.type;
-            const coordinateArray = type === 'Polygon'
-                ? _.flatten(coordinates)
-                : _.flatten(_.flatten(coordinates));
+            const bounds = Tools.calculateBounds({ feature });
 
-            // Create a 'LngLatBounds' with both corners at the first coordinate.
-            const bounds = new mapboxgl.LngLatBounds(
-                coordinateArray[0],
-                coordinateArray[0],
-            );
-
-            coordinateArray.forEach((d) => bounds.extend(d));
+            // make bound available to parent
+            map.MapCCV.selectedBounds = bounds;
             const center = bounds.getCenter();
 
             /*

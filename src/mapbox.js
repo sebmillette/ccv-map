@@ -53,6 +53,9 @@ export const Map = {
             map.hoveredStateId = null;
             map.clickStateId = null;
 
+            // remove bound
+            map.MapCCV.selectedBounds = null;
+
             payload.layers.forEach((layer) => {
                 map.removeFeatureState({
                     source: layer.name,

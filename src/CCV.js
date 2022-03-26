@@ -2,6 +2,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { Map } from './mapbox';
 import { Data } from './data';
 import { Scales } from './scales';
+import { Tools } from './tools';
 
 import { arrayToFeature } from './arrayToFeature';
 
@@ -56,23 +57,52 @@ export class MapCCV {
             console.log('fly to...');
             // merge new location settings with payload
             this.payload.map.geoCenter = Data.calculateGeoCenter({ payload: this.payload });
-            console.log(this.payload.map.geoCenter);
-            this.mapObject.flyTo({
-                center: this.payload.map.geoCenter,
-                zoom: this.payload.map.zoom,
-                speed: 1.2,
-                pitch: Scales.pitchScale(this.payload.map.zoom),
-                easing(t) {
-                    return t;
-                },
-                essential: true,
-            });
-            this.mapObject.flying = true;
+            this.flyToCenter({ center: this.payload.map.geoCenter, zoom: this.payload.map.zoom });
             break;
 
         default:
             break;
         }
+    }
+
+    flyToFeature({ JSONfeature }) {
+        console.log(`fly__ ${JSONfeature}`);
+
+        // Find feature
+        const layer = this.payload.layerData.find((d) => {
+            console.log(d[JSONfeature.id].features.length > 0);
+            return d[JSONfeature.id].features.length > 0;
+        });
+        if (!layer) return;
+
+        const feature = layer[JSONfeature.id].features.find((p) => p.properties[JSONfeature.key] === JSONfeature.value);
+        if (!feature) return;
+
+        const bounds = Tools.calculateBounds({ feature });
+        this.mapObject.fitBounds(bounds);
+    }
+
+    flyToSelectedFeature() {
+        console.log(this.selectedBounds);
+        if (!this.selectedBounds) {
+            this.appState = { type: 'system', value: 'error', message: 'no feature is currently selected.' };
+            return;
+        }
+        this.mapObject.fitBounds(this.selectedBounds);
+    }
+
+    flyToCenter({ center, zoom }) {
+        this.mapObject.flyTo({
+            center,
+            zoom,
+            speed: 1.2,
+            pitch: Scales.pitchScale(this.payload.map.zoom),
+            easing(t) {
+                return t;
+            },
+            essential: true,
+        });
+        this.mapObject.flying = true;
     }
 
     set appState(obj) {

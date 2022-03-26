@@ -79,7 +79,7 @@ export const Data = {
 
         switch (geoType) {
         case 'manual':
-            return payload.map.geoCenterValue.split(',').map((d) => Number(d));
+            return payload.map.geoCenterString.split(',').map((d) => Number(d));
 
         case 'dataCenter':
             return dataGeoCenter();

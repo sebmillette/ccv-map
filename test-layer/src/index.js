@@ -17,9 +17,9 @@ const loadMap = () => {
         id: containerId,
         map: {
             style: 'light-v10',
-            zoom: 5,
+            zoom: 15,
             geoCenterType: 'dataBound', // [manual, dataBound, dataCenter]
-            geoCenterValue: '-73.595, 45.488',
+            geoCenterString: '-73.595, 45.488',
             showBuildings: true,
         },
         data: {
