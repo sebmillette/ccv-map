@@ -17,7 +17,8 @@ const loadMap = () => {
         id: containerId,
         map: {
             style: 'light-v10',
-            zoom: 15,
+            zoom: 5,
+            currentZoom: 5,
             geoCenterType: 'dataBound', // [manual, dataBound, dataCenter]
             geoCenterString: '-73.595, 45.488',
             showBuildings: true,
@@ -25,7 +26,9 @@ const loadMap = () => {
         data: {
             locationPath: 'data/QC_CONDO_SOLD_METRIC.geojson', // GeoJSON with properties
             showAsLayer: true,
-            zoomVisibility: [15, 20],
+            // zoomVisibility: [15, 20],
+            minzoom: 15,
+            maxzoom: 20,
             accessor: {
                 metric: 'PRICE_BY_SQMETER',
                 type: 'NUMBER', // [NUMBER, CURRENCY]
@@ -35,51 +38,61 @@ const loadMap = () => {
         },
         layers: [
             {
-                name: 'zipData',
-                path: 'data/ZOOM_LOWLevel_3Digit.geojson', // path to postal code boundary
-                geoKey: 'CFSAUID', // key used in geoJSON >> null if no data merge required
-                dataKey: 'L03_3DPC', // key used in data file
-                zoomVisibility: [10, 13],
+                name: 'cityData',
+                path: 'data/ZOOM_HighLevel_CITY.geojson',
+                geoKey: 'CCSUID',
+                dataKey: 'L01_CITY',
+                minzoom: 5,
+                maxzoom: 8,
+                // zoomVisibility: [5, 8],
                 accessor: {
                     metric: 'PRICE_BY_SQMETER',
-                    type: 'NUMBER', // [NUMBER, CURRENCY]
+                    type: 'NUMBER',
                     aggregation: 'median',
                     unit: '$/m2',
                 },
+                visibility: true,
             },
             {
                 name: 'municipalData',
                 path: 'data/ZOOM_MedLevel_Municipality.geojson',
                 geoKey: 'IDMAP',
                 dataKey: 'L02_MUNI',
-                zoomVisibility: [8, 10],
+                minzoom: 8,
+                maxzoom: 10,
+                // zoomVisibility: [8, 10],
                 accessor: {
                     metric: 'PRICE_BY_SQMETER',
                     type: 'NUMBER',
                     aggregation: 'median',
                     unit: '$/m2',
                 },
+                visibility: true,
             },
             {
-                name: 'cityData',
-                path: 'data/ZOOM_HighLevel_CITY.geojson',
-                geoKey: 'CCSUID',
-                dataKey: 'L01_CITY',
-                zoomVisibility: [5, 8],
+                name: 'zipData',
+                path: 'data/ZOOM_LOWLevel_3Digit.geojson', // path to postal code boundary
+                geoKey: 'CFSAUID', // key used in geoJSON >> null if no data merge required
+                dataKey: 'L03_3DPC', // key used in data file
+                // zoomVisibility: [10, 13],
+                minzoom: 10,
+                maxzoom: 13,
                 accessor: {
                     metric: 'PRICE_BY_SQMETER',
-                    type: 'NUMBER',
+                    type: 'NUMBER', // [NUMBER, CURRENCY]
                     aggregation: 'median',
                     unit: '$/m2',
                 },
+                visibility: true,
             },
+
         ],
         eventCallback: mapEvents,
     };
     const map = new MapCCV(payload);
     map.create();
 
-    GUI.create({ payload, map });
+    GUI.create({ map });
 
     Buttons.addListeners(map);
 };

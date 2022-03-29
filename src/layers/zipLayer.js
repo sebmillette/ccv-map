@@ -14,7 +14,7 @@ export const ZipLayer = {
         const layerProps = payload.layers.find((d) => d.name === layerName);
         const data = layer[layerName];
         const interactionId = `${layerName}Fill`;
-        const zoomExtent = layerProps.zoomVisibility;
+        const zoomExtent = [layerProps.minzoom, layerProps.maxzoom];
 
         map.addSource(layerName, {
             type: 'geojson',
@@ -104,6 +104,10 @@ export const ZipLayer = {
         map.hoveredStateId = null;
         map.clickStateId = null;
         ToolTip.add({ map, interactionId, layerProps });
+    },
+
+    update: ({ payload }) => {
+
     },
 };
 

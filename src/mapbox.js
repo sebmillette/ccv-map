@@ -67,12 +67,13 @@ export const Map = {
         //     if (map.flying) map.flying = false;
         // });
 
-        // map.on('zoom', () => {
-        //     if (map.flying) return;
-        //     const currentZoom = map.getZoom();
-        //     const pitch = Scales.pitchScale(currentZoom);
-        //     map.setPitch(pitch);
-        // });
+        map.on('zoom', () => {
+            const currentZoom = map.getZoom();
+            map.MapCCV.payload.map.currentZoom = currentZoom;
+            // if (map.flying) return;
+            // const pitch = Scales.pitchScale(currentZoom);
+            // map.setPitch(pitch);
+        });
 
         // this.createAppState({ type: 'status', value: 'success', message: 'Layers loaded' });
         return map;

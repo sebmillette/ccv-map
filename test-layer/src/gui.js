@@ -1,7 +1,8 @@
 import * as dat from 'dat.gui';
 
 export const GUI = {
-    create({ payload, map }) {
+    create({ map }) {
+        const payload = map.payload;
         const gui = new dat.GUI();
         gui.open();
         gui.width = 250;
@@ -23,12 +24,33 @@ export const GUI = {
             .add(payload.map, 'geoCenterString');
         mapSection
             .add(payload.map, 'zoom');
+        mapSection
+            .add(payload.map, 'currentZoom').listen();
 
-        // ### DATA SECTION ###
-        const dataSection = gui.addFolder('Data');
-        dataSection.close();
-        dataSection
-            .add(payload.data, 'locationPath');
+        // ### LAYER SECTION ###
+        const layerSection = gui.addFolder('Shape Layers');
+        layerSection.open();
+        const layerData = [];
+
+        const updateBtn = { 'Update Layers': () => {
+            map.updateLayers();
+        } };
+        layerSection.add(updateBtn, 'Update Layers');
+
+        payload.layers.forEach((layer, index) => {
+            layerData.push(layerSection.addFolder(layer.name));
+            layerData[index]
+                .open();
+            layerData[index]
+                .add(layer, 'visibility')
+                .onChange(() => {
+                    map.updateLayers();
+                });
+            layerData[index]
+                .add(layer, 'minzoom');
+            layerData[index]
+                .add(layer, 'maxzoom');
+        });
 
         // ### BUTTONS ###
         const actionSection = gui.addFolder('Actions');

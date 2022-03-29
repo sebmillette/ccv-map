@@ -22,9 +22,7 @@ export class MapCCV {
         const data = await Data.load({ path: payload.data.locationPath });
         payload.locationData = data;
 
-        // Quantile Scale (applied to all layers)
         payload.locationProperties = Data.locationPropertyArray(data);
-        // payload.quantileScale = Scales.quantileScale({ payload, slices: 5 });
 
         this.appState = { type: 'status', value: 'success', message: 'Location data loaded' };
 
@@ -66,13 +64,8 @@ export class MapCCV {
     }
 
     flyToFeature({ JSONfeature }) {
-        console.log(`fly__ ${JSONfeature}`);
-
         // Find feature
-        const layer = this.payload.layerData.find((d) => {
-            console.log(d[JSONfeature.id].features.length > 0);
-            return d[JSONfeature.id].features.length > 0;
-        });
+        const layer = this.payload.layerData.find((d) => d[JSONfeature.id].features.length > 0);
         if (!layer) return;
 
         const feature = layer[JSONfeature.id].features.find((p) => p.properties[JSONfeature.key] === JSONfeature.value);
@@ -83,7 +76,6 @@ export class MapCCV {
     }
 
     flyToSelectedFeature() {
-        console.log(this.selectedBounds);
         if (!this.selectedBounds) {
             this.appState = { type: 'system', value: 'error', message: 'no feature is currently selected.' };
             return;
@@ -103,6 +95,30 @@ export class MapCCV {
             essential: true,
         });
         this.mapObject.flying = true;
+    }
+
+    updateLayers() {
+        this.payload.layers.forEach((layer) => {
+            const visibility = layer.visibility ? 'visible' : 'none';
+            this.mapObject.setLayoutProperty(
+                `${layer.name}Fill`,
+                'visibility',
+                visibility,
+            );
+
+            // lines
+            this.mapObject.setLayoutProperty(
+                `${layer.name}`,
+                'visibility',
+                visibility,
+            );
+
+            const minzoom = layer.minzoom;
+            const maxzoom = layer.maxzoom;
+
+            this.mapObject.setLayerZoomRange(`${layer.name}Fill`, minzoom, maxzoom);
+            this.mapObject.setLayerZoomRange(`${layer.name}`, minzoom, maxzoom);
+        });
     }
 
     set appState(obj) {
