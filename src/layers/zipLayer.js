@@ -42,8 +42,19 @@ export const ZipLayer = {
             },
         });
 
+        const sliceNumber = 10;
         const dotLayer = payload.data.showAsLayer ? 'locations' : '';
-        const slices = Scales.quantileSlices({ data: data.features, layerProps });
+        const slices = Scales.quantileSlices({ data: data.features, layerProps, sliceNumber });
+
+        // TEST
+        const scaleData = data.features.map((d) => d.properties[layerProps.accessor.metric]).filter((d) => d !== 0);
+        const dataExtent = d3.extent(scaleData);
+
+        // TETS END
+
+        // interpolateYlOrRd, interpolateBlues, interpolateYlGnBu, interpolateRdYlGn
+
+        const colorArray = Scales.colorArray({ name: 'interpolateYlOrRd', sliceNumber });
         map.MapCCV.appState = { type: 'info', value: 'quantiles', message: `${layerProps.name}: ${slices}` };
 
         map.addLayer({
@@ -56,35 +67,44 @@ export const ZipLayer = {
                 visibility: 'visible', // for manual enable disable
             },
             paint: {
-                // 'fill-fill-sort-key': 20,
-                /* 'fill-color': [
+                'fill-color': [
                     'interpolate',
                     ['linear'],
                     ['get', layerProps.accessor.metric],
                     slices[0],
-                    '#c1f7f6', // quantileScale(slices[0]),
+                    colorArray[0],
                     slices[1],
-                    '#9ae1b2', // quantileScale(slices[1]),
+                    colorArray[1],
                     slices[2],
-                    '#b2bd57', // quantileScale(slices[2]),
+                    colorArray[2],
                     slices[3],
-                    '#e0861d', // quantileScale(slices[3]),
+                    colorArray[3],
                     slices[4],
-                    '#ff144b', // quantileScale(slices[4]),
-                ], */
-                'fill-color': [
-                    'step',
-                    ['get', layerProps.accessor.metric],
-                    Scales.manualColors[0],
-                    slices[1],
-                    Scales.manualColors[1],
-                    slices[2],
-                    Scales.manualColors[2],
-                    slices[3],
-                    Scales.manualColors[3],
-                    slices[4],
-                    Scales.manualColors[4],
+                    colorArray[4],
+                    slices[5],
+                    colorArray[5],
+                    slices[6],
+                    colorArray[6],
+                    slices[7],
+                    colorArray[7],
+                    slices[8],
+                    colorArray[8],
+                    slices[9],
+                    colorArray[9],
                 ],
+                // 'fill-color': [
+                //     'step',
+                //     ['get', layerProps.accessor.metric],
+                //     Scales.manualColors[0],
+                //     slices[1],
+                //     Scales.manualColors[1],
+                //     slices[2],
+                //     Scales.manualColors[2],
+                //     slices[3],
+                //     Scales.manualColors[3],
+                //     slices[4],
+                //     Scales.manualColors[4],
+                // ],
                 // See: https://docs.mapbox.com/mapbox-gl-js/example/hover-styles/
                 'fill-opacity':
                 // 0.5,

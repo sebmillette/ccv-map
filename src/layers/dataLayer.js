@@ -9,7 +9,8 @@ export const DataDots = {
         const metricExtent = d3.extent(data, (d) => Number(d.properties[payload.data.accessor.metric]));
 
         const layerProps = payload.data;
-        const slices = Scales.quantileSlices({ data, layerProps });
+        const slices = Scales.quantileSlices({ data, layerProps, sliceNumber: 5 });
+
         map.addLayer(
             {
                 id: 'locations',
