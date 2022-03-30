@@ -3,6 +3,7 @@ import { Map } from './mapbox';
 import { Data } from './data';
 import { Scales } from './scales';
 import { Tools } from './tools';
+import { Colors } from './colors';
 
 import { arrayToFeature } from './arrayToFeature';
 
@@ -113,11 +114,16 @@ export class MapCCV {
                 visibility,
             );
 
+            // zoom
             const minzoom = layer.minzoom;
             const maxzoom = layer.maxzoom;
 
             this.mapObject.setLayerZoomRange(`${layer.name}Fill`, minzoom, maxzoom);
             this.mapObject.setLayerZoomRange(`${layer.name}`, minzoom, maxzoom);
+
+            // colors
+            const fillColorSteps = Colors.layerPaintSteps({ payload: this.payload, layer });
+            this.mapObject.setPaintProperty(`${layer.name}Fill`, 'fill-color', fillColorSteps);
         });
     }
 

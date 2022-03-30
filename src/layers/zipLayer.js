@@ -42,20 +42,33 @@ export const ZipLayer = {
             },
         });
 
-        const sliceNumber = 10;
+        /*
+        ! TO DO CONNECT TO COLOR FUNCTION
+        */
+        const sliceNumber = payload.layerProperties.segmentAmount;
         const dotLayer = payload.data.showAsLayer ? 'locations' : '';
         const slices = Scales.quantileSlices({ data: data.features, layerProps, sliceNumber });
 
-        // TEST
-        const scaleData = data.features.map((d) => d.properties[layerProps.accessor.metric]).filter((d) => d !== 0);
-        const dataExtent = d3.extent(scaleData);
+        // const colorArray = Scales.colorArray({ name: 'interpolateYlOrRd', sliceNumber });
 
-        // TETS END
+        const customColors = payload.layerProperties.segmentColors;
+        const customColorScale = Scales.customColorScale({ customColors, sliceNumber });
 
-        // interpolateYlOrRd, interpolateBlues, interpolateYlGnBu, interpolateRdYlGn
-
-        const colorArray = Scales.colorArray({ name: 'interpolateYlOrRd', sliceNumber });
         map.MapCCV.appState = { type: 'info', value: 'quantiles', message: `${layerProps.name}: ${slices}` };
+
+        // Dynamic generation of fill-color
+        const fillColorSteps = [
+            'step',
+            ['get', layerProps.accessor.metric],
+            customColorScale(0),
+        ];
+        slices.forEach((d, index) => {
+            if (index > 0) {
+                fillColorSteps.push(slices[index]);
+                fillColorSteps.push(customColorScale(index));
+            }
+        });
+        // Dynamic generation of fill-color
 
         map.addLayer({
             id: interactionId,
@@ -67,47 +80,9 @@ export const ZipLayer = {
                 visibility: 'visible', // for manual enable disable
             },
             paint: {
-                'fill-color': [
-                    'interpolate',
-                    ['linear'],
-                    ['get', layerProps.accessor.metric],
-                    slices[0],
-                    colorArray[0],
-                    slices[1],
-                    colorArray[1],
-                    slices[2],
-                    colorArray[2],
-                    slices[3],
-                    colorArray[3],
-                    slices[4],
-                    colorArray[4],
-                    slices[5],
-                    colorArray[5],
-                    slices[6],
-                    colorArray[6],
-                    slices[7],
-                    colorArray[7],
-                    slices[8],
-                    colorArray[8],
-                    slices[9],
-                    colorArray[9],
-                ],
-                // 'fill-color': [
-                //     'step',
-                //     ['get', layerProps.accessor.metric],
-                //     Scales.manualColors[0],
-                //     slices[1],
-                //     Scales.manualColors[1],
-                //     slices[2],
-                //     Scales.manualColors[2],
-                //     slices[3],
-                //     Scales.manualColors[3],
-                //     slices[4],
-                //     Scales.manualColors[4],
-                // ],
-                // See: https://docs.mapbox.com/mapbox-gl-js/example/hover-styles/
+                'fill-color': fillColorSteps,
                 'fill-opacity':
-                // 0.5,
+                // See: https://docs.mapbox.com/mapbox-gl-js/example/hover-styles/
                 [
                     'case',
                     ['<', ['get', layerProps.accessor.metric], 1], 0,

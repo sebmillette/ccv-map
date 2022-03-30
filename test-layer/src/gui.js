@@ -1,4 +1,5 @@
 import * as dat from 'dat.gui';
+import * as d3 from 'd3';
 
 export const GUI = {
     create({ map }) {
@@ -30,12 +31,25 @@ export const GUI = {
         // ### LAYER SECTION ###
         const layerSection = gui.addFolder('Shape Layers');
         layerSection.open();
-        const layerData = [];
 
         const updateBtn = { 'Update Layers': () => {
             map.updateLayers();
         } };
         layerSection.add(updateBtn, 'Update Layers');
+
+        layerSection.add(payload.layerProperties, 'segmentAmount');
+
+        // colors
+        const colors = {};
+        payload.layerProperties.segmentColors.forEach((layer, index) => {
+            colors[`color ${index + 1}`] = layer;
+            layerSection.addColor(colors, `color ${index + 1}`)
+                .onChange((value) => {
+                    payload.layerProperties.segmentColors[index] = value;
+                });
+        });
+
+        const layerData = [];
 
         payload.layers.forEach((layer, index) => {
             layerData.push(layerSection.addFolder(layer.name));

@@ -26,7 +26,6 @@ const loadMap = () => {
         data: {
             locationPath: 'data/QC_CONDO_SOLD_METRIC.geojson', // GeoJSON with properties
             showAsLayer: true,
-            // zoomVisibility: [15, 20],
             minzoom: 15,
             maxzoom: 20,
             accessor: {
@@ -36,6 +35,10 @@ const loadMap = () => {
                 unit: '$/m2',
             },
         },
+        layerProperties: {
+            segmentAmount: 24,
+            segmentColors: ['#d3ffcc', '#dee06c', '#d90421'],
+        },
         layers: [
             {
                 name: 'cityData',
@@ -44,7 +47,6 @@ const loadMap = () => {
                 dataKey: 'L01_CITY',
                 minzoom: 5,
                 maxzoom: 8,
-                // zoomVisibility: [5, 8],
                 accessor: {
                     metric: 'PRICE_BY_SQMETER',
                     type: 'NUMBER',
@@ -60,7 +62,6 @@ const loadMap = () => {
                 dataKey: 'L02_MUNI',
                 minzoom: 8,
                 maxzoom: 10,
-                // zoomVisibility: [8, 10],
                 accessor: {
                     metric: 'PRICE_BY_SQMETER',
                     type: 'NUMBER',
