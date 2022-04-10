@@ -15,18 +15,19 @@ export const Data = {
 
     locationPropertyArray: (locationData) => locationData.features.map((d) => d.properties),
 
-    loadGeo: ({ layerInfo, locationData }) => {
+    loadGeo: ({ layerInfo }) => {
         const geo = {};
 
         const loadData = async () => {
-            const geoData = await d3.json(layerInfo.path);
+            const geoJSON = await d3.json(layerInfo.geoJSON);
+            const geoData = await d3.json(layerInfo.data);
 
             Data.mergeLocationWithGeo({
                 layerInfo,
+                geoJSON,
                 geoData,
-                locationData,
             });
-            geo[layerInfo.name] = geoData;
+            geo[layerInfo.name] = geoJSON;
             return geo;
         };
 
@@ -35,47 +36,52 @@ export const Data = {
         });
     },
 
-    mergeLocationWithGeo: async ({ layerInfo, geoData, locationData }) => {
-        const dataKey = layerInfo.dataKey;
+    mergeLocationWithGeo: async ({ layerInfo, geoJSON, geoData }) => {
         const metricAccessor = layerInfo.accessor.metric;
-        const aggregation = layerInfo.accessor.aggregation.toLowerCase();
         const geoKey = layerInfo.geoKey;
 
-        // group data by postal code
-        const dataArray = locationData.features.map((d) => d.properties);
-        const group = d3.group(dataArray, (d) => d[dataKey]);
-
-        geoData.features.forEach((d, i) => {
-            const key = d.properties[geoKey];
+        geoJSON.features.forEach((d, i) => {
+            const keyValue = d.properties[geoKey];
+            const dataBlock = geoData.find((entry) => keyValue.toString() === entry[geoKey].toString());
             d.id = i;
-            const zone = Number.isNaN(Number(key)) ? group.get(key) : group.get(Number(key));
-            d.properties[metricAccessor] = zone ? d3[aggregation](zone, (v) => v[metricAccessor]) : 0;
+            if (dataBlock) {
+                Object.keys(dataBlock).forEach((blockKey) => {
+                    d.properties[blockKey] = !dataBlock || dataBlock[blockKey] === null ? 0 : dataBlock[blockKey];
+                });
+            }
         });
 
         // add custom properties to geo JSON
-        geoData.properties = {
+        geoJSON.properties = {
             metric: metricAccessor,
-            aggregation,
         };
 
-        return geoData;
+        return geoJSON;
     },
 
     calculateGeoCenter: ({ payload }) => {
         const geoType = payload.map.geoCenterType;
-        const geoArray = payload.locationData.features.map((d) => d.geometry.coordinates);
-        const geoLongExtent = d3.extent(geoArray, (d) => d[1]);
-        const geoLatExtent = d3.extent(geoArray.map((d) => d[0]));
+
+        const calculateGeoLatExtent = () => {
+            const geoArray = payload.locationData.features.map((d) => d.geometry.coordinates);
+            const geoLongExtent = d3.extent(geoArray, (d) => d[1]);
+            const geoLatExtent = d3.extent(geoArray.map((d) => d[0]));
+            return { geoLatExtent, geoLongExtent };
+        };
 
         const dataGeoCenter = () => {
+            const { geoLatExtent, geoLongExtent } = calculateGeoLatExtent();
             const middle = (extent) => (extent[1] - extent[0]) / 2 + extent[0];
             return [middle(geoLatExtent), middle(geoLongExtent)];
         };
 
-        const dataGeoBounds = () => new mapboxgl.LngLatBounds(
-            new mapboxgl.LngLat(geoLatExtent[0], geoLongExtent[0]),
-            new mapboxgl.LngLat(geoLatExtent[1], geoLongExtent[1]),
-        );
+        const dataGeoBounds = () => {
+            const { geoLatExtent, geoLongExtent } = calculateGeoLatExtent();
+            return new mapboxgl.LngLatBounds(
+                new mapboxgl.LngLat(geoLatExtent[0], geoLongExtent[0]),
+                new mapboxgl.LngLat(geoLatExtent[1], geoLongExtent[1]),
+            );
+        };
 
         switch (geoType) {
         case 'manual':

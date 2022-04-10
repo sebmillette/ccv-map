@@ -21,26 +21,62 @@ export const ZipLayer = {
             data,
         });
 
+        /*
+        ! VERSION WITH VECTOR TILESETS
+        map.addSource('tileset', {
+            type: 'vector',
+            url: 'mapbox://spandl.dl1htdno',
+        });
+
         map.addLayer({
-            id: `${layerName}`,
+            id: 'tileset',
             type: 'line',
-            source: layerName,
-            minzoom: zoomExtent[0],
-            maxzoom: zoomExtent[1],
-            layout: {},
-            custom: true,
+            source: 'tileset',
+            'source-layer': 'sold_basickpi_level_01_high_c-aav230',
+            layout: {
+                'line-join': 'round',
+                'line-cap': 'round',
+            },
             paint: {
-                'line-width':
-                [
-                    'case',
-                    ['boolean', ['feature-state', 'click'], false], 3,
-                    ['boolean', ['feature-state', 'hover'], false], 2,
-                    1,
-                ],
-                'line-color': '#FFF',
-                'line-opacity': 0.4,
+                'line-color': '#ff69b4',
+                'line-width': 1,
             },
         });
+
+         map.on('click', (e) => {
+            // Set `bbox` as 5px reactangle area around clicked point.
+            const bbox = [
+                [e.point.x - 50000, e.point.y - 50000],
+                [e.point.x + 50000, e.point.y + 50000],
+            ];
+            // Find features intersecting the bounding box.
+            const selectedFeatures = map.queryRenderedFeatures(bbox, {
+                layers: ['tileset'],
+            });
+            const fips = selectedFeatures.map(
+                (feature) => feature.properties.CCSUID,
+            );
+            // Set a filter matching selected features by FIPS codes
+            // to activate the 'counties-highlighted' layer.
+            // map.setFilter('counties-highlighted', ['in', 'FIPS', ...fips]);
+            const all = map.queryRenderedFeatures({ layers: ['tileset'] });
+            console.log(all);
+        });
+
+        const test0 = map.getSource('tileset');
+        const test = map.getSource('tileset').vectorLayerIds;
+        const features = map.querySourceFeatures('tileset', {
+            sourceLayer: 'sold_basickpi_level_01_high_c-aav230',
+        });
+
+        // Find all features within a static bounding box
+        const query = map.queryRenderedFeatures(
+            [[10, 20], [300, 500]],
+            { layers: ['tileset'] },
+        );
+
+        const stateDataLayer = map.getLayer('tileset');
+        const a = 2; */
 
         /*
         ! TO DO CONNECT TO COLOR FUNCTION
@@ -86,15 +122,48 @@ export const ZipLayer = {
                 [
                     'case',
                     ['<', ['get', layerProps.accessor.metric], 1], 0,
-                    ['boolean', ['feature-state', 'click'], false], 0.85,
-                    ['boolean', ['feature-state', 'hover'], false], 0.6,
-                    0.5,
+                    1,
                 ],
 
             },
         },
         dotLayer); // place choropleth UNDERNEATH dot layer, if available
 
+        map.addLayer({
+            id: `${layerName}`,
+            type: 'line',
+            source: layerName,
+            minzoom: zoomExtent[0],
+            maxzoom: zoomExtent[1],
+            layout: {},
+            custom: true,
+            paint: {
+                'line-width':
+                [
+                    'case',
+                    ['<', ['get', layerProps.accessor.metric], 1], 0,
+                    ['boolean', ['feature-state', 'click'], false], 4,
+                    ['boolean', ['feature-state', 'hover'], false], 3,
+                    1,
+                ],
+                'line-color': [
+                    'case',
+                    ['<', ['get', layerProps.accessor.metric], 1], '#FFF',
+                    ['boolean', ['feature-state', 'click'], false], '#758f94',
+                    ['boolean', ['feature-state', 'hover'], false], '#758f94',
+                    '#FFF',
+                ],
+
+                'line-opacity':
+                [
+                    'case',
+                    ['<', ['get', layerProps.accessor.metric], 1], 0,
+                    ['boolean', ['feature-state', 'click'], false], 1,
+                    ['boolean', ['feature-state', 'hover'], false], 0.75,
+                    0.1,
+                ],
+            },
+        });
         // Add Tooltip
         map.hoveredStateId = null;
         map.clickStateId = null;

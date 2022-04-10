@@ -20,10 +20,10 @@ export class MapCCV {
         const payload = this.payload;
 
         // Data
-        const data = await Data.load({ path: payload.data.locationPath });
-        payload.locationData = data;
+        // const data = await Data.load({ path: payload.data.locationPath });
+        // payload.locationData = data;
 
-        payload.locationProperties = Data.locationPropertyArray(data);
+        // payload.locationProperties = Data.locationPropertyArray(data);
 
         this.appState = { type: 'status', value: 'success', message: 'Location data loaded' };
 
@@ -33,7 +33,7 @@ export class MapCCV {
         // Process all layers
         const promises = payload.layers.map(async (layerInfo) => {
             try {
-                const response = await Data.loadGeo({ layerInfo, locationData: data });
+                const response = await Data.loadGeo({ layerInfo });
                 this.appState = { type: 'status', value: 'success', message: `Layer ${layerInfo.name} loaded` };
                 return response;
             } catch (error) {
@@ -66,7 +66,7 @@ export class MapCCV {
 
     flyToFeature({ JSONfeature }) {
         // Find feature
-        const layer = this.payload.layerData.find((d) => d[JSONfeature.id].features.length > 0);
+        const layer = this.payload.layerData.find((d) => d[JSONfeature.id] && d[JSONfeature.id].features.length > 0);
         if (!layer) return;
 
         const feature = layer[JSONfeature.id].features.find((p) => p.properties[JSONfeature.key] === JSONfeature.value);

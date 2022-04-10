@@ -84,7 +84,6 @@ const ButtonClick = {
         // add custom properties to geo JSON
         geoJSON.properties = {
             metric: 'Superficie',
-            aggregation: 'AVG',
         };
 
         return geoJSON;
