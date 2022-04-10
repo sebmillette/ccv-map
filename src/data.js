@@ -37,7 +37,7 @@ export const Data = {
     },
 
     mergeLocationWithGeo: async ({ layerInfo, geoJSON, geoData }) => {
-        const metricAccessor = layerInfo.accessor.metric;
+        const metricAccessor = layerInfo.metricAccessor;
         const geoKey = layerInfo.geoKey;
 
         geoJSON.features.forEach((d, i) => {

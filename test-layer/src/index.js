@@ -47,11 +47,7 @@ const loadMap = () => {
                 // dataKey: 'L01_CITY',
                 minzoom: 5,
                 maxzoom: 8,
-                accessor: {
-                    metric: 'SQFt_mdn',
-                    type: 'NUMBER',
-                    unit: '$/m2',
-                },
+                metricAccessor: 'SQFt_mdn',
                 visibility: true,
             },
             {
@@ -62,11 +58,7 @@ const loadMap = () => {
                 // dataKey: 'L02_MUNI',
                 minzoom: 8,
                 maxzoom: 12,
-                accessor: {
-                    metric: 'SQFt_mdn',
-                    type: 'NUMBER',
-                    unit: '$/m2',
-                },
+                metricAccessor: 'SQFt_mdn',
                 visibility: true,
             },
             // {
@@ -77,11 +69,7 @@ const loadMap = () => {
             //     // dataKey: 'L03_3DPC', // key used in data file
             //     minzoom: 10,
             //     maxzoom: 13,
-            //     accessor: {
-            //         metric: 'SQFt_mdn',
-            //         type: 'NUMBER', // [NUMBER, CURRENCY]
-            //         unit: '$/m2',
-            //     },
+            //     metricAccessor: 'SQFt_mdn',
             //     visibility: true,
             // },
 

@@ -95,7 +95,7 @@ export const ZipLayer = {
         // Dynamic generation of fill-color
         const fillColorSteps = [
             'step',
-            ['get', layerProps.accessor.metric],
+            ['get', layerProps.metricAccessor],
             customColorScale(0),
         ];
         slices.forEach((d, index) => {
@@ -121,7 +121,7 @@ export const ZipLayer = {
                 // See: https://docs.mapbox.com/mapbox-gl-js/example/hover-styles/
                 [
                     'case',
-                    ['<', ['get', layerProps.accessor.metric], 1], 0,
+                    ['<', ['get', layerProps.metricAccessor], 1], 0,
                     1,
                 ],
 
@@ -141,14 +141,14 @@ export const ZipLayer = {
                 'line-width':
                 [
                     'case',
-                    ['<', ['get', layerProps.accessor.metric], 1], 0,
+                    ['<', ['get', layerProps.metricAccessor], 1], 0,
                     ['boolean', ['feature-state', 'click'], false], 4,
                     ['boolean', ['feature-state', 'hover'], false], 3,
                     1,
                 ],
                 'line-color': [
                     'case',
-                    ['<', ['get', layerProps.accessor.metric], 1], '#FFF',
+                    ['<', ['get', layerProps.metricAccessor], 1], '#FFF',
                     ['boolean', ['feature-state', 'click'], false], '#758f94',
                     ['boolean', ['feature-state', 'hover'], false], '#758f94',
                     '#FFF',
@@ -157,7 +157,7 @@ export const ZipLayer = {
                 'line-opacity':
                 [
                     'case',
-                    ['<', ['get', layerProps.accessor.metric], 1], 0,
+                    ['<', ['get', layerProps.metricAccessor], 1], 0,
                     ['boolean', ['feature-state', 'click'], false], 1,
                     ['boolean', ['feature-state', 'hover'], false], 0.75,
                     0.1,
@@ -192,7 +192,7 @@ const ToolTip = {
             ! Add prefix or unit to layerProps
             */
 
-            const value = feature.properties[layerProps.accessor.metric];
+            const value = feature.properties[layerProps.metricAccessor];
             const valueFormat = `${d3.format('(,.2r')(value)}${layerProps.accessor.unit}`;
             const print = value === 0 ? 'no value' : valueFormat;
 
@@ -219,7 +219,7 @@ const ToolTip = {
             */
             map.tooltip = new mapboxgl.Popup()
                 .setLngLat(center)
-                .setHTML(`<strong>${layerProps.accessor.metric}:</strong> ${print}`)
+                .setHTML(`<strong>${layerProps.metricAccessor}:</strong> ${print}`)
                 .addTo(map);
         });
 

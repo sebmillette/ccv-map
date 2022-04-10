@@ -34,7 +34,7 @@ export const Scales = {
     },
 
     quantileSlices: ({ data, layerProps, sliceNumber }) => {
-        const scaleData = data.map((d) => d.properties[layerProps.accessor.metric]).filter((d) => d !== 0);
+        const scaleData = data.map((d) => d.properties[layerProps.metricAccessor]).filter((d) => d !== 0);
 
         const range = Array.from(Array(sliceNumber).keys());
         const quantileScale = Scales.quantileScale({ data: scaleData, range });

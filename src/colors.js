@@ -15,7 +15,7 @@ export const Colors = {
 
         const fillColorSteps = [
             'step',
-            ['get', layerProps.accessor.metric],
+            ['get', layerProps.metricAccessor],
             customColorScale(0),
         ];
         slices.forEach((d, index) => {

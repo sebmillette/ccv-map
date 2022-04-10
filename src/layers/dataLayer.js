@@ -6,7 +6,7 @@ export const DataDots = {
     add: ({ map, payload }) => {
         const data = payload.locationData.features;
         const zoomExtent = [payload.data.minzoom, payload.data.minzoom];
-        const metricExtent = d3.extent(data, (d) => Number(d.properties[payload.data.accessor.metric]));
+        const metricExtent = d3.extent(data, (d) => Number(d.properties[payload.data.metricAccessor]));
 
         const layerProps = payload.data;
         const slices = Scales.quantileSlices({ data, layerProps, sliceNumber: 5 });
@@ -21,7 +21,7 @@ export const DataDots = {
                     // 'fill-fill-sort-key': 10,
                     // increase the radius of the circle as the zoom level and dbh value increases
                     'circle-radius': {
-                        property: payload.data.accessor.metric,
+                        property: payload.data.metricAccessor,
                         type: 'exponential',
                         stops: [
                             [{ zoom: 16, value: metricExtent[0] }, 6],
@@ -32,7 +32,7 @@ export const DataDots = {
                     },
                     'circle-color': [
                         'step',
-                        ['get', layerProps.accessor.metric],
+                        ['get', layerProps.metricAccessor],
                         Scales.manualColors[0],
                         slices[1],
                         Scales.manualColors[1],

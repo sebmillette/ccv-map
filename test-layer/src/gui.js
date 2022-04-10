@@ -64,6 +64,8 @@ export const GUI = {
                 .add(layer, 'minzoom');
             layerData[index]
                 .add(layer, 'maxzoom');
+            layerData[index]
+                .add(layer, 'metricAccessor');
         });
 
         // ### BUTTONS ###
