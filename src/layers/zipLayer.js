@@ -3,6 +3,7 @@ import mapboxgl from 'mapbox-gl';
 import * as _ from 'lodash';
 import * as d3 from 'd3';
 
+import { Colors } from '../colors';
 import { Scales } from '../scales';
 import { Tools } from '../tools';
 
@@ -22,26 +23,7 @@ export const ZipLayer = {
         });
 
         /*
-        ! VERSION WITH VECTOR TILESETS
-        map.addSource('tileset', {
-            type: 'vector',
-            url: 'mapbox://spandl.dl1htdno',
-        });
-
-        map.addLayer({
-            id: 'tileset',
-            type: 'line',
-            source: 'tileset',
-            'source-layer': 'sold_basickpi_level_01_high_c-aav230',
-            layout: {
-                'line-join': 'round',
-                'line-cap': 'round',
-            },
-            paint: {
-                'line-color': '#ff69b4',
-                'line-width': 1,
-            },
-        });
+        ! Recalculate selection
 
          map.on('click', (e) => {
             // Set `bbox` as 5px reactangle area around clicked point.
@@ -78,34 +60,10 @@ export const ZipLayer = {
         const stateDataLayer = map.getLayer('tileset');
         const a = 2; */
 
-        /*
-        ! TO DO CONNECT TO COLOR FUNCTION
-        */
-        const sliceNumber = payload.layerProperties.segmentAmount;
+        const fillColorSteps = Colors.layerPaintSteps({ payload, layer: layerProps });
+        // map.MapCCV.appState = { type: 'info', value: 'quantiles', message: `${layerProps.name}: ${slices}` };
+
         const dotLayer = payload.data.showAsLayer ? 'locations' : '';
-        const slices = Scales.quantileSlices({ data: data.features, layerProps, sliceNumber });
-
-        // const colorArray = Scales.colorArray({ name: 'interpolateYlOrRd', sliceNumber });
-
-        const customColors = payload.layerProperties.segmentColors;
-        const customColorScale = Scales.customColorScale({ customColors, sliceNumber });
-
-        map.MapCCV.appState = { type: 'info', value: 'quantiles', message: `${layerProps.name}: ${slices}` };
-
-        // Dynamic generation of fill-color
-        const fillColorSteps = [
-            'step',
-            ['get', layerProps.metricAccessor],
-            customColorScale(0),
-        ];
-        slices.forEach((d, index) => {
-            if (index > 0) {
-                fillColorSteps.push(slices[index]);
-                fillColorSteps.push(customColorScale(index));
-            }
-        });
-        // Dynamic generation of fill-color
-
         map.addLayer({
             id: interactionId,
             type: 'fill',
@@ -187,13 +145,8 @@ const ToolTip = {
             map.MapCCV.selectedBounds = bounds;
             const center = bounds.getCenter();
 
-            /*
-            ! Final formatting
-            ! Add prefix or unit to layerProps
-            */
-
             const value = feature.properties[layerProps.metricAccessor];
-            const valueFormat = `${d3.format('(,.2r')(value)}${layerProps.accessor.unit}`;
+            const valueFormat = `${d3.format('(,.2r')(value)}`;
             const print = value === 0 ? 'no value' : valueFormat;
 
             // drawBox({ map, bounds });

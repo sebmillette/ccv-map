@@ -28,11 +28,7 @@ const loadMap = () => {
             // showAsLayer: true,
             minzoom: 15,
             maxzoom: 20,
-            accessor: {
-                metric: 'PRICE_BY_SQMETER',
-                type: 'NUMBER', // [NUMBER, CURRENCY]
-                unit: '$/m2',
-            },
+            metricAccessor: 'SQFt_mdn',
         },
         layerProperties: {
             segmentAmount: 24,
