@@ -32,7 +32,7 @@ const loadMap = () => {
         },
         layerProperties: {
             segmentAmount: 24,
-            segmentColors: ['#faffdc', '#e3c745', '#0168a2'],
+            segmentColors: ['#faffdc', '#f5da73', '#015b91'],
             // '#faffdc', '#e3c745', '#0168a2' >> yellow - blue
             // '#cbedc4', '#eddc2f', '#d91d04' >> yellow - red
             // '#ddf5f5', '#72e8cc', '#f01064' >> green pink
