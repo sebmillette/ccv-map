@@ -17,6 +17,9 @@ export const ZipLayer = {
         const interactionId = `${layerName}Fill`;
         const zoomExtent = [layerProps.minzoom, layerProps.maxzoom];
 
+        // Find layer for  z-index placement
+        const baseLayers = map.getStyle().layers;
+
         map.addSource(layerName, {
             type: 'geojson',
             data,
@@ -85,7 +88,7 @@ export const ZipLayer = {
 
             },
         },
-        dotLayer); // place choropleth UNDERNEATH dot layer, if available
+        'waterway-label'); // place choropleth UNDERNEATH dot layer, if available
 
         map.addLayer({
             id: `${layerName}`,

@@ -18,7 +18,7 @@ export const Map = {
 
         const map = new mapboxgl.Map({
             container: payload.id,
-            style: `mapbox://styles/mapbox/${payload.map.style}`,
+            style: `mapbox://styles/${payload.map.style}`,
             center: payload.map.geoCenterType === 'dataBound' ? [0, 0] : payload.map.geoCenterValue,
             zoom: payload.map.zoom,
             bounds: payload.map.geoCenterType === 'dataBound' ? value : null,

@@ -19,10 +19,9 @@ export class MapCCV {
         this.appState = { type: 'status', value: 'success', message: 'create' };
         const payload = this.payload;
 
-        // Data
+        // Point layer >> currently disabled
         // const data = await Data.load({ path: payload.data.locationPath });
         // payload.locationData = data;
-
         // payload.locationProperties = Data.locationPropertyArray(data);
 
         this.appState = { type: 'status', value: 'success', message: 'Location data loaded' };
