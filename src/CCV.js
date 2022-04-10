@@ -121,7 +121,28 @@ export class MapCCV {
             this.mapObject.setLayerZoomRange(`${layer.name}`, minzoom, maxzoom);
 
             // colors
-            const fillColorSteps = Colors.layerPaintSteps({ payload: this.payload, layer });
+            const layerData = this.payload.layerData.find((d) => d[layer.name])[layer.name].features;
+            const fillColorSteps = Colors.layerPaintSteps({
+                layerData,
+                layerProperties: this.payload.layerProperties,
+                layer,
+            });
+            this.mapObject.setPaintProperty(`${layer.name}Fill`, 'fill-color', fillColorSteps);
+        });
+    }
+
+    scaleColorsToScreen() {
+        this.payload.layers.forEach((layer) => {
+            const features = this.mapObject.querySourceFeatures(layer.name, {
+                sourceLayer: `${layer.name}Fill`,
+            });
+
+            if (features.length === 0) return; // hidden layer will not be updated
+            const fillColorSteps = Colors.layerPaintSteps({
+                layerData: features,
+                layerProperties: this.payload.layerProperties,
+                layer,
+            });
             this.mapObject.setPaintProperty(`${layer.name}Fill`, 'fill-color', fillColorSteps);
         });
     }

@@ -37,6 +37,11 @@ export const GUI = {
         } };
         layerSection.add(updateBtn, 'Update Layers');
 
+        const updateColors = { 'Update Color Scheme': () => {
+            map.scaleColorsToScreen();
+        } };
+        layerSection.add(updateColors, 'Update Color Scheme');
+
         layerSection.add(payload.layerProperties, 'segmentAmount');
 
         // colors

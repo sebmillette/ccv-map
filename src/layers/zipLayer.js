@@ -62,8 +62,13 @@ export const ZipLayer = {
 
         const stateDataLayer = map.getLayer('tileset');
         const a = 2; */
-
-        const fillColorSteps = Colors.layerPaintSteps({ payload, layer: layerProps });
+        const layerData = payload.layerData.find((d) => d[layerName])[layerName].features;
+        const fillColorSteps = Colors.layerPaintSteps({
+            layerData,
+            layerProperties: payload.layerProperties,
+            layer: layerProps,
+        });
+        // const fillColorSteps = Colors.layerPaintSteps({ payload, layer: layerProps });
         // map.MapCCV.appState = { type: 'info', value: 'quantiles', message: `${layerProps.name}: ${slices}` };
 
         const dotLayer = payload.data.showAsLayer ? 'locations' : '';

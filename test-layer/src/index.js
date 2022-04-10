@@ -17,7 +17,7 @@ const loadMap = () => {
         id: containerId,
         map: {
             style: 'spandl/cl1tf9mgp003i14s2rul8tegf', // mapbox/light-v10
-            zoom: 5,
+            zoom: 7,
             currentZoom: 5,
             geoCenterType: 'manual', // [manual, dataBound, dataCenter]
             geoCenterString: '-73.595, 45.488',
@@ -53,7 +53,7 @@ const loadMap = () => {
                 geoKey: 'UPKYID',
                 // dataKey: 'L02_MUNI',
                 minzoom: 8,
-                maxzoom: 12,
+                maxzoom: 15,
                 metricAccessor: 'SQFt_mdn',
                 visibility: true,
             },
