@@ -22,7 +22,7 @@ export const Map = {
             center: payload.map.geoCenterType === 'dataBound' ? [0, 0] : payload.map.geoCenterValue,
             zoom: payload.map.zoom,
             bounds: payload.map.geoCenterType === 'dataBound' ? value : null,
-            pitch: Scales.pitchScale(payload.map.zoom), // payload.map.zoom
+            // pitch: Scales.pitchScale(payload.map.zoom),
             bearing: 0,
             antialias: true,
             flying: false,

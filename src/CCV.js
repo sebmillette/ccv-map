@@ -88,7 +88,7 @@ export class MapCCV {
             center,
             zoom,
             speed: 1.2,
-            pitch: Scales.pitchScale(this.payload.map.zoom),
+            // pitch: Scales.pitchScale(this.payload.map.zoom),
             easing(t) {
                 return t;
             },

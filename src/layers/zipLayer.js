@@ -88,7 +88,7 @@ export const ZipLayer = {
                 [
                     'case',
                     ['<', ['get', layerProps.metricAccessor], 1], 0,
-                    1,
+                    0.7,
                 ],
 
             },
