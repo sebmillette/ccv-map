@@ -95,6 +95,12 @@ export const ZipLayer = {
         },
         'waterway-label'); // place choropleth UNDERNEATH dot layer, if available
 
+        const lineColorSteps = Colors.layerPaintSteps({
+            layerData,
+            layerProperties: payload.layerProperties,
+            layer: layerProps,
+            darken: true,
+        });
         map.addLayer({
             id: `${layerName}`,
             type: 'line',
@@ -112,20 +118,14 @@ export const ZipLayer = {
                     ['boolean', ['feature-state', 'hover'], false], 3,
                     1,
                 ],
-                'line-color': [
-                    'case',
-                    ['<', ['get', layerProps.metricAccessor], 1], '#FFF',
-                    ['boolean', ['feature-state', 'click'], false], '#758f94',
-                    ['boolean', ['feature-state', 'hover'], false], '#758f94',
-                    '#FFF',
-                ],
+                'line-color': lineColorSteps,
 
                 'line-opacity':
                 [
                     'case',
                     ['<', ['get', layerProps.metricAccessor], 1], 0,
                     ['boolean', ['feature-state', 'click'], false], 1,
-                    ['boolean', ['feature-state', 'hover'], false], 0.75,
+                    ['boolean', ['feature-state', 'hover'], false], 0.85,
                     0.1,
                 ],
             },

@@ -17,10 +17,10 @@ const loadMap = () => {
         id: containerId,
         map: {
             style: 'spandl/cl1tf9mgp003i14s2rul8tegf', // mapbox/light-v10
-            zoom: 7,
+            zoom: 8,
             currentZoom: 5,
             geoCenterType: 'manual', // [manual, dataBound, dataCenter]
-            geoCenterString: '-73.595, 45.488',
+            geoCenterString: '-73.595, 45.688',
             showBuildings: true,
         },
         data: {
@@ -32,7 +32,10 @@ const loadMap = () => {
         },
         layerProperties: {
             segmentAmount: 24,
-            segmentColors: ['#d3ffcc', '#dee06c', '#d90421'],
+            segmentColors: ['#faffdc', '#e3c745', '#0168a2'],
+            // '#faffdc', '#e3c745', '#0168a2' >> yellow - blue
+            // '#cbedc4', '#eddc2f', '#d91d04' >> yellow - red
+            // '#ddf5f5', '#72e8cc', '#f01064' >> green pink
         },
         layers: [
             {
