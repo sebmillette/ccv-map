@@ -80,7 +80,7 @@ export class MapCCV {
             this.appState = { type: 'system', value: 'error', message: 'no feature is currently selected.' };
             return;
         }
-        this.mapObject.fitBounds(this.selectedBounds);
+        this.mapObject.fitBounds(this.selectedBounds); // , { linear: true, pitch: 45 }
     }
 
     flyToCenter({ center, zoom }) {

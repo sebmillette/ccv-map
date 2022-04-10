@@ -37,10 +37,10 @@ export const GUI = {
         } };
         layerSection.add(updateBtn, 'Update Layers');
 
-        const updateColors = { 'Update Color Scheme': () => {
+        const updateColors = { 'Adapt Colors to Screen Selection': () => {
             map.scaleColorsToScreen();
         } };
-        layerSection.add(updateColors, 'Update Color Scheme');
+        layerSection.add(updateColors, 'Adapt Colors to Screen Selection');
 
         layerSection.add(payload.layerProperties, 'segmentAmount');
 
