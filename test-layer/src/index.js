@@ -17,7 +17,7 @@ const loadMap = () => {
         id: containerId,
         map: {
             style: 'spandl/cl1tf9mgp003i14s2rul8tegf', // mapbox/light-v10
-            zoom: 8,
+            zoom: 7,
             currentZoom: 5,
             geoCenterType: 'manual', // [manual, dataBound, dataCenter]
             geoCenterString: '-73.595, 45.688',
@@ -33,6 +33,7 @@ const loadMap = () => {
         layerProperties: {
             segmentAmount: 24,
             segmentColors: ['#faffdc', '#f5da73', '#015b91'],
+            // Other possible color schemes
             // '#faffdc', '#e3c745', '#0168a2' >> yellow - blue
             // '#cbedc4', '#eddc2f', '#d91d04' >> yellow - red
             // '#ddf5f5', '#72e8cc', '#f01064' >> green pink
@@ -40,37 +41,34 @@ const loadMap = () => {
         layers: [
             {
                 name: 'cityData',
-                geoJSON: 'data/ZOOM_HighLevel_CITY.geojson',
+                geoJSON: 'data/LEVEL_HIGH.geojson',
                 data: 'data/sold_basickpi_level_01_high_condo.json',
                 geoKey: 'CCSUID',
-                // dataKey: 'L01_CITY',
                 minzoom: 5,
                 maxzoom: 8,
                 metricAccessor: 'SQFt_mdn',
                 visibility: true,
             },
-            {
-                name: 'municipalData',
-                geoJSON: 'data/ZOOM_MedLevel_Municipality.geojson',
-                data: 'data/sold_basickpi_level_02_med_condo.json',
-                geoKey: 'UPKYID',
-                // dataKey: 'L02_MUNI',
-                minzoom: 8,
-                maxzoom: 15,
-                metricAccessor: 'SQFt_mdn',
-                visibility: true,
-            },
             // {
-            //     name: 'zipData',
-            //     geoJSON: 'data/ZOOM_LOWLevel_3Digit.geojson', // path to postal code boundary
-            //     data: 'data/sold_basickpi_level_03_low_condo.json',
-            //     geoKey: 'CFSAUID', // key used in geoJSON >> null if no data merge required
-            //     // dataKey: 'L03_3DPC', // key used in data file
-            //     minzoom: 10,
-            //     maxzoom: 13,
+            //     name: 'municipalData',
+            //     geoJSON: 'data/ZOOM_MedLevel_Municipality.geojson',
+            //     data: 'data/sold_basickpi_level_02_med_condo.json',
+            //     geoKey: 'UPKYID',
+            //     minzoom: 8,
+            //     maxzoom: 10,
             //     metricAccessor: 'SQFt_mdn',
             //     visibility: true,
             // },
+            {
+                name: 'lowLevelData',
+                geoJSON: 'data/LEVEL_LOW.geojson', // path to geojson
+                data: 'data/sold_basickpi_level_03_low_condo.json', // path to data file
+                geoKey: 'UNIQUE_ID', // key to merge
+                minzoom: 10,
+                maxzoom: 13,
+                metricAccessor: 'SQFt_mdn',
+                visibility: true,
+            },
 
         ],
         eventCallback: mapEvents,

@@ -1,7 +1,7 @@
 {
   "presets": [
     [
-          "@babel/env",
+      "@babel/env",
       {
         "targets": {
           "edge": "17",
@@ -10,7 +10,11 @@
           "safari": "11.1"
         },
         "useBuiltIns": "usage",
-        "corejs": "3.6.5"
+        "corejs": "3.6.5",
+        "ignore": [
+          "./dist",
+          "webpack*.js"
+        ]
       }
     ]
   ]

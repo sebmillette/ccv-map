@@ -9,7 +9,7 @@
     "deploy": "npm run build && firebase deploy --only hosting"
   },
   "repository": "https://github.com/spandl/CCV-map",
-  "author": "Ralph Spandl – ralph.spandl@r42.ca",
+  "author": "Ralph Spandl – ralph@r42.ca",
   "license": "MIT",
   "dependencies": {
     "@formatjs/intl-numberformat": "^7.2.3",

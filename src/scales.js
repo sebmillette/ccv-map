@@ -8,15 +8,6 @@ export const Scales = {
         .range([0, 45]) // pitch
         .clamp(true),
 
-    // quantileScale: ({ data, slices }) => {
-    //     const colorScale = Scales.sequentialScale(slices);
-    //     const sliceArray = Array.from(Array(slices).keys());
-    //     const colorArray = sliceArray.map((d, i) => colorScale(i));
-    //     return d3.scaleQuantile()
-    //         .domain(data)
-    //         .range(colorArray);
-    // },
-
     sequentialScale: ({ sliceNumber, name }) => d3.scaleSequential([0, sliceNumber - 1], d3[name]),
 
     colorArray: ({ name, sliceNumber }) => {
