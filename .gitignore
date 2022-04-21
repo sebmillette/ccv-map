@@ -1,6 +1,8 @@
 # heavy files
 test-layer/assets
 
+test-module
+
 # VS stuff
 dist
 .npmrc
