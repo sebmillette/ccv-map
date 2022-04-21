@@ -1,6 +1,6 @@
 {
   "name": "@spandl/ccv-map",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "MapBox for CCV",
   "repository": "https://github.com/spandl/ccv-map",
   "publishConfig": {
@@ -14,7 +14,6 @@
   "license": "MIT",
   "dependencies": {
     "@formatjs/intl-numberformat": "^7.2.3",
-    "@spandl/gds-packagetest": "^1.0.2",
     "d3": "^7.3.0",
     "d3-geo": "^3.0.1",
     "install": "^0.13.0",
