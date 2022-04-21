@@ -26,9 +26,9 @@ const loadMap = () => {
         data: {
             // locationPath: 'data/QC_CONDO_SOLD_METRIC.geojson', // GeoJSON with properties
             // showAsLayer: true,
+            // metricAccessor: 'SQFt_mdn',
             minzoom: 15,
             maxzoom: 20,
-            metricAccessor: 'SQFt_mdn',
         },
         layerProperties: {
             segmentAmount: 24,

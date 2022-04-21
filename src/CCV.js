@@ -68,7 +68,8 @@ export class MapCCV {
         const layer = this.payload.layerData.find((d) => d[JSONfeature.id] && d[JSONfeature.id].features.length > 0);
         if (!layer) return;
 
-        const feature = layer[JSONfeature.id].features.find((p) => p.properties[JSONfeature.key] === JSONfeature.value);
+        // eslint-disable-next-line max-len
+        const feature = layer[JSONfeature.id].features.find((p) => p.properties[JSONfeature.key].toString() === JSONfeature.value.toString());
         if (!feature) return;
 
         const bounds = Tools.calculateBounds({ feature });

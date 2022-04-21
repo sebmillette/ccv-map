@@ -94,7 +94,7 @@ export const GUI = {
         actionSection.add(flyToSelection, 'fly to selected feature');
 
         // Fly-to custom feature
-        const sampleFeatureValue = JSON.stringify({ id: 'zipData', key: 'CFSAUID', value: 'H2L' });
+        const sampleFeatureValue = JSON.stringify({ id: 'lowLevelData', key: 'UNIQUE_ID', value: '2' });
         const customFeature = { sampleFeatureValue };
         actionSection
             .add(customFeature, 'sampleFeatureValue');
