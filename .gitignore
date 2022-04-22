@@ -6,6 +6,7 @@ test-module
 # VS stuff
 dist
 .npmrc
+*npm*
 .DS_Store
 .code-workspace
 *.code-workspace
