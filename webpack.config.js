@@ -5,14 +5,23 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 const config = {
+    mode: 'production',
     name: 'MapBox map for CCV',
     entry: {
         mapCCV: './src/CCV.js',
     },
+    optimization: {
+        minimize: true,
+    },
+    devtool: 'source-map',
     output: {
         path: path.join(__dirname, 'dist'),
         publicPath: '/',
         filename: '[name].js',
+        library: {
+            name: 'MapCCV',
+            type: 'umd',
+        },
     },
     target: 'web',
     performance: {

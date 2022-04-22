@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0, minimum-scale=1.0">
+    <title>
+        CCV TEST
+    </title>
+    <script defer src="../dist/mapCCV.js"></script>
+    <style>
+        html,
+        body,
+        #dev-map {
+            width: 100%;
+            height: 90vh;
+        }
+    </style>
+    <script>
+        const loadMap = () => {
+            const containerId = 'dev-map';
+
+            const payload = {
+                MAPBOX_API: 'pk.eyJ1Ijoic3BhbmRsIiwiYSI6ImNqYzZ0d2pnMTFremsycWpkaWt4NnZ5Z3gifQ.OkATsh9paiz4l2VHN3Rqfw',
+                id: containerId,
+                map: {
+                    style: 'spandl/cl1tf9mgp003i14s2rul8tegf', // mapbox/light-v10
+                    zoom: 7,
+                    currentZoom: 5,
+                    geoCenterType: 'manual',
+                    geoCenterString: '-73.595, 45.688',
+                    showBuildings: true,
+                },
+                data: {
+                    minzoom: 15,
+                    maxzoom: 20,
+                },
+                layerProperties: {
+                    segmentAmount: 24,
+                    segmentColors: ['#faffdc', '#f5da73', '#015b91'],
+                },
+                layers: [
+                    {
+                        name: 'cityData',
+                        geoJSON: 'https://gist.githubusercontent.com/spandl/615bb9690645960b3fd128bbd8f68cce/raw/65fd3c763232f67cf496d3da4f8cea3e2cba9ae2/gistfile1.txt',
+                        data: 'https://gist.githubusercontent.com/spandl/d830944082cadaf18b39aa9249717039/raw/b36318ce44345dfbdf768607a5ea796a79916568/sold_basickpi_level_01_high_condo.json',
+                        geoKey: 'CCSUID',
+                        minzoom: 5,
+                        maxzoom: 15,
+                        metricAccessor: 'SQFt_mdn',
+                        visibility: true,
+                    },
+
+                ],
+            };
+            const map = new MapCCV.MapCCV(payload);
+            map.create();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMap();
+        });
+
+    </script>
+</head>
+
+<body>
+    <h1>
+        SAMPLE MAP
+    </h1>
+    <div id="dev-map"></div>
+</body>
