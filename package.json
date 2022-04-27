@@ -1,6 +1,6 @@
 {
   "name": "@spandl/ccv-map",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "MapBox for CCV",
   "main": "src/CCV.js",
   "publishConfig": {
@@ -14,12 +14,14 @@
   "license": "MIT",
   "dependencies": {
     "@formatjs/intl-numberformat": "^7.2.3",
+    "core-js": "^3.17.3",
     "d3": "^7.3.0",
     "d3-geo": "^3.0.1",
     "install": "^0.13.0",
     "lodash": "^4.17.21",
     "mapbox-gl": "^2.7.0",
-    "npm": "^8.5.4"
+    "npm": "^8.5.4",
+    "regenerator-runtime": "^0.13.9"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
@@ -29,7 +31,6 @@
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^9.0.1",
-    "core-js": "^3.17.3",
     "css-loader": "^6.2.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
@@ -44,7 +45,6 @@
     "html-webpack-plugin": "^5.3.2",
     "mini-css-extract-plugin": "^2.2.2",
     "prettier": "^2.4.0",
-    "regenerator-runtime": "^0.13.9",
     "rimraf": "^3.0.2",
     "sass": "^1.39.0",
     "sass-loader": "^12.1.0",
