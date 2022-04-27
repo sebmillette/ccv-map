@@ -2,6 +2,8 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
 import * as _ from 'lodash';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
 import config from '../config.json';
 import { MapCCV } from '../../src/CCV';
 import { GUI } from './gui';
