@@ -25,13 +25,6 @@ const loadMap = () => {
             geoCenterString: '-73.595, 45.688',
             showBuildings: true,
         },
-        data: {
-            // locationPath: 'data/QC_CONDO_SOLD_METRIC.geojson', // GeoJSON with properties
-            // showAsLayer: true,
-            // metricAccessor: 'SQFt_mdn',
-            minzoom: 15,
-            maxzoom: 20,
-        },
         layerProperties: {
             segmentAmount: 24,
             segmentColors: ['#faffdc', '#f5da73', '#015b91'],
@@ -51,16 +44,16 @@ const loadMap = () => {
                 metricAccessor: 'SQFt_mdn',
                 visibility: true,
             },
-            // {
-            //     name: 'municipalData',
-            //     geoJSON: 'data/ZOOM_MedLevel_Municipality.geojson',
-            //     data: 'data/sold_basickpi_level_02_med_condo.json',
-            //     geoKey: 'UPKYID',
-            //     minzoom: 8,
-            //     maxzoom: 10,
-            //     metricAccessor: 'SQFt_mdn',
-            //     visibility: true,
-            // },
+            {
+                name: 'municipalData',
+                geoJSON: 'data/LEVEL_MED.geojson',
+                data: 'data/sold_basickpi_level_02_med_condo.json',
+                geoKey: 'UPKYID',
+                minzoom: 8,
+                maxzoom: 10,
+                metricAccessor: 'SQFt_mdn',
+                visibility: true,
+            },
             {
                 name: 'lowLevelData',
                 geoJSON: 'data/LEVEL_LOW.geojson', // path to geojson

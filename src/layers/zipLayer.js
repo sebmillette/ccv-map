@@ -25,53 +25,13 @@ export const ZipLayer = {
             data,
         });
 
-        /*
-        ! Recalculate selection
-
-         map.on('click', (e) => {
-            // Set `bbox` as 5px reactangle area around clicked point.
-            const bbox = [
-                [e.point.x - 50000, e.point.y - 50000],
-                [e.point.x + 50000, e.point.y + 50000],
-            ];
-            // Find features intersecting the bounding box.
-            const selectedFeatures = map.queryRenderedFeatures(bbox, {
-                layers: ['tileset'],
-            });
-            const fips = selectedFeatures.map(
-                (feature) => feature.properties.CCSUID,
-            );
-            // Set a filter matching selected features by FIPS codes
-            // to activate the 'counties-highlighted' layer.
-            // map.setFilter('counties-highlighted', ['in', 'FIPS', ...fips]);
-            const all = map.queryRenderedFeatures({ layers: ['tileset'] });
-            console.log(all);
-        });
-
-        const test0 = map.getSource('tileset');
-        const test = map.getSource('tileset').vectorLayerIds;
-        const features = map.querySourceFeatures('tileset', {
-            sourceLayer: 'sold_basickpi_level_01_high_c-aav230',
-        });
-
-        // Find all features within a static bounding box
-        const query = map.queryRenderedFeatures(
-            [[10, 20], [300, 500]],
-            { layers: ['tileset'] },
-        );
-
-        const stateDataLayer = map.getLayer('tileset');
-        const a = 2; */
         const layerData = payload.layerData.find((d) => d[layerName])[layerName].features;
         const fillColorSteps = Colors.layerPaintSteps({
             layerData,
             layerProperties: payload.layerProperties,
             layer: layerProps,
         });
-        // const fillColorSteps = Colors.layerPaintSteps({ payload, layer: layerProps });
-        // map.MapCCV.appState = { type: 'info', value: 'quantiles', message: `${layerProps.name}: ${slices}` };
 
-        const dotLayer = payload.data.showAsLayer ? 'locations' : '';
         map.addLayer({
             id: interactionId,
             type: 'fill',
@@ -144,9 +104,7 @@ export const ZipLayer = {
 const ToolTip = {
     add: ({ map, interactionId, layerProps }) => {
         map.on('click', interactionId, (event) => {
-            // const num = d3.format('($,.2r')(event.features[0].properties.metric);
             const feature = event.features[0];
-
             const bounds = Tools.calculateBounds({ feature });
 
             // make bound available to parent
@@ -156,8 +114,6 @@ const ToolTip = {
             const value = feature.properties[layerProps.metricAccessor];
             const valueFormat = `${d3.format('(,.2r')(value)}`;
             const print = value === 0 ? 'no value' : valueFormat;
-
-            // drawBox({ map, bounds });
 
             // Manage click state
             if (event.features.length > 0) {
@@ -175,9 +131,6 @@ const ToolTip = {
             }
 
             map.MapCCV.appState = { type: 'user', value: 'click', message: `clicked on ${layerProps.geoKey}: ${feature.properties[layerProps.geoKey]}` };
-            /*
-            ! To Do - zoom to bound (using external button)
-            */
             map.tooltip = new mapboxgl.Popup()
                 .setLngLat(center)
                 .setHTML(`<strong>${layerProps.metricAccessor}:</strong> ${print}`)
@@ -215,38 +168,4 @@ const ToolTip = {
             map.getCanvas().style.cursor = 'default';
         });
     },
-};
-
-const drawBox = ({ map, bounds }) => {
-    const northEast = [bounds._ne.lng, bounds._ne.lat];
-    const southEast = [bounds._ne.lng, bounds._sw.lat];
-    const southWest = [bounds._sw.lng, bounds._sw.lat];
-    const northWest = [bounds._sw.lng, bounds._ne.lat];
-
-    map.addSource('route', {
-        type: 'geojson',
-        data: {
-            type: 'Feature',
-            properties: {},
-            geometry: {
-                type: 'LineString',
-                coordinates: [
-                    northEast, southEast, southWest, northWest, northEast,
-                ],
-            },
-        },
-    });
-    map.addLayer({
-        id: 'route',
-        type: 'line',
-        source: 'route',
-        layout: {
-            'line-join': 'round',
-            'line-cap': 'round',
-        },
-        paint: {
-            'line-color': '#ff0000',
-            'line-width': 5,
-        },
-    });
 };
