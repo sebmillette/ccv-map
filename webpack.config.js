@@ -20,7 +20,7 @@ const config = {
         filename: '[name].js',
         library: {
             name: 'MapCCV',
-            type: 'umd',
+            type: 'module',
         },
     },
     target: 'web',
