@@ -54,6 +54,9 @@ export const GUI = {
                 });
         });
 
+        // scale
+        layerSection.add(payload.layerProperties, 'scaleType', { Quantile: 'quantile', Quantize: 'quantize' });
+
         const layerData = [];
 
         payload.layers.forEach((layer, index) => {

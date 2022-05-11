@@ -28,6 +28,7 @@ const loadMap = () => {
         layerProperties: {
             segmentAmount: 24,
             segmentColors: ['#faffdc', '#f5da73', '#015b91'],
+            scaleType: 'quantize', // [quantile, quantize]
             // Other possible color schemes
             // '#faffdc', '#e3c745', '#0168a2' >> yellow - blue
             // '#cbedc4', '#eddc2f', '#d91d04' >> yellow - red

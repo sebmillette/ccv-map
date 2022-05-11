@@ -3,16 +3,13 @@ import { Scales } from './scales';
 
 export const Colors = {
     layerPaintSteps: ({ layerData, layerProperties, layer, darken = false } = {}) => {
-        const layerName = layer.name;
         const layerProps = layer;
-
-        // const data = layerData.find((d) => d[layerName])[layerName].features;
 
         const sliceNumber = layerProperties.segmentAmount;
         const slices = Scales.quantileSlices({ data: layerData, layerProps, sliceNumber });
 
         const customColors = layerProperties.segmentColors;
-        const customColorScale = Scales.customColorScale({ customColors, sliceNumber });
+        const customColorScale = Scales.quantileColorScale({ customColors, sliceNumber });
 
         const fillColorSteps = [
             'step',

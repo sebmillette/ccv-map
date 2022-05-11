@@ -26,6 +26,13 @@ export const ZipLayer = {
         });
 
         const layerData = payload.layerData.find((d) => d[layerName])[layerName].features;
+
+        /*
+        * CONDITION: layerProperties.scaleType === 'quantile'
+        ! TO DO : Quantize scale must have different property 'fillColorSteps'
+        * May not even require a color scale >> use the one integrated in Map box
+        Scales.quantizeColorScale({ customColors, data: layerData, layerProps });
+        */
         const fillColorSteps = Colors.layerPaintSteps({
             layerData,
             layerProperties: payload.layerProperties,

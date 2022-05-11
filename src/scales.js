@@ -16,12 +16,21 @@ export const Scales = {
         return sliceArray.map((d, i) => colorScale(i));
     },
 
-    customColorScale: ({ customColors, sliceNumber }) => {
+    quantileColorScale: ({ customColors, sliceNumber }) => {
         const domain = customColors.map((d, index) => (sliceNumber - 1) * (index / (customColors.length - 1)));
         return d3.scaleLinear()
             .domain(domain)
             .range(customColors)
             .interpolate(d3.interpolateRgb);
+    },
+
+    quantizeColorScale: ({ customColors, data, layerProps }) => {
+        const scaleData = data.map((d) => d.properties[layerProps.metricAccessor]).filter((d) => d !== 0);
+        const domain = d3.extent(scaleData);
+        const colorRange = ['white', 'red'];
+        return d3.scaleLinear()
+            .domain(domain)
+            .range(colorRange);
     },
 
     quantileSlices: ({ data, layerProps, sliceNumber }) => {
