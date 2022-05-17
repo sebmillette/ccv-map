@@ -125,11 +125,13 @@ export class MapCCV {
 
             // colors
             const layerData = this.payload.layerData.find((d) => d[layer.name])[layer.name].features;
-            const fillColorSteps = Colors.layerPaintSteps({
+
+            const fillColorSteps = Colors.paintSteps({
                 layerData,
                 layerProperties: this.payload.layerProperties,
                 layer,
             });
+
             this.mapObject.setPaintProperty(`${layer.name}Fill`, 'fill-color', fillColorSteps);
         });
     }
@@ -141,7 +143,7 @@ export class MapCCV {
             });
 
             if (features.length === 0) return; // hidden layer will not be updated
-            const fillColorSteps = Colors.layerPaintSteps({
+            const fillColorSteps = Colors.paintSteps({
                 layerData: features,
                 layerProperties: this.payload.layerProperties,
                 layer,
