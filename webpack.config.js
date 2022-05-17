@@ -24,9 +24,9 @@ const config = {
             type: 'umd',
         },
     },
-    experiments: {
-        outputModule: true,
-    },
+    // experiments: {
+    //     outputModule: true,
+    // },
     target: 'web',
     performance: {
         maxEntrypointSize: 2024000,
