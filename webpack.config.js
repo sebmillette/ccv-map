@@ -19,8 +19,9 @@ const config = {
         publicPath: '/',
         filename: '[name].js',
         library: {
-            // name: 'MapCCV',
-            type: 'module',
+            name: 'MapCCV',
+            // type: 'module',
+            type: 'umd',
         },
     },
     experiments: {

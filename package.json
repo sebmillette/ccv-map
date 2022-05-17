@@ -1,8 +1,8 @@
 {
   "name": "@spandl/ccv-map",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "MapBox for CCV",
-  "main": "src/CCV.js",
+  "main": "dist/mapCCV.js",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/@spandl"
   },
