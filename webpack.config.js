@@ -20,8 +20,9 @@ const config = {
         filename: '[name].js',
         library: {
             name: 'MapCCV',
-            // type: 'module',
-            type: 'umd',
+            // type: 'module', // Make sure to enable experiments.outputModule beforehand.
+            // https://webpack.js.org/configuration/output/#outputlibrarytype
+            type: 'commonjs',
         },
     },
     // experiments: {
