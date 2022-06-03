@@ -131,7 +131,16 @@ const ToolTip = {
                 );
             }
 
-            map.MapCCV.appState = { type: 'user', value: 'click', message: `clicked on ${layerProps.geoKey}: ${feature.properties[layerProps.geoKey]}` };
+            map.MapCCV.appState = {
+                type: 'user',
+                value: 'click',
+                message: `clicked on ${layerProps.geoKey}: ${feature.properties[layerProps.geoKey]}`,
+                data: {
+                    source: layerProps.name,
+                    key: [layerProps.geoKey],
+                    keyValue: feature.properties[layerProps.geoKey],
+                },
+            };
             map.tooltip = new mapboxgl.Popup()
                 .setLngLat(center)
                 .setHTML(`<strong>${layerProps.metricAccessor}:</strong> ${print}`)

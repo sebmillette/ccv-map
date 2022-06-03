@@ -83,5 +83,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const mapEvents = (obj) => {
     const log = document.getElementById('log');
+    // attach new message on top
+
+    if (obj.data) {
+        Object.keys(obj.data).forEach((key) => {
+            log.innerHTML = `<span style="color: slategrey;">
+            ${key}: ${obj.data[key]}
+            </span>${log.innerHTML}`;
+        });
+    }
     log.innerHTML = `<span>${obj.message} (${obj.type} | ${obj.value})</span>${log.innerHTML}`;
 };

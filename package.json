@@ -1,6 +1,6 @@
 {
   "name": "@spandl/ccv-map",
-  "version": "0.2.9",
+  "version": "0.3.1",
   "description": "MapBox for CCV",
   "main": "dist/mapCCV.js",
   "publishConfig": {

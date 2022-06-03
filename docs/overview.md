@@ -90,12 +90,34 @@ The application is updating an object called `appState`.
 
 The value can be watched directly or by using a callback function which will be called every time the object changes.
 
-Currently `appState` is an object with three properties, but this will be adapted depending on the application needs:
+`appState` is an object containing 4 properties:
+* message
+* type
+* value
+* data (optional)
 
 Example:
 ```
-{ type: 'status', value: 'success', message: 'Zip layer loaded' };
+{
+    type: 'user',
+    value: 'click',
+    message: `clicked on ${layerProps.geoKey}: ${feature.properties[layerProps.geoKey]}`,
+    data: {
+        source: layerProps.name,
+        key: [layerProps.geoKey],
+        keyValue: feature.properties[layerProps.geoKey],
+}
 ```
+
+All occurrences of `appState` without the `data` attribute are general messages that can be used to trace the behavior of the library.
+
+On some user interactions, (example, click on a geo feature), the data property contains more information.
+In the above sample, the object contains all properties required to identify the clicked geo feature:
+
+* source: the source name as specified in the payload
+* key: the key name of the feature
+* keyValue: the value of the key
+
 
 ## Class Methods
 
