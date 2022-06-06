@@ -2,6 +2,7 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
 import * as _ from 'lodash';
+import * as d3 from 'd3';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import config from '../config.json';
@@ -11,8 +12,14 @@ import { Buttons } from './btn-scripts';
 
 import './css/base.scss';
 
-const loadMap = () => {
+const loadMap = async () => {
     const containerId = 'dev-map';
+
+    // load one file to test passing object directly
+    const highLevelDataPath = 'data/sold_basickpi_level_01_high_condo.json';
+    const highLevelGeoPath = 'data/LEVEL_HIGH.geojson';
+    const geoJSON = await d3.json(highLevelGeoPath);
+    const geoData = await d3.json(highLevelDataPath);
 
     const payload = {
         MAPBOX_API: config.MAPBOX_API,
@@ -37,8 +44,8 @@ const loadMap = () => {
         layers: [
             {
                 name: 'cityData',
-                geoJSON: 'data/LEVEL_HIGH.geojson',
-                data: 'data/sold_basickpi_level_01_high_condo.json',
+                geoJSON,
+                data: geoData,
                 geoKey: 'CCSUID',
                 minzoom: 5,
                 maxzoom: 8,

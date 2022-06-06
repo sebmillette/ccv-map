@@ -19,8 +19,12 @@ export const Data = {
         const geo = {};
 
         const loadData = async () => {
-            const geoJSON = await d3.json(layerInfo.geoJSON);
-            const geoData = await d3.json(layerInfo.data);
+            const geoJSON = typeof layerInfo.geoJSON === 'string'
+                ? await d3.json(layerInfo.geoJSON)
+                : layerInfo.geoJSON;
+            const geoData = typeof layerInfo.data === 'string'
+                ? await d3.json(layerInfo.data)
+                : layerInfo.data;
 
             Data.mergeLocationWithGeo({
                 layerInfo,
