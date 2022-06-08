@@ -147,6 +147,7 @@ export class MapCCV {
 
     set appState(obj) {
         if (!this.eventCallback) return;
+        obj.currentZoom = this.payload.map.currentZoom;
         this.eventCallback(obj);
     }
 }

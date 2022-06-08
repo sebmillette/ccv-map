@@ -83,7 +83,6 @@ const loadMap = async () => {
 
     Buttons.addListeners(map);
 };
-
 document.addEventListener('DOMContentLoaded', () => {
     loadMap();
 });
@@ -99,5 +98,6 @@ const mapEvents = (obj) => {
             </span>${log.innerHTML}`;
         });
     }
-    log.innerHTML = `<span>${obj.message} (${obj.type} | ${obj.value})</span>${log.innerHTML}`;
+    log.innerHTML = `<span>${obj.message} (${obj.type} | ${obj.value} | zoom: ${obj.currentZoom})</span>
+    ${log.innerHTML}`;
 };

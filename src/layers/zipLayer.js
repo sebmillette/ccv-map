@@ -141,10 +141,12 @@ const ToolTip = {
                     keyValue: feature.properties[layerProps.geoKey],
                 },
             };
-            map.tooltip = new mapboxgl.Popup()
-                .setLngLat(center)
-                .setHTML(`<strong>${layerProps.metricAccessor}:</strong> ${print}`)
-                .addTo(map);
+
+            // ONLY REQUIRED FOR DEBUGGING
+            // map.tooltip = new mapboxgl.Popup()
+            //     .setLngLat(center)
+            //     .setHTML(`<strong>${layerProps.metricAccessor}:</strong> ${print}`)
+            //     .addTo(map);
         });
 
         map.on('mousemove', interactionId, (event) => {
