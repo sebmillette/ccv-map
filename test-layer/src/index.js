@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
@@ -44,7 +45,7 @@ const loadMap = async () => {
         layers: [
             {
                 name: 'cityData',
-                geoJSON,
+                geoJSON: highLevelGeoPath,
                 data: geoData,
                 geoKey: 'CCSUID',
                 minzoom: 5,
@@ -82,6 +83,20 @@ const loadMap = async () => {
     GUI.create({ map });
 
     Buttons.addListeners(map);
+
+    // EXAMPLE: HOW TO RESIZE THE MAP
+    const resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+            if (entry.target.id === containerId) {
+                if (!map.mapObject) return; // may take some time until map is created
+                map.mapObject.resize();
+            }
+        }
+    });
+
+    const divElem = document.querySelector(`#${containerId}`);
+    resizeObserver.observe(divElem);
+    // EXAMPLE: HOW TO RESIZE THE MAP >> END
 };
 document.addEventListener('DOMContentLoaded', () => {
     loadMap();

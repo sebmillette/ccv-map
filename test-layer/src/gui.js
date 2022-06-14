@@ -30,7 +30,7 @@ export const GUI = {
 
         // ### LAYER SECTION ###
         const layerSection = gui.addFolder('Shape Layers');
-        layerSection.open();
+        layerSection.close();
 
         const updateBtn = { 'Update Layers': () => {
             map.updateLayers();
@@ -92,7 +92,7 @@ export const GUI = {
 
         // Fly-to selected feature
         const flyToSelection = { 'fly to selected feature': () => {
-            map.flyToSelectedFeature();
+            map.flyToSelectedFeature({ geoPadding: [20, 20, 20, 20] }); // west, north, east, south
         } };
         actionSection.add(flyToSelection, 'fly to selected feature');
 

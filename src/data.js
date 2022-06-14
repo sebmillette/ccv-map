@@ -15,10 +15,17 @@ export const Data = {
 
     locationPropertyArray: (locationData) => locationData.features.map((d) => d.properties),
 
-    loadGeo: ({ layerInfo }) => {
+    loadGeo: ({ layerInfo, test }) => {
         const geo = {};
 
         const loadData = async () => {
+            test.appState = {
+                type: 'test',
+                value: '-',
+                message: 'data check',
+                data: layerInfo.data[0],
+            };
+
             const geoJSON = typeof layerInfo.geoJSON === 'string'
                 ? await d3.json(layerInfo.geoJSON)
                 : layerInfo.geoJSON;
@@ -26,6 +33,12 @@ export const Data = {
                 ? await d3.json(layerInfo.data)
                 : layerInfo.data;
 
+            test.appState = {
+                type: 'test 2',
+                value: '-',
+                message: 'data check 2',
+                data: geoData[0],
+            };
             Data.mergeLocationWithGeo({
                 layerInfo,
                 geoJSON,

@@ -94,6 +94,7 @@ The value can be watched directly or by using a callback function which will be 
 * message
 * type
 * value
+* currentZoom (current zoom level)
 * data (optional)
 
 Example:
@@ -102,6 +103,7 @@ Example:
     type: 'user',
     value: 'click',
     message: `clicked on ${layerProps.geoKey}: ${feature.properties[layerProps.geoKey]}`,
+    currentZoom: 9.12
     data: {
         source: layerProps.name,
         key: [layerProps.geoKey],
@@ -134,9 +136,15 @@ map.flyToFeature(JSONfeature)
 
 ### flyToSelectedFeature
 If the user has selected a feature on the map, this method flies to its bounds
+The geo padding is an array with 4 numbers, expressing a percentage of the width/height
+
+`[10, 0, 10, 0]` will create a space left and right (and depending on the shape create vertical padding as well).
+`[0, 25, 0, 0]` will create a larger space to the top.
+`geoPadding` is optional.
+
 
 ```JS
-map.flyToSelectedFeature()
+map.flyToSelectedFeature({geoPadding})
 ```
 ### flyToCenter
 Flies to a specific point on a specific zoom level

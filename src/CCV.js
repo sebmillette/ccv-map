@@ -27,7 +27,7 @@ export class MapCCV {
         // Process all layers
         const promises = payload.layers.map(async (layerInfo) => {
             try {
-                const response = await Data.loadGeo({ layerInfo });
+                const response = await Data.loadGeo({ layerInfo, test: this });
                 this.appState = { type: 'status', value: 'success', message: `Layer ${layerInfo.name} loaded` };
                 return response;
             } catch (error) {
@@ -58,25 +58,64 @@ export class MapCCV {
         }
     }
 
-    flyToFeature({ JSONfeature }) {
+    flyToFeature({ JSONfeature, geoPadding = [0, 0, 0, 0] }) {
         // Find feature
         const layer = this.payload.layerData.find((d) => d[JSONfeature.id] && d[JSONfeature.id].features.length > 0);
         if (!layer) return;
 
-        // eslint-disable-next-line max-len
-        const feature = layer[JSONfeature.id].features.find((p) => p.properties[JSONfeature.key].toString() === JSONfeature.value.toString());
+        const feature = layer[JSONfeature.id].features.find((p) => p.properties[JSONfeature.key].toString()
+            === JSONfeature.value.toString());
+
         if (!feature) return;
 
         const bounds = Tools.calculateBounds({ feature });
+
         this.mapObject.fitBounds(bounds);
     }
 
-    flyToSelectedFeature() {
+    flyToSelectedFeature({ geoPadding = [0, 0, 0, 0] }) {
         if (!this.selectedBounds) {
             this.appState = { type: 'system', value: 'error', message: 'no feature is currently selected.' };
             return;
         }
+
+        const test = this.boundPadding(this.selectedBounds, geoPadding);
+
         this.mapObject.fitBounds(this.selectedBounds); // , { linear: true, pitch: 45 }
+        this.mapObject.fitBounds(test); // , { linear: true, pitch: 45 }
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    boundPadding(bounds, padding) {
+        // somehow the direction sw / ne is not correct
+        // the result now is west, north, east, south
+        const top = Number.isNaN(padding[0]) ? 0 : padding[0] / 100;
+        const right = Number.isNaN(padding[1]) ? 0 : padding[1] / 100;
+        const bottom = Number.isNaN(padding[2]) ? 0 : padding[2] / 100;
+        const left = Number.isNaN(padding[3]) ? 0 : padding[3] / 100;
+
+        const adjustObject = () => {
+            const width = Math.abs(bounds._sw.lat - bounds._ne.lat);
+            const height = Math.abs(bounds._ne.lng - bounds._sw.lng);
+
+            bounds._sw.lng += height * bottom;
+            bounds._ne.lng -= height * top;
+
+            bounds._sw.lat -= width * left;
+            bounds._ne.lat += width * right;
+
+            return bounds;
+        };
+
+        const adjustArray = () => {
+            const sw = [bounds._sw.lat, bounds._sw.lng];
+            const ne = [bounds._ne.lat, bounds._ne.lng];
+
+            return [sw, ne];
+        };
+
+        const newBounds = typeof bounds === 'object' ? adjustObject() : adjustArray();
+        return newBounds;
     }
 
     flyToCenter({ center, zoom }) {
