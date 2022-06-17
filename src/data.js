@@ -17,6 +17,7 @@ export const Data = {
 
     loadGeo: ({ layerInfo }) => {
         const geo = {};
+        console.log('loadGeo/layerInfo', layerInfo);
 
         const loadData = async () => {
             console.log('Data Test before fetch check', layerInfo.data);

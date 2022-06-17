@@ -24,6 +24,8 @@ export class MapCCV {
         // geo center
         payload.map.geoCenterValue = Data.calculateGeoCenter({ payload });
 
+        console.log('payload.layers (anything empty here?)', payload.layers);
+
         // Process all layers
         const promises = payload.layers.map(async (layerInfo) => {
             try {
