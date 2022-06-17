@@ -27,7 +27,7 @@ export class MapCCV {
         // Process all layers
         const promises = payload.layers.map(async (layerInfo) => {
             try {
-                const response = await Data.loadGeo({ layerInfo, test: this });
+                const response = await Data.loadGeo({ layerInfo });
                 this.appState = { type: 'status', value: 'success', message: `Layer ${layerInfo.name} loaded` };
                 return response;
             } catch (error) {
