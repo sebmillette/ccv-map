@@ -64,7 +64,10 @@ export const Data = {
             metric: metricAccessor,
         };
 
-        return geoJSON;
+        // remove null sectors
+        const cleanGeoJSON = geoJSON.features.filter((d) => d.properties[metricAccessor]);
+
+        return cleanGeoJSON;
     },
 
     calculateGeoCenter: ({ payload }) => {
