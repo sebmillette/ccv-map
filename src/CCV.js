@@ -3,11 +3,10 @@ import 'regenerator-runtime/runtime';
 
 import { Map } from './mapbox';
 import { Data } from './data';
-import { Scales } from './scales';
 import { Tools } from './tools';
 import { Colors } from './colors';
 
-import { arrayToFeature } from './arrayToFeature';
+import { infoLayer } from './layers/infoLayer';
 
 export class MapCCV {
     constructor(payload) {
@@ -24,7 +23,7 @@ export class MapCCV {
         // geo center
         payload.map.geoCenterValue = Data.calculateGeoCenter({ payload });
 
-        console.log('payload.layers (anything empty here?)', payload.layers);
+        // console.log('payload.layers (anything empty here?)', payload.layers);
 
         // Process all layers
         const promises = payload.layers.map(async (layerInfo) => {
@@ -40,16 +39,19 @@ export class MapCCV {
         payload.layerData = await Promise.all(promises);
 
         this.mapObject = Map.draw({ payload, MapCCV: this });
+        infoLayer.create.call(this, {
+            infoLayerData: payload.infoLayerData,
+            MAPBOX_API: payload.MAPBOX_API,
+            map: this.mapObject,
+        });
     }
 
     update({ property, value }) {
         switch (property) {
         case 'style':
-            console.log('update style');
             this.mapObject.setStyle(`mapbox://styles/mapbox/${value}`);
             break;
         case 'location':
-            console.log('fly to...');
             // merge new location settings with payload
             this.payload.map.geoCenter = Data.calculateGeoCenter({ payload: this.payload });
             this.flyToCenter({ center: this.payload.map.geoCenter, zoom: this.payload.map.zoom });

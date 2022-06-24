@@ -22,16 +22,70 @@ const loadMap = async () => {
     const geoJSON = await d3.json(highLevelGeoPath);
     const geoData = await d3.json(highLevelDataPath);
 
+    // See Documentation:
+    // https://docs.mapbox.com/data/tilesets/reference/mapbox-streets-v8/
+
+    // other possibilities for poi_label
+    // ['store_like', 'park_like', 'lodging',
+    // 'education', 'arts_and_entertainment, 'sport_and_leisure', 'building', 'medical']
+
+    // other possibilities for transit_stop_label
+    // ['entrance', 'stop']
+
+    const visibleLayers = [
+        { layer: 'poi_label',
+            selectionKey: 'class',
+            selection: [
+                {
+                    group: 'food_and_drink_stores',
+                    icon: 'food_and_drink_stores.png',
+                },
+                {
+                    group: 'food_and_drink',
+                    icon: 'food_and_drink.png',
+                },
+                {
+                    group: 'commercial_services',
+                    icon: 'commercial_services.png',
+                },
+                {
+                    group: 'education',
+                    icon: 'education.png',
+                },
+            ] },
+        { layer: 'transit_stop_label',
+            selectionKey: 'stop_type',
+            selection: [
+                {
+                    group: 'station',
+                    icon: 'metro.png',
+                },
+                {
+                    group: 'stop',
+                    icon: 'stop.png',
+                },
+            ] },
+    ];
+    const infoIconPath = '/assets/icons/';
+
     const payload = {
         MAPBOX_API: config.MAPBOX_API,
         id: containerId,
         map: {
             style: 'spandl/cl1tf9mgp003i14s2rul8tegf', // mapbox/light-v10
-            zoom: 7,
+            zoom: 16,
             currentZoom: 5,
             geoCenterType: 'manual', // [manual, dataBound, dataCenter]
-            geoCenterString: '-73.595, 45.688',
+            geoCenterString: '-73.5681, 45.5186',
             showBuildings: true,
+        },
+        infoLayerData: {
+            latitude: '-73.5681',
+            longitude: '45.5186',
+            maxItems: 50,
+            radius: 1000,
+            visibleLayers,
+            infoIconPath,
         },
         layerProperties: {
             segmentAmount: 24,
