@@ -35,36 +35,21 @@ const loadMap = async () => {
     const visibleLayers = [
         { layer: 'poi_label',
             selectionKey: 'class',
-            selection: [
-                {
-                    group: 'food_and_drink_stores',
-                    icon: 'food_and_drink_stores.png',
-                },
-                {
-                    group: 'food_and_drink',
-                    icon: 'food_and_drink.png',
-                },
-                {
-                    group: 'commercial_services',
-                    icon: 'commercial_services.png',
-                },
-                {
-                    group: 'education',
-                    icon: 'education.png',
-                },
-            ] },
+            icons: {
+                food_and_drink_stores: 'food_and_drink_stores.png',
+                food_and_drink: 'food_and_drink.png',
+                commercial_services: 'commercial_services.png',
+                education: 'education.png',
+            } },
         { layer: 'transit_stop_label',
             selectionKey: 'stop_type',
-            selection: [
+            icons:
                 {
-                    group: 'station',
-                    icon: 'metro.png',
-                },
-                {
-                    group: 'stop',
-                    icon: 'stop.png',
-                },
-            ] },
+                    station: 'metro.png',
+                    stop: 'stop.png',
+                } },
+        { layer: 'landuse',
+            selectionKey: 'class' },
     ];
     const infoIconPath = '/assets/icons/';
 
@@ -73,7 +58,7 @@ const loadMap = async () => {
         id: containerId,
         map: {
             style: 'spandl/cl1tf9mgp003i14s2rul8tegf', // mapbox/light-v10
-            zoom: 16,
+            zoom: 17,
             currentZoom: 5,
             geoCenterType: 'manual', // [manual, dataBound, dataCenter]
             geoCenterString: '-73.5681, 45.5186',
