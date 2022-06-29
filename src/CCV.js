@@ -6,8 +6,6 @@ import { Data } from './data';
 import { Tools } from './tools';
 import { Colors } from './colors';
 
-import { infoLayer } from './layers/infoLayer';
-
 export class MapCCV {
     constructor(payload) {
         this.payload = payload;
@@ -39,11 +37,11 @@ export class MapCCV {
         payload.layerData = await Promise.all(promises);
 
         this.mapObject = Map.draw({ payload, MapCCV: this });
-        infoLayer.create.call(this, {
-            infoLayerData: payload.infoLayerData,
-            MAPBOX_API: payload.MAPBOX_API,
-            map: this.mapObject,
-        });
+        // infoLayer.create.call(this, {
+        //     infoLayerData: payload.infoLayerData,
+        //     MAPBOX_API: payload.MAPBOX_API,
+        //     map: this.mapObject,
+        // });
     }
 
     update({ property, value }) {

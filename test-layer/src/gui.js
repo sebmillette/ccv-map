@@ -1,6 +1,8 @@
 import * as dat from 'dat.gui';
 import * as d3 from 'd3';
 
+import { infoLayer } from '../../src/layers/infoLayer';
+
 export const GUI = {
     create({ map }) {
         const payload = map.payload;
@@ -78,7 +80,7 @@ export const GUI = {
 
         // ### BUTTONS ###
         const actionSection = gui.addFolder('Actions');
-        actionSection.open();
+        actionSection.close();
 
         // Fly-to zoom / center
         const sampleCenterValue = JSON.stringify({ zoom: 10, lat: -73.595, long: 45.488 });
@@ -107,5 +109,93 @@ export const GUI = {
             map.flyToFeature({ JSONfeature });
         } };
         actionSection.add(flyToFeature, 'fly to sample feature');
+
+        // ### INFO BUTTONS ###
+        const placesSection = gui.addFolder('Places');
+        placesSection.open();
+        const places = {
+            Configuration: 'poi_all',
+            Zoom: 17,
+            latitude: '', //  45.508888
+            longitude: '', // -73.561668
+            radius: 1000,
+            maxItems: 50,
+        };
+
+        placesSection.add(places, 'Configuration', {
+            'POI Layer': 'poi_all',
+            'Transit Layer': 'transit',
+            'Selected POI + stops': 'poi_label',
+            'Metro stations': 'metro',
+            'Bixi Stations': 'bixi',
+        });
+
+        placesSection.add(places, 'Zoom');
+        placesSection.add(places, 'latitude');
+        placesSection.add(places, 'longitude');
+        placesSection.add(places, 'radius');
+        placesSection.add(places, 'maxItems');
+
+        const centerShow = { 'show places': () => {
+            const infoLayerData = {
+                latitude: places.latitude,
+                longitude: places.longitude,
+                maxItems: places.maxItems,
+                radius: places.radius,
+                visibleLayers: visibleLayers[places.Configuration],
+                infoIconPath: '/assets/icons/',
+            };
+
+            infoLayer.create.call(this, {
+                infoLayerData,
+                MAPBOX_API: payload.MAPBOX_API,
+                map: map.mapObject,
+            });
+        } };
+        placesSection.add(centerShow, 'show places');
     },
+};
+
+const visibleLayers = {
+    poi_label: [
+        { layer: 'poi_label',
+            selectionKey: 'class',
+            icons: {
+                food_and_drink_stores: 'food_and_drink_stores.png',
+                food_and_drink: 'food_and_drink.png',
+                commercial_services: 'commercial_services.png',
+                education: 'education.png',
+            } },
+        { layer: 'transit_stop_label',
+            selectionKey: 'stop_type',
+            icons:
+                {
+                    station: 'station.png',
+                    stop: 'stop.png',
+                } },
+        { layer: 'landuse',
+            selectionKey: 'class' },
+    ],
+    poi_all: [
+        { layer: 'poi_label' },
+    ],
+    metro: [
+        { layer: 'transit_stop_label',
+            selectionKey: 'stop_type',
+            icons:
+                {
+                    station: 'station.png',
+                } },
+    ],
+    bixi: [
+        { layer: 'poi_label',
+            selectionKey: 'maki',
+            icons:
+                {
+                    bicycle: 'station.png',
+                } },
+    ],
+    transit: [
+        { layer: 'transit_stop_label' },
+    ],
 };

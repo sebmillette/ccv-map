@@ -9,6 +9,11 @@ export const infoLayer = {
      * @MAPBOX_API {string} API key
      */
     async create({ infoLayerData, MAPBOX_API, map }) {
+        const { lng, lat } = map.getCenter();
+
+        if (infoLayerData.longitude === '' || !infoLayerData.longitude) infoLayerData.longitude = lng;
+        if (infoLayerData.latitude === '' || !infoLayerData.latitude) infoLayerData.latitude = lat;
+
         const infoFeatures = await infoLayer.getData({ infoLayerData, MAPBOX_API });
         infoLayer.update.call(this, { infoLayerData, infoFeatures, map, MAPBOX_API });
     },
@@ -29,8 +34,11 @@ export const infoLayer = {
 
             const groups = layer && layer.icons
                 ? Object.keys(layer.icons).map((d) => d)
-                : [layer.layer];
+                : [];
 
+            /*
+            ! Do we need to filter second query as well?
+            */
             const selectedFeatures = layer.icons && groups.length > 0
                 ? infoFeatures.features.filter((d) => groups.includes(d.properties[key]))
                 : infoFeatures.features.filter((d) => d.properties.tilequery.layer === layer.layer);
@@ -45,7 +53,7 @@ export const infoLayer = {
         const addIconProperties = ({ layer, feature }) => {
             const key = layer.selectionKey;
             const iconKey = feature.properties[key];
-            const icon = layer.icons ? layer.icons[iconKey] : `${iconKey}.png`;
+            const icon = typeof key === 'undefined' ? `${layer.layer}.png` : `${iconKey}.png`;
             feature.icon = infoLayerData.infoIconPath + icon;
         };
 
@@ -60,7 +68,9 @@ export const infoLayer = {
      * @map {object} the MapBox map object
      */
     drawMarker({ infoLayerData, selectedFeatures, map, MAPBOX_API }) {
-        const startLocation = `${infoLayerData.latitude},${infoLayerData.longitude}`;
+        infoLayer.removeMarker(map);
+
+        const startLocation = `${infoLayerData.longitude},${infoLayerData.latitude}`;
 
         const centerPoint = () => {
             const el = document.createElement('div');
@@ -83,7 +93,7 @@ export const infoLayer = {
                 map.MapCCV.appState = {
                     type: 'user',
                     value: 'click',
-                    message: `clicked on ${properties.name} (distance: ${properties.tilequery.distance}m)`,
+                    message: `clicked on ${properties.name} (distance: ${Math.floor(properties.tilequery.distance)}m)`,
                     data: properties,
                 };
 
@@ -92,13 +102,6 @@ export const infoLayer = {
                 infoLayer.drawPath({ map, startLocation, endLocation, MAPBOX_API });
             });
 
-            /*
-            ! TO DO
-
-            * GUI: three configurations
-            * GUI: click on button get new data from map center
-            */
-
             new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
         });
 
@@ -106,9 +109,17 @@ export const infoLayer = {
     },
 
     /*
-    ! To Do:
-    * function to remove all icons
+    * remove all icons / markers
     */
+    removeMarker(map) {
+        const markers = document.querySelectorAll('div.marker');
+        const center = document.querySelector('div.center');
+
+        if (markers.length > 0) markers.forEach((d) => d.remove());
+        if (center) center.remove();
+
+        if (map.getLayer('route')) map.setLayoutProperty('route', 'visibility', 'none');
+    },
 
     /**
      * draw features on screen
@@ -152,16 +163,20 @@ export const infoLayer = {
                 },
             });
         }
+
+        map.setLayoutProperty('route', 'visibility', 'visible');
     },
 
     async getData({ infoLayerData, MAPBOX_API }) {
         const layers = infoLayerData.visibleLayers.map((d) => d.layer).join();
         const infoQuery = `https://api.mapbox.com/v4/mapbox.mapbox-streets-v8/tilequery/
-        ${infoLayerData.latitude},${infoLayerData.longitude}.json?radius=${infoLayerData.radius}&limit=
-        ${infoLayerData.maxItems}&layers=${layers}&access_token=${MAPBOX_API}`;
+        ${infoLayerData.longitude},${infoLayerData.latitude}.json?radius=${infoLayerData.radius}&limit=
+        ${d3.min([infoLayerData.maxItems, 50])}&layers=${layers}&access_token=${MAPBOX_API}`;
 
         const loadData = async () => {
             const infoFeatures = await d3.json(infoQuery);
+
+            infoFeatures.features.forEach((d, i) => console.log(i, d.properties));
             return infoFeatures;
         };
 
