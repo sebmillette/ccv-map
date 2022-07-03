@@ -1,5 +1,4 @@
 import * as dat from 'dat.gui';
-import * as d3 from 'd3';
 
 import { infoLayer } from '../../src/layers/infoLayer';
 
@@ -114,7 +113,7 @@ export const GUI = {
         const placesSection = gui.addFolder('Places');
         placesSection.open();
         const places = {
-            Configuration: 'poi_all',
+            Configuration: 'murales',
             Zoom: 17,
             latitude: '', //  45.508888
             longitude: '', // -73.561668
@@ -123,6 +122,7 @@ export const GUI = {
         };
 
         placesSection.add(places, 'Configuration', {
+            Murales: 'murales',
             'POI Layer': 'poi_all',
             'Transit Layer': 'transit',
             'Selected POI + stops': 'poi_label',
@@ -144,6 +144,7 @@ export const GUI = {
                 radius: places.radius,
                 visibleLayers: visibleLayers[places.Configuration],
                 infoIconPath: '/assets/icons/',
+                tileset: 'spandl.9s7tnsby',
             };
 
             infoLayer.create.call(this, {
@@ -178,6 +179,9 @@ const visibleLayers = {
     ],
     poi_all: [
         { layer: 'poi_label' },
+    ],
+    murales: [
+        { layer: 'murales-4d22r0' },
     ],
     metro: [
         { layer: 'transit_stop_label',

@@ -36,9 +36,6 @@ export const infoLayer = {
                 ? Object.keys(layer.icons).map((d) => d)
                 : [];
 
-            /*
-            ! Do we need to filter second query as well?
-            */
             const selectedFeatures = layer.icons && groups.length > 0
                 ? infoFeatures.features.filter((d) => groups.includes(d.properties[key]))
                 : infoFeatures.features.filter((d) => d.properties.tilequery.layer === layer.layer);
@@ -93,7 +90,8 @@ export const infoLayer = {
                 map.MapCCV.appState = {
                     type: 'user',
                     value: 'click',
-                    message: `clicked on ${properties.name} (distance: ${Math.floor(properties.tilequery.distance)}m)`,
+                    message: `clicked on ${properties.artiste} 
+                    (distance: ${Math.floor(properties.tilequery.distance)}m)`,
                     data: properties,
                 };
 
@@ -169,14 +167,13 @@ export const infoLayer = {
 
     async getData({ infoLayerData, MAPBOX_API }) {
         const layers = infoLayerData.visibleLayers.map((d) => d.layer).join();
-        const infoQuery = `https://api.mapbox.com/v4/mapbox.mapbox-streets-v8/tilequery/
+        const infoQuery = `https://api.mapbox.com/v4/${infoLayerData.tileset}/tilequery/
         ${infoLayerData.longitude},${infoLayerData.latitude}.json?radius=${infoLayerData.radius}&limit=
         ${d3.min([infoLayerData.maxItems, 50])}&layers=${layers}&access_token=${MAPBOX_API}`;
 
         const loadData = async () => {
             const infoFeatures = await d3.json(infoQuery);
-
-            infoFeatures.features.forEach((d, i) => console.log(i, d.properties));
+            // infoFeatures.features.forEach((d, i) => console.log(i, d.properties));
             return infoFeatures;
         };
 

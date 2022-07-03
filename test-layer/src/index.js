@@ -58,7 +58,7 @@ const loadMap = async () => {
         id: containerId,
         map: {
             style: 'spandl/cl1tf9mgp003i14s2rul8tegf', // mapbox/light-v10
-            zoom: 17,
+            zoom: 8,
             currentZoom: 5,
             geoCenterType: 'manual', // [manual, dataBound, dataCenter]
             geoCenterString: '-73.5681, 45.5186',
