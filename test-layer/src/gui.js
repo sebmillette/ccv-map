@@ -114,6 +114,7 @@ export const GUI = {
         placesSection.open();
         const places = {
             Configuration: 'murales',
+            Set: 'g1',
             Zoom: 17,
             latitude: '', //  45.508888
             longitude: '', // -73.561668
@@ -123,20 +124,26 @@ export const GUI = {
 
         placesSection.add(places, 'Configuration', {
             Murales: 'murales',
-            'POI Layer': 'poi_all',
-            'Transit Layer': 'transit',
-            'Selected POI + stops': 'poi_label',
-            'Metro stations': 'metro',
-            'Bixi Stations': 'bixi',
+            'Murales (2019-2021)': 'muralesYear',
+            'Murales (2016-2018)': 'muralesYear2',
+            // 'POI Layer': 'poi_all',
+            // 'Transit Layer': 'transit',
+            // 'Selected POI + stops': 'poi_label',
+            // 'Metro stations': 'metro',
+            // 'Bixi Stations': 'bixi',
         });
 
-        placesSection.add(places, 'Zoom');
+        placesSection.add(places, 'Set', {
+            'Group 1': 'g1',
+            'Group 2': 'g2',
+        });
+
         placesSection.add(places, 'latitude');
         placesSection.add(places, 'longitude');
         placesSection.add(places, 'radius');
         placesSection.add(places, 'maxItems');
 
-        const centerShow = { 'show places': () => {
+        const centerShow = { 'show group': () => {
             const infoLayerData = {
                 latitude: places.latitude,
                 longitude: places.longitude,
@@ -145,6 +152,7 @@ export const GUI = {
                 visibleLayers: visibleLayers[places.Configuration],
                 infoIconPath: '/assets/icons/',
                 tileset: 'spandl.9s7tnsby',
+                id: places.Set,
             };
 
             infoLayer.create.call(this, {
@@ -153,7 +161,16 @@ export const GUI = {
                 map: map.mapObject,
             });
         } };
-        placesSection.add(centerShow, 'show places');
+        placesSection.add(centerShow, 'show group');
+
+        // Remove Layer
+        const removeLayer = { 'remove group': () => {
+            infoLayer.removeMarker({
+                map: map.mapObject,
+                id: places.Set,
+            });
+        } };
+        placesSection.add(removeLayer, 'remove group');
     },
 };
 
@@ -182,6 +199,28 @@ const visibleLayers = {
     ],
     murales: [
         { layer: 'murales-4d22r0' },
+    ],
+    muralesYear: [
+        { layer: 'murales-4d22r0',
+            selectionKey: 'annee',
+            icons:
+            {
+                2021: 'm21.png',
+                2020: 'm20.png',
+                2019: 'm19.png',
+            } },
+
+    ],
+    muralesYear2: [
+        { layer: 'murales-4d22r0',
+            selectionKey: 'annee',
+            icons:
+            {
+                2018: 'm18.png',
+                2017: 'm17.png',
+                2016: 'm16.png',
+            } },
+
     ],
     metro: [
         { layer: 'transit_stop_label',

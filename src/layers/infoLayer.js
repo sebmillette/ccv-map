@@ -50,7 +50,7 @@ export const infoLayer = {
         const addIconProperties = ({ layer, feature }) => {
             const key = layer.selectionKey;
             const iconKey = feature.properties[key];
-            const icon = typeof key === 'undefined' ? `${layer.layer}.png` : `${iconKey}.png`;
+            const icon = typeof key === 'undefined' ? `${layer.layer}.png` : `${layer.icons[iconKey]}`;
             feature.icon = infoLayerData.infoIconPath + icon;
         };
 
@@ -65,7 +65,7 @@ export const infoLayer = {
      * @map {object} the MapBox map object
      */
     drawMarker({ infoLayerData, selectedFeatures, map, MAPBOX_API }) {
-        infoLayer.removeMarker(map);
+        infoLayer.removeMarker({ map, id: infoLayerData.id });
 
         const startLocation = `${infoLayerData.longitude},${infoLayerData.latitude}`;
 
@@ -80,7 +80,7 @@ export const infoLayer = {
 
         selectedFeatures.forEach((feature) => {
             const el = document.createElement('div');
-            el.className = 'marker';
+            el.className = `marker marker-${infoLayerData.id}`;
             el.style.backgroundImage = `url(${feature.icon})`;
             el.style.backgroundSize = '100%';
 
@@ -109,8 +109,8 @@ export const infoLayer = {
     /*
     * remove all icons / markers
     */
-    removeMarker(map) {
-        const markers = document.querySelectorAll('div.marker');
+    removeMarker({ map, id }) {
+        const markers = document.querySelectorAll(`div.marker-${id}`);
         const center = document.querySelector('div.center');
 
         if (markers.length > 0) markers.forEach((d) => d.remove());
@@ -173,7 +173,7 @@ export const infoLayer = {
 
         const loadData = async () => {
             const infoFeatures = await d3.json(infoQuery);
-            // infoFeatures.features.forEach((d, i) => console.log(i, d.properties));
+            infoFeatures.features.forEach((d, i) => console.log(i, d.properties));
             return infoFeatures;
         };
 
