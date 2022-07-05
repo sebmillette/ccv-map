@@ -15,7 +15,7 @@ export const infoLayer = {
         if (infoLayerData.latitude === '' || !infoLayerData.latitude) infoLayerData.latitude = lat;
 
         const infoFeatures = await infoLayer.getData({ infoLayerData, MAPBOX_API });
-        infoLayer.update.call(this, { infoLayerData, infoFeatures, map, MAPBOX_API });
+        infoLayer.update({ infoLayerData, infoFeatures, map, MAPBOX_API });
     },
 
     /**
@@ -56,7 +56,7 @@ export const infoLayer = {
 
         // Filter only if sub categories are defined + combine features
         const selectedFeatures = visibleLayers.map((layer) => filterFeatures(layer)).flat();
-        infoLayer.drawMarker.call(this, { infoLayerData, selectedFeatures, map, MAPBOX_API });
+        infoLayer.drawMarker({ infoLayerData, selectedFeatures, map, MAPBOX_API });
     },
 
     /**
@@ -173,7 +173,7 @@ export const infoLayer = {
 
         const loadData = async () => {
             const infoFeatures = await d3.json(infoQuery);
-            infoFeatures.features.forEach((d, i) => console.log(i, d.properties));
+            // infoFeatures.features.forEach((d, i) => console.log(i, d.properties));
             return infoFeatures;
         };
 

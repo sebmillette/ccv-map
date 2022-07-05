@@ -1,7 +1,5 @@
 import * as dat from 'dat.gui';
 
-import { infoLayer } from '../../src/layers/infoLayer';
-
 export const GUI = {
     create({ map }) {
         const payload = map.payload;
@@ -155,7 +153,7 @@ export const GUI = {
                 id: places.Set,
             };
 
-            infoLayer.create.call(this, {
+            map.infoLayer.create({
                 infoLayerData,
                 MAPBOX_API: payload.MAPBOX_API,
                 map: map.mapObject,
@@ -165,7 +163,7 @@ export const GUI = {
 
         // Remove Layer
         const removeLayer = { 'remove group': () => {
-            infoLayer.removeMarker({
+            map.infoLayer.removeMarker({
                 map: map.mapObject,
                 id: places.Set,
             });

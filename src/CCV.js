@@ -5,6 +5,7 @@ import { Map } from './mapbox';
 import { Data } from './data';
 import { Tools } from './tools';
 import { Colors } from './colors';
+import { infoLayer } from './layers/infoLayer';
 
 export class MapCCV {
     constructor(payload) {
@@ -12,6 +13,7 @@ export class MapCCV {
         this.eventCallback = payload.eventCallback;
         this.appState = { type: 'status', value: 'success', message: 'Class created' };
         payload.appState = this.appState;
+        this.infoLayer = infoLayer;
     }
 
     async create() {
