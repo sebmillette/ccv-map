@@ -13,13 +13,13 @@ export const infoLayer = {
 
         if (map.getLayer(lineId) || map.getLayer(pointId)) infoLayer.removeGeoJSON({ map, id: infoLayerData.id });
 
-        // defaults
+        // defaults and fallbacks
         const minzoom = infoLayerData.minzoom ? infoLayerData.minzoom : 1;
         const maxzoom = infoLayerData.maxzoom ? infoLayerData.maxzoom : 24;
 
         const addLines = () => {
-            const lineWidth = infoLayerData.defaultLineWidth ? infoLayerData.defaultLineWidth : 2;
-            const lineColor = infoLayerData.defaultLineColor ? infoLayerData.defaultLineColor : 'slategrey';
+            const lineWidth = infoLayerData.lineWidth ? infoLayerData.lineWidth : 2;
+            const lineColor = infoLayerData.lineColor ? infoLayerData.lineColor : 'slategrey';
 
             const lines = geoJSON.features.filter((d) => d.geometry.type === 'LineString');
 
@@ -42,8 +42,8 @@ export const infoLayer = {
                     'line-cap': 'round',
                 },
                 paint: {
-                    'line-color': ['to-color', ['get', 'color'], d3.color(lineColor).formatHex()],
-                    'line-width': ['number', ['get', 'width'], lineWidth],
+                    'line-color': ['to-color', ['get', 'lineColor'], d3.color(lineColor).formatHex()],
+                    'line-width': ['number', ['get', 'lineWidth'], lineWidth],
                 },
 
             });

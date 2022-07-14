@@ -106,3 +106,62 @@ map.infoLayer.removeMarker({
 
 For a full working example see:
 https://github.com/spandl/ccv-map/blob/main/test-layer/src/gui.js#L112
+
+
+## Geo JSON Layer
+In addition to the geo-located info layer, the library can draw geoJSON data with Points or LineStrings.
+
+### Draw Geo JSON layer
+call `infoLayer.drawGeoJSON` with following parameters:
+* `Map` > the map object
+* `geoJSON` > GeoJSON data
+* `infoLayerData` > information about the layer
+
+### Info Layer Data
+* `id`: (REQUIRED) id of the layer (allows to create multiple layers)
+* `minzoom`: minimum zoom before the layer is shown
+* `maxzoom`: maximum zoom after the layer is hidden
+* `lineWidth`: Default line width if not specified in the geoJSON
+* `lineColor`: Default line color if not specified in the geoJSON
+* `circleRadius`:  Default circle radius if not specified in the geoJSON
+* `circleColor`: Default circle color if not specified in the geoJSON
+* `strokeColor`: Default stroke color if not specified in the geoJSON
+* `strokeWidth`:  Default stroke width if not specified in the geoJSON
+* `opacity`:  Default circle opacity if not specified in the geoJSON
+
+
+```JS
+const metroData = await d3.json('data/metromap.json');
+map.infoLayer.drawGeoJSON({
+    map: map.mapObject,
+    geoJSON: metroData,
+    infoLayerData: {
+        id: 'metro',
+        minzoom: 13,
+        maxzoom: 22,
+        lineWidth: 2,
+        lineColor: 'pink',
+        circleRadius: 6,
+        circleColor: 'white',
+        strokeColor: 'black',
+        strokeWidth: 2,
+        opacity: 1,
+
+    },
+});
+```
+
+### Geo JSON Data
+The `properties` section of the geoJSON can contain data that will adapt the style of each feature individually.
+Following properties are rendered
+
+#### LineString
+* `lineWidth` (integer)
+* `lineColor` (color in any format)
+
+#### Point
+* `circleRadius`: (integer)
+* `circleColor`: (color in any format)
+* `strokeColor`: (color in any format)
+* `strokeWidth`: (integer)
+* `opacity`: (integer, 0-1)

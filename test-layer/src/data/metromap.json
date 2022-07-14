@@ -1097,8 +1097,8 @@
       "type": "Feature",
       "properties": {
         "ligne": "Orange",
-        "color": "#E8853C",
-        "width": 2,
+        "lineColor": "#E8853C",
+        "lineWidth": 2,
         "stop_id": ""
       },
       "geometry": {
@@ -1235,8 +1235,8 @@
       "type": "Feature",
       "properties": {
         "ligne": "Jaune",
-        "color": "#F7D952",
-        "width": 2
+        "lineColor": "#F7D952",
+        "lineWidth": 2
       },
       "geometry": {
         "type": "LineString",
@@ -1260,8 +1260,8 @@
       "type": "Feature",
       "properties": {
         "ligne": "Verte",
-        "color": "#54AD64",
-        "width": 4
+        "lineColor": "#54AD64",
+        "lineWidth": 4
       },
       "geometry": {
         "type": "LineString",
@@ -1381,8 +1381,8 @@
       "type": "Feature",
       "properties": {
         "ligne": "Bleu",
-        "color": "#438BCF",
-        "width": 2
+        "lineColor": "#438BCF",
+        "lineWidth": 2
       },
       "geometry": {
         "type": "LineString",
