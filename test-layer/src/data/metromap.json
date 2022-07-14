@@ -1,0 +1,1438 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 43,
+        "stop_code": 10118,
+        "stop_name": "Station Angrignon",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.603118,
+          45.446466
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 42,
+        "stop_code": 10120,
+        "stop_name": "Station Monk",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.593242,
+          45.451158
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 41,
+        "stop_code": 10122,
+        "stop_name": "Station Jolicoeur",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.581691,
+          45.45701
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 40,
+        "stop_code": 10124,
+        "stop_name": "Station Verdun",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.572021,
+          45.459441
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 39,
+        "stop_code": 10126,
+        "stop_name": "Station De l'Église",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.567074,
+          45.461894
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 38,
+        "stop_code": 10128,
+        "stop_name": "Station LaSalle",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.566267,
+          45.471063
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 37,
+        "stop_code": 10130,
+        "stop_name": "Station Charlevoix",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.569336,
+          45.478465
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 36,
+        "stop_code": 10132,
+        "stop_name": "Station Lionel-Groulx",
+        "ligne": "Verte",
+        "radius": 15,
+        "color": "orange",
+        "strokeColor": "white",
+        "strokeWidth": 3,
+        "opacity": 1
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.58018,
+          45.482509
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 35,
+        "stop_code": 10134,
+        "stop_name": "Station Atwater",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.585812,
+          45.490068
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 34,
+        "stop_code": 10136,
+        "stop_name": "Station Guy-Concordia",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.57931,
+          45.49557
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 33,
+        "stop_code": 10138,
+        "stop_name": "Station Peel",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.574715,
+          45.500879
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 32,
+        "stop_code": 10140,
+        "stop_name": "Station McGill",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.571586,
+          45.504064
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 31,
+        "stop_code": 10142,
+        "stop_name": "Station Place-des-Arts",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.568433,
+          45.50822
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 30,
+        "stop_code": 10144,
+        "stop_name": "Station Saint-Laurent",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.564899,
+          45.511033
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 9999111,
+        "stop_code": 10146,
+        "stop_name": "Station Berri-UQAM 1",
+        "ligne": "Multi",
+        "radius": 15,
+        "color": "orange",
+        "strokeColor": "white",
+        "strokeWidth": 3,
+        "opacity": 1
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.561082,
+          45.515226
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 29,
+        "stop_code": 10148,
+        "stop_name": "Station Beaudry",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.555837,
+          45.518831
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 28,
+        "stop_code": 10150,
+        "stop_name": "Station Papineau",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.552703,
+          45.523988
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 27,
+        "stop_code": 10152,
+        "stop_name": "Station Frontenac",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.552196,
+          45.533504
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 26,
+        "stop_code": 10154,
+        "stop_name": "Station Préfontaine",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.554192,
+          45.541717
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 25,
+        "stop_code": 10156,
+        "stop_name": "Station Joliette",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.551391,
+          45.546832
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 24,
+        "stop_code": 10158,
+        "stop_name": "Station Pie-IX",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.551757,
+          45.553688
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 23,
+        "stop_code": 10160,
+        "stop_name": "Station Viau",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.54753,
+          45.560687
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 22,
+        "stop_code": 10162,
+        "stop_name": "Station Assomption",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.547336,
+          45.569285
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 21,
+        "stop_code": 10164,
+        "stop_name": "Station Cadillac",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.54671,
+          45.576843
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 20,
+        "stop_code": 10166,
+        "stop_name": "Station Langelier",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.543133,
+          45.582736
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 19,
+        "stop_code": 10168,
+        "stop_name": "Station Radisson",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.539269,
+          45.589431
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 18,
+        "stop_code": 10170,
+        "stop_name": "Station Honoré-Beaugrand",
+        "ligne": "Verte"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.535376,
+          45.596572
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 65,
+        "stop_code": 10222,
+        "stop_name": "Station Côte-Vertu",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.682757,
+          45.514237
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 54,
+        "stop_code": 10224,
+        "stop_name": "Station Du Collège",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.674796,
+          45.509258
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 53,
+        "stop_code": 10228,
+        "stop_name": "Station De la Savane",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.661538,
+          45.500051
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 52,
+        "stop_code": 10230,
+        "stop_name": "Station Namur",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.652828,
+          45.494643
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 51,
+        "stop_code": 10232,
+        "stop_name": "Station Plamondon",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.63826,
+          45.494644
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 50,
+        "stop_code": 10234,
+        "stop_name": "Station Côte-Sainte-Catherine",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.6331,
+          45.492356
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 9999492,
+        "stop_code": 10236,
+        "stop_name": "Station Snowdon 2",
+        "ligne": "Orange",
+        "radius": 15,
+        "color": "orange",
+        "strokeColor": "white",
+        "strokeWidth": 3,
+        "opacity": 1
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.62773,
+          45.485433
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 48,
+        "stop_code": 10238,
+        "stop_name": "Station Villa-Maria",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.619821,
+          45.479709
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 47,
+        "stop_code": 10242,
+        "stop_name": "Station Vendôme",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.603706,
+          45.474101
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 46,
+        "stop_code": 10244,
+        "stop_name": "Station Place-Saint-Henri",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.586629,
+          45.47732
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 17,
+        "stop_code": 10248,
+        "stop_name": "Station Georges-Vanier",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.576852,
+          45.488897
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 16,
+        "stop_code": 10250,
+        "stop_name": "Station Lucien-L'Allier",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.571074,
+          45.494745
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 15,
+        "stop_code": 10252,
+        "stop_name": "Station Bonaventure",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.567235,
+          45.498086
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 14,
+        "stop_code": 10254,
+        "stop_name": "Station Square-Victoria–OACI",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.563118,
+          45.501937
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 13,
+        "stop_code": 10256,
+        "stop_name": "Station Place-d'Armes",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.559548,
+          45.506348
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 12,
+        "stop_code": 10258,
+        "stop_name": "Station Champ-de-Mars",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.556596,
+          45.510047
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 10,
+        "stop_code": 10262,
+        "stop_name": "Station Sherbrooke",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.569217,
+          45.51906
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 9,
+        "stop_code": 10264,
+        "stop_name": "Station Mont-Royal",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.581959,
+          45.524931
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 8,
+        "stop_code": 10266,
+        "stop_name": "Station Laurier",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.586907,
+          45.527399
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 7,
+        "stop_code": 10268,
+        "stop_name": "Station Rosemont",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.59778,
+          45.531733
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 6,
+        "stop_code": 10270,
+        "stop_name": "Station Beaubien",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.604688,
+          45.535354
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 9999052,
+        "stop_code": 10272,
+        "stop_name": "Station Jean-Talon 2",
+        "ligne": "Orange",
+        "radius": 15,
+        "color": "orange",
+        "strokeColor": "white",
+        "strokeWidth": 3,
+        "opacity": 1
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.613902,
+          45.539056
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 4,
+        "stop_code": 10274,
+        "stop_name": "Station Jarry",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.628765,
+          45.543191
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 3,
+        "stop_code": 10276,
+        "stop_name": "Station Crémazie",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.639052,
+          45.546082
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 2,
+        "stop_code": 10278,
+        "stop_name": "Station Sauvé",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.656017,
+          45.550757
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 1,
+        "stop_code": 10280,
+        "stop_name": "Station Henri-Bourassa",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.668172,
+          45.555277
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 66,
+        "stop_code": 10282,
+        "stop_name": "Station Cartier",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.68231,
+          45.559997
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 67,
+        "stop_code": 10286,
+        "stop_name": "Station De la Concorde",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.709389,
+          45.560698
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 68,
+        "stop_code": 10288,
+        "stop_name": "Station Montmorency",
+        "ligne": "Orange"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.722459,
+          45.558436
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 45,
+        "stop_code": 10452,
+        "stop_name": "Station Jean-Drapeau",
+        "ligne": "Jaune"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.533127,
+          45.512429
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 44,
+        "stop_code": 10454,
+        "stop_name": "Station Longueuil–Université-de-Sherbrooke",
+        "ligne": "Jaune"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.522098,
+          45.52489
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 55,
+        "stop_code": 10534,
+        "stop_name": "Station Côte-des-Neiges",
+        "ligne": "Bleu"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.623386,
+          45.496846
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 56,
+        "stop_code": 10536,
+        "stop_name": "Station Université-de-Montréal",
+        "ligne": "Bleu"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.617699,
+          45.503188
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 57,
+        "stop_code": 10538,
+        "stop_name": "Station Édouard-Montpetit",
+        "ligne": "Bleu"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.612858,
+          45.50992
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 58,
+        "stop_code": 10540,
+        "stop_name": "Station Outremont",
+        "ligne": "Bleu"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.614976,
+          45.52037
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 59,
+        "stop_code": 10542,
+        "stop_name": "Station Acadie",
+        "ligne": "Bleu"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.623257,
+          45.523458
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 60,
+        "stop_code": 10544,
+        "stop_name": "Station Parc",
+        "ligne": "Bleu"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.624559,
+          45.530177
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 61,
+        "stop_code": 10546,
+        "stop_name": "Station De Castelnau",
+        "ligne": "Bleu"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.619873,
+          45.535437
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 62,
+        "stop_code": 10552,
+        "stop_name": "Station Fabre",
+        "ligne": "Bleu"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.608106,
+          45.546753
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_id": 64,
+        "stop_code": 10556,
+        "stop_name": "Station Saint-Michel",
+        "ligne": "Bleu"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.600002,
+          45.55956
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ligne": "Orange",
+        "color": "#E8853C",
+        "width": 2,
+        "stop_id": ""
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.72246742248535,
+            45.55845639043873
+          ],
+          [
+            -73.7093836069107,
+            45.560709984040585
+          ],
+          [
+            -73.68242740631102,
+            45.56009776672104
+          ],
+          [
+            -73.66826534271239,
+            45.55531998891832
+          ],
+          [
+            -73.65599155426025,
+            45.550752173725904
+          ],
+          [
+            -73.63899707794188,
+            45.5460938219615
+          ],
+          [
+            -73.62882614135741,
+            45.543178398976046
+          ],
+          [
+            -73.61380577087402,
+            45.53912059987818
+          ],
+          [
+            -73.60462188720703,
+            45.53533305649348
+          ],
+          [
+            -73.5977554321289,
+            45.531815823488955
+          ],
+          [
+            -73.58685493469238,
+            45.527336293780834
+          ],
+          [
+            -73.5818338394165,
+            45.5249009635151
+          ],
+          [
+            -73.56920599937439,
+            45.519060251154016
+          ],
+          [
+            -73.56107354164124,
+            45.5152713567606
+          ],
+          [
+            -73.55655670166016,
+            45.510061210407464
+          ],
+          [
+            -73.55960369110107,
+            45.50639201562248
+          ],
+          [
+            -73.56314420700073,
+            45.50203077632737
+          ],
+          [
+            -73.56715679168701,
+            45.49813545285458
+          ],
+          [
+            -73.57110500335693,
+            45.4947963896697
+          ],
+          [
+            -73.57687711715698,
+            45.48899015973809
+          ],
+          [
+            -73.58018159866333,
+            45.482581553108
+          ],
+          [
+            -73.58664035797119,
+            45.47733076633775
+          ],
+          [
+            -73.60365629196167,
+            45.47412589097481
+          ],
+          [
+            -73.61981391906738,
+            45.47964779274193
+          ],
+          [
+            -73.62775325775146,
+            45.48551516071037
+          ],
+          [
+            -73.63311767578125,
+            45.492359651036296
+          ],
+          [
+            -73.63837480545044,
+            45.49470614197085
+          ],
+          [
+            -73.65285873413086,
+            45.49463093544465
+          ],
+          [
+            -73.66161346435547,
+            45.5001057080614
+          ],
+          [
+            -73.6748743057251,
+            45.50938453263581
+          ],
+          [
+            -73.68277072906494,
+            45.51424139493942
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ligne": "Jaune",
+        "color": "#F7D952",
+        "width": 2
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.5221815109253,
+            45.5250813619652
+          ],
+          [
+            -73.5331678390503,
+            45.51239192712923
+          ],
+          [
+            -73.5609769821167,
+            45.515308946251544
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ligne": "Verte",
+        "color": "#54AD64",
+        "width": 4
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.53535652160645,
+            45.5965937880755
+          ],
+          [
+            -73.53930473327637,
+            45.58935654550453
+          ],
+          [
+            -73.54316711425781,
+            45.582779154700944
+          ],
+          [
+            -73.54677200317383,
+            45.57677173182715
+          ],
+          [
+            -73.54732990264893,
+            45.569411762853804
+          ],
+          [
+            -73.54754447937012,
+            45.56066866897127
+          ],
+          [
+            -73.55187892913817,
+            45.55372730604142
+          ],
+          [
+            -73.55136394500732,
+            45.546815140398635
+          ],
+          [
+            -73.55423927307129,
+            45.54167554456839
+          ],
+          [
+            -73.55217933654784,
+            45.53355943657552
+          ],
+          [
+            -73.55282306671143,
+            45.524179363929655
+          ],
+          [
+            -73.5558271408081,
+            45.518887350814616
+          ],
+          [
+            -73.56106281280516,
+            45.51536908938486
+          ],
+          [
+            -73.56492519378662,
+            45.51097847173195
+          ],
+          [
+            -73.56853008270264,
+            45.5081815298437
+          ],
+          [
+            -73.5716199874878,
+            45.50415128315096
+          ],
+          [
+            -73.57488155364989,
+            45.50087273533682
+          ],
+          [
+            -73.57943058013916,
+            45.49560861245121
+          ],
+          [
+            -73.5860824584961,
+            45.48995289210684
+          ],
+          [
+            -73.5801601409912,
+            45.48270190924546
+          ],
+          [
+            -73.56943130493164,
+            45.47848929144962
+          ],
+          [
+            -73.56616973876953,
+            45.47102616677216
+          ],
+          [
+            -73.56711387634277,
+            45.46199687242373
+          ],
+          [
+            -73.57200622558594,
+            45.4594684108294
+          ],
+          [
+            -73.5818338394165,
+            45.45693983584491
+          ],
+          [
+            -73.59333515167236,
+            45.451099598368785
+          ],
+          [
+            -73.60320568084717,
+            45.44652331962253
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "ligne": "Bleu",
+        "color": "#438BCF",
+        "width": 2
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -73.60002994537354,
+            45.559617002432056
+          ],
+          [
+            -73.60814094543457,
+            45.54672497610019
+          ],
+          [
+            -73.61380577087402,
+            45.539150658725916
+          ],
+          [
+            -73.61994266510008,
+            45.53551342148722
+          ],
+          [
+            -73.62453460693358,
+            45.530312665371966
+          ],
+          [
+            -73.62333297729492,
+            45.52345775508823
+          ],
+          [
+            -73.61492156982422,
+            45.520210400759034
+          ],
+          [
+            -73.61281871795654,
+            45.50989580103678
+          ],
+          [
+            -73.61783981323242,
+            45.50321887154943
+          ],
+          [
+            -73.62346172332764,
+            45.496902128251676
+          ],
+          [
+            -73.62771034240723,
+            45.48528950401066
+          ]
+        ]
+      }
+    }
+  ]
+}

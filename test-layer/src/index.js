@@ -58,7 +58,7 @@ const loadMap = async () => {
         id: containerId,
         map: {
             style: 'spandl/cl1tf9mgp003i14s2rul8tegf', // mapbox/light-v10
-            zoom: 8,
+            zoom: 15,
             currentZoom: 5,
             geoCenterType: 'manual', // [manual, dataBound, dataCenter]
             geoCenterString: '-73.5681, 45.5186',
@@ -117,9 +117,32 @@ const loadMap = async () => {
         eventCallback: mapEvents,
     };
     const map = new MapCCV(payload);
-    map.create();
+    const mapIsCreated = await map.create();
+    if (!mapIsCreated) {
+        console.error('failed to create map');
+        return;
+    }
 
-    GUI.create({ map });
+    const metroData = await d3.json('data/metromap.json');
+    map.infoLayer.drawGeoJSON({
+        map: map.mapObject,
+        geoJSON: metroData,
+        infoLayerData: {
+            id: 'metro',
+            minzoom: 13,
+            maxzoom: 22,
+            defaultLineWidth: 2,
+            defaultLineColor: 'pink',
+            circleRadius: 6,
+            circleColor: 'white',
+            strokeColor: 'black',
+            strokeWidth: 2,
+            opacity: 1,
+
+        },
+    });
+
+    GUI.create({ map, metroData });
 
     Buttons.addListeners(map);
 

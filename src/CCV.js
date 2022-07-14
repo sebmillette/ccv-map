@@ -17,33 +17,35 @@ export class MapCCV {
     }
 
     async create() {
-        this.appState = { type: 'status', value: 'success', message: 'create' };
-        const payload = this.payload;
+        const createMap = async () => {
+            this.appState = { type: 'status', value: 'success', message: 'create' };
+            const payload = this.payload;
 
-        // geo center
-        payload.map.geoCenterValue = Data.calculateGeoCenter({ payload });
+            // geo center
+            payload.map.geoCenterValue = Data.calculateGeoCenter({ payload });
 
-        // console.log('payload.layers (anything empty here?)', payload.layers);
+            // console.log('payload.layers (anything empty here?)', payload.layers);
 
-        // Process all layers
-        const promises = payload.layers.map(async (layerInfo) => {
-            try {
-                const response = await Data.loadGeo({ layerInfo });
-                this.appState = { type: 'status', value: 'success', message: `Layer ${layerInfo.name} loaded` };
-                return response;
-            } catch (error) {
-                this.appState = { type: 'status', value: 'error', message: error };
-                return '';
-            }
+            // Process all layers
+            const promises = payload.layers.map(async (layerInfo) => {
+                try {
+                    const response = await Data.loadGeo({ layerInfo });
+                    this.appState = { type: 'status', value: 'success', message: `Layer ${layerInfo.name} loaded` };
+                    return response;
+                } catch (error) {
+                    this.appState = { type: 'status', value: 'error', message: error };
+                    return '';
+                }
+            });
+            payload.layerData = await Promise.all(promises);
+
+            this.mapObject = Map.draw({ payload, MapCCV: this });
+            return true;
+        };
+
+        return new Promise((resolve) => {
+            resolve(createMap());
         });
-        payload.layerData = await Promise.all(promises);
-
-        this.mapObject = Map.draw({ payload, MapCCV: this });
-        // infoLayer.create.call(this, {
-        //     infoLayerData: payload.infoLayerData,
-        //     MAPBOX_API: payload.MAPBOX_API,
-        //     map: this.mapObject,
-        // });
     }
 
     update({ property, value }) {

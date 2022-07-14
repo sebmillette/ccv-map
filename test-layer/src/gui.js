@@ -1,7 +1,8 @@
 import * as dat from 'dat.gui';
+import { async } from 'regenerator-runtime';
 
 export const GUI = {
-    create({ map }) {
+    create({ map, metroData }) {
         const payload = map.payload;
         const gui = new dat.GUI();
         gui.open();
@@ -169,6 +170,37 @@ export const GUI = {
             });
         } };
         placesSection.add(removeLayer, 'remove group');
+
+        // Add GeoJSON  Layer
+        const drawGeoJSON = { 'draw GeoJSON': () => {
+            map.infoLayer.drawGeoJSON({
+                map: map.mapObject,
+                geoJSON: metroData,
+                infoLayerData: {
+                    id: 'metro',
+                    minzoom: 13,
+                    maxzoom: 22,
+                    defaultLineWidth: 6,
+                    defaultLineColor: 'pink',
+                    circleRadius: 5,
+                    circleColor: 'pink',
+                    strokeColor: 'slategrey',
+                    strokeWidth: 1,
+                    opacity: 1,
+
+                },
+            });
+        } };
+        placesSection.add(drawGeoJSON, 'draw GeoJSON');
+
+        // Remove GeoJSON Layer
+        const removeGeoJSON = { 'remove GeoJSON': () => {
+            map.infoLayer.removeGeoJSON({
+                map: map.mapObject,
+                id: 'metro',
+            });
+        } };
+        placesSection.add(removeGeoJSON, 'remove GeoJSON');
     },
 };
 

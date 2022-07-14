@@ -4,6 +4,130 @@ import mapboxgl from 'mapbox-gl';
 export const infoLayer = {
 
     /**
+     * Draw geoJSON layer
+     * Currently supports 'LineString' and 'Point'
+     */
+    drawGeoJSON({ map, geoJSON, infoLayerData }) {
+        const lineId = `line-${infoLayerData.id}`;
+        const pointId = `point-${infoLayerData.id}`;
+
+        if (map.getLayer(lineId) || map.getLayer(pointId)) infoLayer.removeGeoJSON({ map, id: infoLayerData.id });
+
+        // defaults
+        const minzoom = infoLayerData.minzoom ? infoLayerData.minzoom : 1;
+        const maxzoom = infoLayerData.maxzoom ? infoLayerData.maxzoom : 24;
+
+        const addLines = () => {
+            const lineWidth = infoLayerData.defaultLineWidth ? infoLayerData.defaultLineWidth : 2;
+            const lineColor = infoLayerData.defaultLineColor ? infoLayerData.defaultLineColor : 'slategrey';
+
+            const lines = geoJSON.features.filter((d) => d.geometry.type === 'LineString');
+
+            map.addSource(lineId, {
+                type: 'geojson',
+                data: {
+                    type: 'FeatureCollection',
+                    features: lines,
+                },
+            });
+
+            map.addLayer({
+                id: lineId,
+                type: 'line',
+                minzoom,
+                maxzoom,
+                source: lineId,
+                layout: {
+                    'line-join': 'round',
+                    'line-cap': 'round',
+                },
+                paint: {
+                    'line-color': ['to-color', ['get', 'color'], d3.color(lineColor).formatHex()],
+                    'line-width': ['number', ['get', 'width'], lineWidth],
+                },
+
+            });
+        };
+
+        const addPoints = () => {
+            const circleRadius = infoLayerData.circleRadius ? infoLayerData.circleRadius : 6;
+            const circleColor = infoLayerData.circleColor ? infoLayerData.circleColor : 'slategrey';
+            const strokeColor = infoLayerData.strokeColor ? infoLayerData.strokeColor : 'black';
+            const strokeWidth = infoLayerData.strokeWidth ? infoLayerData.strokeWidth : 2;
+            const opacity = infoLayerData.opacity ? infoLayerData.opacity : 1;
+
+            const points = geoJSON.features.filter((d) => d.geometry.type === 'Point');
+
+            map.addSource(pointId, {
+                type: 'geojson',
+                data: {
+                    type: 'FeatureCollection',
+                    features: points,
+                },
+            });
+
+            map.addLayer(
+                {
+                    id: pointId,
+                    type: 'circle',
+                    source: pointId,
+                    minzoom,
+                    maxzoom,
+                    paint: {
+                        'circle-radius': ['number', ['get', 'radius'], circleRadius],
+                        'circle-color': ['to-color', ['get', 'color'], d3.color(circleColor).formatHex()],
+                        'circle-stroke-color': ['to-color', ['get', 'strokeColor'], d3.color(strokeColor).formatHex()],
+                        'circle-stroke-width': ['number', ['get', 'strokeWidth'], strokeWidth],
+                        'circle-opacity': ['number', ['get', 'opacity'], opacity],
+                    },
+                },
+            );
+
+            map.on('click', pointId, (event) => {
+                map.MapCCV.appState = {
+                    type: 'user',
+                    value: 'click',
+                    message: 'clicked on circle',
+                    data: event.features[0].properties,
+                };
+            });
+
+            map.on('mouseenter', pointId, (event) => {
+                map.getCanvas().style.cursor = 'pointer';
+                map.MapCCV.appState = {
+                    type: 'user',
+                    value: 'enter',
+                    message: 'rollover on circle',
+                    data: event.features[0].properties,
+                };
+            });
+
+            // Change it back to a pointer when it leaves.
+            map.on('mouseleave', pointId, () => {
+                map.getCanvas().style.cursor = '';
+            });
+        };
+
+        addLines();
+        addPoints();
+    },
+
+    removeGeoJSON({ map, id }) {
+        const lineId = `line-${id}`;
+        const pointId = `point-${id}`;
+
+        if (map.getLayer(lineId)) {
+            map.removeLayer(lineId);
+            map.removeSource(lineId);
+        }
+
+        if (map.getLayer(pointId)) {
+            map.removeLayer(pointId);
+            map.removeSource(pointId);
+        }
+    },
+
+    /**
      * fetch data from Tile query API and draw icons on map
      * @infoLayerData {object} contains detailed info about features to draw
      * @MAPBOX_API {string} API key
