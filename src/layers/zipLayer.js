@@ -1,10 +1,7 @@
-/* eslint-disable max-len */
-import mapboxgl from 'mapbox-gl';
 import * as _ from 'lodash';
 import * as d3 from 'd3';
 
 import { Colors } from '../colors';
-import { Scales } from '../scales';
 import { Tools } from '../tools';
 
 export const ZipLayer = {
@@ -16,9 +13,6 @@ export const ZipLayer = {
         const data = layer[layerName];
         const interactionId = `${layerName}Fill`;
         const zoomExtent = [layerProps.minzoom, layerProps.maxzoom];
-
-        // Find layer for  z-index placement
-        const baseLayers = map.getStyle().layers;
 
         map.addSource(layerName, {
             type: 'geojson',

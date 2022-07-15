@@ -39,7 +39,7 @@ export class MapCCV {
             });
             payload.layerData = await Promise.all(promises);
 
-            this.mapObject = Map.draw({ payload, MapCCV: this });
+            this.mapObject = await Map.draw({ payload, MapCCV: this });
             return true;
         };
 

@@ -10,7 +10,7 @@ export const Map = {
         return Map.map.getZoom();
     },
 
-    draw({ payload, MapCCV }) {
+    async draw({ payload, MapCCV }) {
         mapboxgl.accessToken = payload.MAPBOX_API;
         MapCCV.appState = { type: 'status', value: 'success', message: 'MapBox token OK' };
 
@@ -22,7 +22,6 @@ export const Map = {
             center: payload.map.geoCenterType === 'dataBound' ? [0, 0] : payload.map.geoCenterValue,
             zoom: payload.map.zoom,
             bounds: payload.map.geoCenterType === 'dataBound' ? value : null,
-            // pitch: Scales.pitchScale(payload.map.zoom),
             bearing: 0,
             antialias: true,
             flying: false,
@@ -35,13 +34,7 @@ export const Map = {
         map.MapCCV = MapCCV;
 
         map.on('load', () => {
-            // map.addSource('locations', {
-            //     type: 'geojson',
-            //     data: payload.locationData,
-            // });
-
             if (payload.map.showBuildings) Buildings.add({ map });
-            // if (payload.data.showAsLayer) DataDots.add({ map, payload });
             payload.layerData.forEach((layer, index) => {
                 ZipLayer.add({ map, payload, layer, index });
             });
@@ -68,19 +61,11 @@ export const Map = {
             });
         });
 
-        // map.on('moveend', (e) => {
-        //     if (map.flying) map.flying = false;
-        // });
-
         map.on('zoom', () => {
             const currentZoom = map.getZoom();
             map.MapCCV.payload.map.currentZoom = currentZoom;
-            // if (map.flying) return;
-            // const pitch = Scales.pitchScale(currentZoom);
-            // map.setPitch(pitch);
         });
 
-        // this.createAppState({ type: 'status', value: 'success', message: 'Layers loaded' });
         return map;
     },
 };

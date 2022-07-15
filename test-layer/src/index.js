@@ -118,6 +118,7 @@ const loadMap = async () => {
     };
     const map = new MapCCV(payload);
     const mapIsCreated = await map.create();
+
     if (!mapIsCreated) {
         console.error('failed to create map');
         return;

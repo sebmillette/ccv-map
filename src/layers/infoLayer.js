@@ -14,12 +14,13 @@ export const infoLayer = {
         const lineId = `line-${infoLayerData.id}`;
         const pointId = `point-${infoLayerData.id}`;
         console.log('point/lineId', pointId, lineId);
-
-        if (map.getLayer(lineId) || map.getLayer(pointId)) infoLayer.removeGeoJSON({ map, id: infoLayerData.id });
-
         // defaults and fallbacks
         const minzoom = infoLayerData.minzoom ? infoLayerData.minzoom : 1;
         const maxzoom = infoLayerData.maxzoom ? infoLayerData.maxzoom : 24;
+
+        const checkLayer = () => {
+            if (map.getLayer(lineId) || map.getLayer(pointId)) infoLayer.removeGeoJSON({ map, id: infoLayerData.id });
+        };
 
         const addLines = () => {
             const lineWidth = infoLayerData.lineWidth ? infoLayerData.lineWidth : 2;
@@ -90,8 +91,8 @@ export const infoLayer = {
             map.on('click', pointId, (event) => {
                 map.MapCCV.appState = {
                     type: 'user',
-                    value: 'click',
-                    message: 'clicked on circle',
+                    value: 'geo-point-click',
+                    message: 'clicked on point',
                     data: event.features[0].properties,
                 };
             });
@@ -100,8 +101,8 @@ export const infoLayer = {
                 map.getCanvas().style.cursor = 'pointer';
                 map.MapCCV.appState = {
                     type: 'user',
-                    value: 'enter',
-                    message: 'rollover on circle',
+                    value: 'geo-point-enter',
+                    message: 'rollover on point',
                     data: event.features[0].properties,
                 };
             });
@@ -112,8 +113,19 @@ export const infoLayer = {
             });
         };
 
-        addLines();
-        addPoints();
+        const isLoaded = map.loaded();
+
+        if (map.loaded()) {
+            checkLayer();
+            addLines();
+            addPoints();
+        } else {
+            map.on('load', () => {
+                checkLayer();
+                addLines();
+                addPoints();
+            });
+        }
     },
 
     removeGeoJSON({ map, id }) {
