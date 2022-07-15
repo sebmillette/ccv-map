@@ -8,8 +8,12 @@ export const infoLayer = {
      * Currently supports 'LineString' and 'Point'
      */
     drawGeoJSON({ map, geoJSON, infoLayerData }) {
+        console.log('draw Geo JSON');
+        console.log({ map, geoJSON, infoLayerData });
+
         const lineId = `line-${infoLayerData.id}`;
         const pointId = `point-${infoLayerData.id}`;
+        console.log('point/lineId', pointId, lineId);
 
         if (map.getLayer(lineId) || map.getLayer(pointId)) infoLayer.removeGeoJSON({ map, id: infoLayerData.id });
 
@@ -113,6 +117,9 @@ export const infoLayer = {
     },
 
     removeGeoJSON({ map, id }) {
+        console.log('remove Geo JSON');
+        console.log({ map, id });
+
         const lineId = `line-${id}`;
         const pointId = `point-${id}`;
 
