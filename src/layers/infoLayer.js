@@ -25,6 +25,7 @@ export const infoLayer = {
         const addLines = () => {
             const lineWidth = infoLayerData.lineWidth ? infoLayerData.lineWidth : 2;
             const lineColor = infoLayerData.lineColor ? infoLayerData.lineColor : 'slategrey';
+            const opacity = infoLayerData.opacity ? infoLayerData.opacity : 1;
 
             const lines = geoJSON.features.filter((d) => d.geometry.type === 'LineString');
 
@@ -49,6 +50,8 @@ export const infoLayer = {
                 paint: {
                     'line-color': ['to-color', ['get', 'lineColor'], d3.color(lineColor).formatHex()],
                     'line-width': ['number', ['get', 'lineWidth'], lineWidth],
+                    'line-opacity': ['number', ['get', 'opacity'], opacity],
+
                 },
 
             });
@@ -81,9 +84,10 @@ export const infoLayer = {
                     paint: {
                         'circle-radius': ['number', ['get', 'radius'], circleRadius],
                         'circle-color': ['to-color', ['get', 'color'], d3.color(circleColor).formatHex()],
+                        'circle-opacity': ['number', ['get', 'opacity'], opacity],
                         'circle-stroke-color': ['to-color', ['get', 'strokeColor'], d3.color(strokeColor).formatHex()],
                         'circle-stroke-width': ['number', ['get', 'strokeWidth'], strokeWidth],
-                        'circle-opacity': ['number', ['get', 'opacity'], opacity],
+                        'circle-stroke-opacity': ['number', ['get', 'opacity'], opacity],
                     },
                 },
             );

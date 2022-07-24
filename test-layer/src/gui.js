@@ -30,12 +30,17 @@ export const GUI = {
 
         // ### LAYER SECTION ###
         const layerSection = gui.addFolder('Shape Layers');
-        layerSection.close();
+        layerSection.open();
 
         const updateBtn = { 'Update Layers': () => {
             map.updateLayers();
         } };
         layerSection.add(updateBtn, 'Update Layers');
+
+        const removeLayerHighlightsBtn = { 'Remove Layer Highlights': () => {
+            map.removeLayerHighlights();
+        } };
+        layerSection.add(removeLayerHighlightsBtn, 'Remove Layer Highlights');
 
         const updateColors = { 'Adapt Colors to Screen Selection': () => {
             map.scaleColorsToScreen();

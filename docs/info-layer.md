@@ -165,3 +165,17 @@ Following properties are rendered
 * `strokeColor`: (color in any format)
 * `strokeWidth`: (integer)
 * `opacity`: (integer, 0-1)
+
+
+## Remove Geo JSON layer
+To remove a geo JSON layer completely (not just restricting display by zoom level)
+
+* `map` > the map object
+* `id`: > id of the layer
+
+```JS
+map.infoLayer.removeGeoJSON({
+    map: map.mapObject,
+    id: 'metro',
+});
+```

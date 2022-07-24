@@ -1,11 +1,16 @@
 # CCV-map
 MapBox map for CCV project
 
-## Deploy on Firebase
-`firebase deploy --only hosting`
-
-## URL
+## Demo application
 https://mapccv.web.app/
 
 ## Documentation
-[Documentation](./docs/overview.md).
+[Payload / main app](./docs/overview.md)
+[Info Layer](./docs/info-layer.md)
+[Links](./docs/mapbox-examples.md)
+
+## Deploy on Firebase
+```
+cd test-layer
+npm run deploy
+```

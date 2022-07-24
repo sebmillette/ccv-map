@@ -7,12 +7,14 @@ export const Colors = {
             layerData,
             layerProperties,
             layer,
+            darken,
         });
 
         const quantizeFillColorSteps = Colors.quantizePaintSteps({
             layerData,
             layerProperties,
             layer,
+            darken,
         });
 
         return layerProperties.scaleType === 'quantile'

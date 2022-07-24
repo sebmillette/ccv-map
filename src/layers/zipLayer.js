@@ -50,12 +50,13 @@ export const ZipLayer = {
         },
         'waterway-label'); // place choropleth UNDERNEATH dot layer, if available
 
-        const lineColorSteps = Colors.quantilePaintSteps({
+        const lineColorSteps = Colors.paintSteps({
             layerData,
             layerProperties: payload.layerProperties,
             layer: layerProps,
             darken: true,
         });
+
         map.addLayer({
             id: `${layerName}`,
             type: 'line',
@@ -94,6 +95,22 @@ export const ZipLayer = {
     update: ({ payload }) => {
 
     },
+
+    removeLayerHighlights({ map }) {
+        map.MapCCV.payload.layers.forEach((layer) => {
+            if (map.clickStateId !== null) {
+                map.setFeatureState(
+                    { source: layer.name, id: map.clickStateId },
+                    { click: false },
+                );
+                map.setFeatureState(
+                    { source: layer.name, id: map.clickStateId },
+                    { hover: false },
+                );
+            }
+        });
+        map.clickStateId = null;
+    },
 };
 
 const ToolTip = {
@@ -101,23 +118,13 @@ const ToolTip = {
         map.on('click', interactionId, (event) => {
             const feature = event.features[0];
             const bounds = Tools.calculateBounds({ feature });
-
             // make bound available to parent
             map.MapCCV.selectedBounds = bounds;
-            const center = bounds.getCenter();
-
-            const value = feature.properties[layerProps.metricAccessor];
-            const valueFormat = `${d3.format('(,.2r')(value)}`;
-            const print = value === 0 ? 'no value' : valueFormat;
 
             // Manage click state
             if (event.features.length > 0) {
-                if (map.clickStateId !== null) {
-                    map.setFeatureState(
-                        { source: layerProps.name, id: map.clickStateId },
-                        { click: false },
-                    );
-                }
+                ZipLayer.removeLayerHighlights({ map }); // loops through all layers
+
                 map.clickStateId = event.features[0].id;
                 map.setFeatureState(
                     { source: layerProps.name, id: map.clickStateId },
@@ -137,6 +144,11 @@ const ToolTip = {
             };
 
             // ONLY REQUIRED FOR DEBUGGING
+            // const center = bounds.getCenter();
+            // const value = feature.properties[layerProps.metricAccessor];
+            // const valueFormat = `${d3.format('(,.2r')(value)}`;
+            // const print = value === 0 ? 'no value' : valueFormat;
+
             // map.tooltip = new mapboxgl.Popup()
             //     .setLngLat(center)
             //     .setHTML(`<strong>${layerProps.metricAccessor}:</strong> ${print}`)

@@ -6,6 +6,7 @@ import { Data } from './data';
 import { Tools } from './tools';
 import { Colors } from './colors';
 import { infoLayer } from './layers/infoLayer';
+import { ZipLayer } from './layers/zipLayer';
 
 export class MapCCV {
     constructor(payload) {
@@ -170,8 +171,21 @@ export class MapCCV {
                 layer,
             });
 
+            const lineColorSteps = Colors.paintSteps({
+                layerData,
+                layerProperties: this.payload.layerProperties,
+                layer,
+                darken: true,
+            });
+
             this.mapObject.setPaintProperty(`${layer.name}Fill`, 'fill-color', fillColorSteps);
+            this.mapObject.setPaintProperty(`${layer.name}`, 'line-color', lineColorSteps);
         });
+    }
+
+    removeLayerHighlights() {
+        const map = this.mapObject;
+        ZipLayer.removeLayerHighlights({ map });
     }
 
     scaleColorsToScreen() {

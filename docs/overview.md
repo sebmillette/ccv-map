@@ -164,6 +164,12 @@ map.payload.layers[0].metricAccessor = 'SQFt_avg'
 map.updateLayers();
 ```
 
+### removeLayerHighlights
+Remove highlights of features that have been created by a user click
+```JS
+map.removeLayerHighlights();
+```
+
 ### scaleColorsToScreen
 Recalculates the color scheme based on the features visible in the viewport.
 
