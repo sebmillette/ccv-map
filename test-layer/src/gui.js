@@ -1,5 +1,4 @@
 import * as dat from 'dat.gui';
-import { async } from 'regenerator-runtime';
 
 export const GUI = {
     create({ map, metroData }) {
@@ -30,7 +29,7 @@ export const GUI = {
 
         // ### LAYER SECTION ###
         const layerSection = gui.addFolder('Shape Layers');
-        layerSection.open();
+        layerSection.close();
 
         const updateBtn = { 'Update Layers': () => {
             map.updateLayers();
@@ -83,7 +82,7 @@ export const GUI = {
 
         // ### BUTTONS ###
         const actionSection = gui.addFolder('Actions');
-        actionSection.close();
+        actionSection.open();
 
         // Fly-to zoom / center
         const sampleCenterValue = JSON.stringify({ zoom: 10, lat: -73.595, long: 45.488 });
@@ -101,6 +100,12 @@ export const GUI = {
         } };
         actionSection.add(flyToSelection, 'fly to selected feature');
 
+        // Center selected feature
+        const centerSelection = { 'center selected feature': () => {
+            map.centerSelectedFeature({ geoPadding: [0, 0, 0, 0] }); // west, north, east, south
+        } };
+        actionSection.add(centerSelection, 'center selected feature');
+
         // Fly-to custom feature
         const sampleFeatureValue = JSON.stringify({ id: 'lowLevelData', key: 'UNIQUE_ID', value: '2' });
         const customFeature = { sampleFeatureValue };
@@ -115,7 +120,7 @@ export const GUI = {
 
         // ### INFO BUTTONS ###
         const placesSection = gui.addFolder('Places');
-        placesSection.open();
+        placesSection.close();
         const places = {
             Configuration: 'murales',
             Set: 'g1',

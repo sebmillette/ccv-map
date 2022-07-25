@@ -1,5 +1,6 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import * as d3 from 'd3';
 
 import { Map } from './mapbox';
 import { Data } from './data';
@@ -86,10 +87,32 @@ export class MapCCV {
             return;
         }
 
-        const test = this.boundPadding(this.selectedBounds, geoPadding);
+        const paddedFeature = this.boundPadding(this.selectedBounds, geoPadding);
 
-        this.mapObject.fitBounds(this.selectedBounds); // , { linear: true, pitch: 45 }
-        this.mapObject.fitBounds(test); // , { linear: true, pitch: 45 }
+        // this.mapObject.fitBounds(this.selectedBounds); // , { linear: true, pitch: 45 }
+        this.mapObject.fitBounds(paddedFeature); // , { linear: true, pitch: 45 }
+    }
+
+    centerSelectedFeature() {
+        if (!this.selectedBounds) {
+            this.appState = { type: 'system', value: 'error', message: 'no feature is currently selected.' };
+            return;
+        }
+
+        const bounds = this.selectedBounds;
+        const latDiff = Math.abs(bounds._sw.lat - bounds._ne.lat);
+        const lngDiff = Math.abs(bounds._ne.lng - bounds._sw.lng);
+        const latMin = d3.min([bounds._sw.lat, bounds._ne.lat]);
+        const lngMin = d3.min([bounds._ne.lng, bounds._sw.lng]);
+
+        const lat = latMin + latDiff / 2;
+        const lng = lngMin + lngDiff / 2;
+        // move map to the center of this bound
+
+        const center = [lng, lat];
+        const zoom = this.mapObject.getZoom();
+        // center: [(Math.random() - 0.5) * 360, (Math.random() - 0.5) * 100],
+        this.flyToCenter.call(this, { center, zoom });
     }
 
     // eslint-disable-next-line class-methods-use-this

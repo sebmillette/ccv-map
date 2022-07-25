@@ -133,6 +133,12 @@ map.flyToFeature(JSONfeature)
 * key in geo JSON
 * value of key
 
+### centerSelectedFeature
+Centers the selected feature without changing the zoom level
+```JS
+map.centerSelectedFeature() 
+```
+
 
 ### flyToSelectedFeature
 If the user has selected a feature on the map, this method flies to its bounds
