@@ -1,6 +1,5 @@
 import * as _ from 'lodash';
-import * as d3 from 'd3';
-
+import mapboxgl from 'mapbox-gl';
 import { Colors } from '../colors';
 import { Tools } from '../tools';
 
@@ -133,6 +132,8 @@ const ToolTip = {
             }
 
             const center = Tools.centerOfBounds({ bounds });
+            const featureCenter = new mapboxgl.LngLat(center[1], center[0]);
+            const pointerLocation = event.lngLat.wrap();
 
             map.MapCCV.appState = {
                 type: 'user',
@@ -142,7 +143,8 @@ const ToolTip = {
                     source: layerProps.name,
                     key: [layerProps.geoKey],
                     keyValue: feature.properties[layerProps.geoKey],
-                    featureCenter: center,
+                    featureCenter,
+                    pointerLocation,
                 },
             };
 
