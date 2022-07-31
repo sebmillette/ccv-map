@@ -132,6 +132,8 @@ const ToolTip = {
                 );
             }
 
+            const center = Tools.centerOfBounds({ bounds });
+
             map.MapCCV.appState = {
                 type: 'user',
                 value: 'click',
@@ -140,6 +142,7 @@ const ToolTip = {
                     source: layerProps.name,
                     key: [layerProps.geoKey],
                     keyValue: feature.properties[layerProps.geoKey],
+                    featureCenter: center,
                 },
             };
 

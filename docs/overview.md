@@ -11,6 +11,8 @@ const payload = {
             geoCenterType: 'manual', // [manual, dataBound, dataCenter]
             geoCenterString: '-73.595, 45.688',
             showBuildings: true,
+            minZoom: 9,
+            maxZoom: 15,
         },
         data: {
             // locationPath: 'data/QC_CONDO_SOLD_METRIC.geojson', // GeoJSON with properties
@@ -58,6 +60,8 @@ const payload = {
 |map.geoCenterType|How to position the map|[manual, data, postalCode]|
 |map.geoCenterString|Used if type is manual|String of longitude and latitude: '-73.595, 45.488'|
 |map.showBuildings|Show or hide buildings|boolean|
+|map.minZoom| minimal zoom of map  | any value between 1 and 20 (if not provided it is set to 5)  |
+|map.maxZoom| maximal zoom of map  | any value between 1 and 20 (if not provided it is set to 20)  |
 
 ### data
 |property|description|values|

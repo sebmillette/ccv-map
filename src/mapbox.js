@@ -2,8 +2,6 @@ import mapboxgl from 'mapbox-gl';
 
 import { Buildings } from './layers/buildingLayers';
 import { ZipLayer } from './layers/zipLayer';
-import { DataDots } from './layers/dataLayer';
-import { Scales } from './scales';
 
 export const Map = {
     get currentZoom() {
@@ -25,8 +23,8 @@ export const Map = {
             bearing: 0,
             antialias: true,
             flying: false,
-            minZoom: 6,
-            maxZoom: 18,
+            minZoom: payload.map.minZoom ? payload.map.minZoom : 5,
+            maxZoom: payload.map.maxZoom ? payload.map.maxZoom : 20,
         });
 
         map.flying = false;

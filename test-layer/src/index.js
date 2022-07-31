@@ -63,6 +63,8 @@ const loadMap = async () => {
             geoCenterType: 'manual', // [manual, dataBound, dataCenter]
             geoCenterString: '-73.5681, 45.5186',
             showBuildings: true,
+            minZoom: 9,
+            maxZoom: 15,
         },
         infoLayerData: {
             latitude: '-73.5681',
